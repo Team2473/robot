@@ -13,7 +13,7 @@ public class EncoderDrive {
 	CANTalon backRight;
 	Joystick joyOne;
 	
-	final double maxSpeed = 0.75;
+	final double maxSpeed = 0.50;
 	final double dz = .03;
 	
 	double fl = 0;
@@ -166,10 +166,13 @@ public class EncoderDrive {
 			encBroke = true;
 		}
 		
-		SmartDashboard.putString("DB/String 6", "Front Left EncPos: " + frontLeft.getPosition());
-		SmartDashboard.putString("DB/String 7", "Front Right EncPos: " + frontRight.getPosition());
-		SmartDashboard.putString("DB/String 8", "Back Left EncPos: " + backLeft.getPosition());
-		SmartDashboard.putString("DB/String 9", "Back Right EncPos: " + backRight.getPosition());
+		SmartDashboard.putString("DB/String 2", "angle: " + Math.round(angle));
+		SmartDashboard.putString("DB/String 3", "magnitude: " + Math.round(magnitude*100)/100.0);
+		SmartDashboard.putString("DB/String 4", "zpos: " + z);
+		SmartDashboard.putString("DB/String 6", "FL EncPos: " + frontLeft.getPosition());
+		SmartDashboard.putString("DB/String 7", "FR EncPos: " + frontRight.getPosition());
+		SmartDashboard.putString("DB/String 8", "BL EncPos: " + backLeft.getPosition());
+		SmartDashboard.putString("DB/String 9", "BR EncPos: " + backRight.getPosition());
 		
 		loopTime++;
 		SmartDashboard.putString("DB/String 0", "Loop time: " + loopTime);
