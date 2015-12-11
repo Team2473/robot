@@ -13,11 +13,9 @@ public class TankDrive {
 	CANTalon backRight;
 	Joystick joyOne;
 	
-<<<<<<< HEAD
+
 	final double maxSpeed = .60;
-=======
-	final double maxSpeed = 0.6;
->>>>>>> origin/master
+
 	final double dz = .05;
 	
 	public TankDrive() {
@@ -62,17 +60,13 @@ public class TankDrive {
 		SmartDashboard.putString("DB/String 2", "Bl: " + backRight.getEncPosition());
 		SmartDashboard.putString("DB/String 3", "Fr: " + frontRight.getEncPosition());
 		SmartDashboard.putString("DB/String 4", "Br: " + backRight.getEncPosition());
-<<<<<<< HEAD
-		SmartDashboard.putString("DB/String 6", "Left X: " + x1);
-		SmartDashboard.putString("DB/String 7", "Left Y: " + y1);
-		SmartDashboard.putString("DB/String 8", "Right X: " + x2);
-		SmartDashboard.putString("DB/String 9", "Right Y: " + y2);
-=======
+
+
 //		SmartDashboard.putString("DB/String 6", "Left X: " + x1);
 //		SmartDashboard.putString("DB/String 7", "Left Y: " + y1);
 //		SmartDashboard.putString("DB/String 8", "Right X: " + x2);
 //		SmartDashboard.putString("DB/String 9", "Right Y: " + y2);
->>>>>>> origin/master
+
 		
 	}
 	
@@ -88,8 +82,6 @@ public class TankDrive {
 		tal.enableControl();
 	}
 }
-<<<<<<< HEAD
-=======
 
 
->>>>>>> origin/master
+
