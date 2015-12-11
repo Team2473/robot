@@ -14,7 +14,7 @@ public class EncoderDrive {
 	Joystick joyOne;
 	
 	final double maxSpeed = 0.50;
-	final double dz = .03;
+	final double dz = .05;
 	
 	double fl = 0;
 	double fr = 0;
@@ -41,8 +41,6 @@ public class EncoderDrive {
 		frontRight = new CANTalon(5);
 		backLeft = new CANTalon(3);
 		backRight = new CANTalon(4);
-	
-		
 		
 		joyOne = new Joystick(0);
 		
@@ -58,6 +56,8 @@ public class EncoderDrive {
 		setEncoder(backRight);
 		setEncoder(frontLeft);
 		setEncoder(frontRight);
+		frontLeft.reverseSensor(true);
+		frontRight.reverseSensor(true);
 		
 		fl = 0;
 		fr = 0;
@@ -67,6 +67,7 @@ public class EncoderDrive {
 	
 	public void teleop () {
 		
+		
 		double x = joyOne.getX();
 		double y = -joyOne.getY();
 		double z = joyOne.getZ();
@@ -74,11 +75,11 @@ public class EncoderDrive {
 		double angle = (x == 0)?90:Math.toDegrees(Math.atan(Math.abs(y)/Math.abs(x)));
 		double magnitude = Math.min(Math.sqrt(x*x + y*y),1);
 		
-		if(z > dz || z < -dz){
-			fl +=z*maxSpeed*.5;
-			fr +=z*maxSpeed* .5;
-			bl+=z*maxSpeed*.5;
-			br+=z*maxSpeed*.5;
+		if(z > .20 || z < -.20){
+			fl +=z*maxSpeed;
+			fr +=z*maxSpeed;
+			bl+=z*maxSpeed;
+			br+=z*maxSpeed;
 		}
 
 		if((y >= 0 && x >= 0) && (magnitude > dz)){ //Q1
@@ -113,10 +114,10 @@ public class EncoderDrive {
 		//CANTalon.getSpeed()
 		//CANTalon.getEncVelocity()
 		
-		frontRight.set(fr*200);
-		frontLeft.set(fl*200);
-		backRight.set(br*200);
-		backLeft.set(bl*200);
+		frontRight.set(fr*150);
+		frontLeft.set(fl*150);
+		backRight.set(br*150);
+		backLeft.set(bl*150);
 		
 		if(frontRight.getEncVelocity() < 0){ 
 			frTime++;
@@ -168,7 +169,7 @@ public class EncoderDrive {
 		
 		SmartDashboard.putString("DB/String 2", "angle: " + Math.round(angle));
 		SmartDashboard.putString("DB/String 3", "magnitude: " + Math.round(magnitude*100)/100.0);
-		SmartDashboard.putString("DB/String 4", "zpos: " + z);
+		SmartDashboard.putString("DB/String 4", "zpos: " + Math.round(z*100)/100.0);
 		SmartDashboard.putString("DB/String 6", "FL EncPos: " + frontLeft.getPosition());
 		SmartDashboard.putString("DB/String 7", "FR EncPos: " + frontRight.getPosition());
 		SmartDashboard.putString("DB/String 8", "BL EncPos: " + backLeft.getPosition());
