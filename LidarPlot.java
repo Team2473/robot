@@ -30,6 +30,7 @@ public class LidarPlot implements KeyListener{
 	
 	public void updatePlot(){
 		pen.home();
+		pen.down();
 		pen.setColor(Color.WHITE);
 		pen.fillRect(1000, 1000);
 		pen.setColor(Color.BLACK);
@@ -42,6 +43,8 @@ public class LidarPlot implements KeyListener{
 				pen.fillCircle(2);
 				pen.move(Math.cos(Math.toRadians(i))*plot[i],Math.sin(Math.toRadians(i))*plot[i]);
 			}
+			pen.fillCircle(2);
+			pen.move(Math.cos(Math.toRadians(0))*plot[0],Math.sin(Math.toRadians(0))*plot[0]);
 		}else{
 			for(int i = 0; i < 360; i++){
 				pen.home();
@@ -70,9 +73,10 @@ public class LidarPlot implements KeyListener{
 		LidarPlot window = new LidarPlot();
 		double[] a = new double[360];
 		for(int i = 0; i < 360; i++){
-			a[i] = (new Random()).nextInt(100) + 300;
+			a[i] = (new Random()).nextInt(50) + 300;
 		}
 		window.importArray(a);
+		window.toggleLines(true);
 		window.updatePlot();
 	}
 
@@ -92,13 +96,13 @@ public class LidarPlot implements KeyListener{
 	        System.out.println(keyString);
 	        if(e.getKeyChar() == 'w'){
 	        	for(int i = 0; i < 360; i++){
-	        		plot[i] = plot[i]*1.01;
+	        		plot[i] = plot[i]*1.02;
 	        	}
 	        	System.out.println("up");
 	        }
 	        else if(e.getKeyChar() == 's'){
 	        	for(int i = 0; i < 360; i++){
-	        		plot[i] = plot[i]*.99;
+	        		plot[i] = plot[i]*.98;
 	        	}
 	        }else if(e.getKeyChar() == 'd'){
 	        	double temp = plot[0];
