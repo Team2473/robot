@@ -12,7 +12,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * directory.
  */
 
-//asdfasdfasdfasdfasdf
 public class Robot extends IterativeRobot {
 	/**
      * This function is run when the robot is first started up and should be
