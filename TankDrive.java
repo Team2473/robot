@@ -14,9 +14,14 @@ public class TankDrive {
 	Joystick joyOne;
 	
 
-	final double maxSpeed = .60;
+	final double maxSpeed = .30;
 
 	final double dz = .05;
+	
+	final double encScale = 150;
+	
+	private double bl;
+	private double fl;
 	
 	public TankDrive() {
 		//instantiations
@@ -41,7 +46,10 @@ public class TankDrive {
 		setEncoder(backRight);
 		setEncoder(frontLeft);
 		setEncoder(frontRight);
-	
+		
+		
+		bl = 0;
+		fl = 0;
 	
 	}
 	
@@ -51,13 +59,17 @@ public class TankDrive {
 		double x2 = joyOne.getZ();
 		double y2 = -joyOne.getThrottle();
 		
-		backLeft.set(y1*maxSpeed);
-		frontLeft.set(y1*maxSpeed);
-		frontRight.set(-y2*maxSpeed);
-		backRight.set(-y2*maxSpeed);
+		fl += maxSpeed * y1;
+		
+		//backLeft.set(y1*maxSpeed);
+		//frontLeft.set(y1*maxSpeed);
+		backLeft.set(fl*encScale);
+		//frontRight.set(-y2*maxSpeed);
+		//backRight.set(-y2*maxSpeed);
 
 		SmartDashboard.putString("DB/String 1", "Fl: " + frontLeft.getEncPosition());
-		SmartDashboard.putString("DB/String 2", "Bl: " + backRight.getEncPosition());
+		//SmartDashboard.putString("DB/String 2", "Bl: " + backRight.getEncPosition());
+		SmartDashboard.putString("DB/String 2", "Val " + y1);
 		SmartDashboard.putString("DB/String 3", "Fr: " + frontRight.getEncPosition());
 		SmartDashboard.putString("DB/String 4", "Br: " + backRight.getEncPosition());
 
@@ -73,11 +85,8 @@ public class TankDrive {
 	
 	
 	private void setEncoder(CANTalon tal) {
-//		System.out.println("Current mode is: " + tal.getControlMode());
-		tal.changeControlMode(ControlMode.PercentVbus);
+		tal.changeControlMode(ControlMode.Position);
 		tal.setFeedbackDevice(FeedbackDevice.QuadEncoder);
-		//tal.setPID(.020, 0.000003, 0.0); //scales power difference, the longer you haven't reached goal > faster it gets, how quickly you move towards the goal
-//		tal.setPID(2.0, 0.0, 0.0);
 		tal.setPosition(0);
 		tal.enableControl();
 	}
