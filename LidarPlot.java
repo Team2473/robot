@@ -6,6 +6,19 @@ import java.awt.event.KeyListener;
 import java.util.Random;
 
 import gpdraw.*;
+/////////////////////////////////////////////////////////
+//TO USE
+//
+//Create a LidarPlot class
+//Call import Array with a 360 size double array of "distances accessed with degrees"
+//Set Speed to no delay in gpdraw window
+//
+//CONTROLS
+//
+//"w" to zoom in
+//"s" to zoom out
+//"a" to rotate counter-clockwise
+//"s" to rotate clockwise
 
 public class LidarPlot implements KeyListener{
 	SketchPad paper;
@@ -22,13 +35,15 @@ public class LidarPlot implements KeyListener{
 	
 	public void importArray(double[] plot){
 		this.plot = plot;
+		this.updatePlot();
 	}
 	
 	public void toggleLines(boolean b){
 		drawLines = b;
+		this.updatePlot();
 	}
 	
-	public void updatePlot(){
+	private void updatePlot(){
 		pen.home();
 		pen.down();
 		pen.setColor(Color.WHITE);
@@ -77,7 +92,6 @@ public class LidarPlot implements KeyListener{
 		}
 		window.importArray(a);
 		window.toggleLines(true);
-		window.updatePlot();
 	}
 
 	public void keyTyped(KeyEvent e) {
@@ -98,7 +112,6 @@ public class LidarPlot implements KeyListener{
 	        	for(int i = 0; i < 360; i++){
 	        		plot[i] = plot[i]*1.02;
 	        	}
-	        	System.out.println("up");
 	        }
 	        else if(e.getKeyChar() == 's'){
 	        	for(int i = 0; i < 360; i++){
