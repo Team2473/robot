@@ -11,19 +11,17 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * creating this project, you must also update the manifest file in the resource
  * directory.
  */
-//asdfasdfasdf
+
 public class Robot extends IterativeRobot {
 	/**
      * This function is run when the robot is first started up and should be
      * used for any initialization code.
      */
 	EncoderDrive encDrive;
-	TCPSocket socket;
 	TankDrive test;
 	
     public void robotInit() {
         //encDrive = new EncoderDrive();
-    	socket = new TCPSocket();
     	//test = new TankDrive();
     }
     
@@ -46,7 +44,6 @@ public class Robot extends IterativeRobot {
      */
     public void teleopInit(){
     	//encDrive.teleopInit();
-    	socket.teleopInit();
     	//test.teleopInit();
     }
     
@@ -56,7 +53,6 @@ public class Robot extends IterativeRobot {
     public void teleopPeriodic() {
     	//test.teleop();
     	//encDrive.teleop();
-    	socket.teleop();
     	//SmartDashboard.putString("DB/String 8", "r " + Math.random());
     }
     
