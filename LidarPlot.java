@@ -20,8 +20,6 @@ import gpdraw.*;
 //"a" to rotate counter-clockwise
 //"s" to rotate clockwise
 
-
-//github test
 public class LidarPlot implements KeyListener{
 	SketchPad paper;
 	DrawingTool pen;
