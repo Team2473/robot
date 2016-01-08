@@ -17,12 +17,9 @@ public class Robot extends IterativeRobot {
      * This function is run when the robot is first started up and should be
      * used for any initialization code.
      */
-	EncoderDrive encDrive;
-	TankDrive test;
 	
     public void robotInit() {
-        //encDrive = new EncoderDrive();
-    	//test = new TankDrive();
+
     }
     
     /**
@@ -43,17 +40,14 @@ public class Robot extends IterativeRobot {
      * This function is called once each time the robot enters tele-operated mode
      */
     public void teleopInit(){
-    	//encDrive.teleopInit();
-    	//test.teleopInit();
+
     }
     
     /**
      * This function is called periodically during operator control
      */
     public void teleopPeriodic() {
-    	//test.teleop();
-    	//encDrive.teleop();
-    	//SmartDashboard.putString("DB/String 8", "r " + Math.random());
+
     }
     
     /**
