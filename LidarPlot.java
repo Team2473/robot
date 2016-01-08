@@ -26,11 +26,17 @@ public class LidarPlot implements KeyListener{
 	boolean drawLines;
 	double[] plot;
 	
+	double scale;
+	int angle;
+	
 	public LidarPlot(){
 		paper = new SketchPad(1000,1000);
 		pen = new DrawingTool(paper);
 		drawLines = true;
 		paper.addKeyListener(this);
+		
+		scale = 1;
+		angle = 30;
 	}
 	
 	public void importArray(double[] plot){
@@ -50,21 +56,29 @@ public class LidarPlot implements KeyListener{
 		pen.fillRect(1000, 1000);
 		pen.setColor(Color.BLACK);
 		pen.fillCircle(5);
+		pen.up();
+		pen.move(-500, 0);
+		pen.down();
+		pen.move(500,0);
+		pen.up();
+		pen.move(0,-500);
+		pen.down();
+		pen.move(0,500);
 		if(drawLines){
-			pen.home();
-			pen.turnRight();
-			teleport(pen,plot[0]);
-			for(int i = 0; i < 360; i++){
+			pen.up();
+			pen.move(Math.cos(Math.toRadians(0))*plot[angle]*scale,Math.sin(Math.toRadians(0))*plot[angle]*scale);
+			pen.down();
+			for(int i = angle; i < 360 + angle; i++){
 				pen.fillCircle(2);
-				pen.move(Math.cos(Math.toRadians(i))*plot[i],Math.sin(Math.toRadians(i))*plot[i]);
+				pen.move(Math.cos(Math.toRadians(i - angle))*plot[i%360]*scale,Math.sin(Math.toRadians(i - angle))*plot[i%360]*scale);
 			}
 			pen.fillCircle(2);
-			pen.move(Math.cos(Math.toRadians(0))*plot[0],Math.sin(Math.toRadians(0))*plot[0]);
+			pen.move(Math.cos(Math.toRadians(0))*plot[angle]*scale,Math.sin(Math.toRadians(0))*plot[angle]*scale);
 		}else{
-			for(int i = 0; i < 360; i++){
+			for(int i = angle; i < 360 + angle; i++){
 				pen.home();
-				pen.turn(i);
-				teleport(pen, plot[i]);
+				pen.turn(i - angle);
+				teleport(pen, plot[i%360] * scale);
 				pen.fillCircle(2);
 				pen.up();
 			}
@@ -109,26 +123,23 @@ public class LidarPlot implements KeyListener{
 	        }
 	        System.out.println(keyString);
 	        if(e.getKeyChar() == 'w'){
-	        	for(int i = 0; i < 360; i++){
-	        		plot[i] = plot[i]*1.02;
-	        	}
+	        	scale *= 1.02;
 	        }
 	        else if(e.getKeyChar() == 's'){
-	        	for(int i = 0; i < 360; i++){
-	        		plot[i] = plot[i]*.98;
-	        	}
+	        	scale /= 1.02;
 	        }else if(e.getKeyChar() == 'd'){
-	        	double temp = plot[0];
-	        	for(int i = 0; i < 359; i++){
-	        		plot[i] = plot[i+1];
+	        	if(angle < 359){
+	        		angle++;
+	        	}else{
+	        		angle = 0;
 	        	}
-	        	plot[359] = temp;
 	        }else if(e.getKeyChar() == 'a'){
-	        	double temp = plot[359];
-	        	for(int i = 359; i > 0; i--){
-	        		plot[i] = plot[i-1];
+	       
+	        	if(angle > 0){
+	        		angle--;
+	        	}else{
+	        		angle = 359;
 	        	}
-	        	plot[0] = temp;
 	        }
 	        this.updatePlot();
 	}
