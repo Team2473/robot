@@ -56,14 +56,13 @@ public class LidarPlot implements KeyListener{
 		pen.fillRect(1000, 1000);
 		pen.setColor(Color.BLACK);
 		pen.fillCircle(5);
-		pen.up();
-		pen.move(-500, 0);
-		pen.down();
+		teleport(pen,-500,0);
 		pen.move(500,0);
-		pen.up();
-		pen.move(0,-500);
-		pen.down();
+		teleport(pen,0,-500);
 		pen.move(0,500);
+		for(int i = -5; i <= -5; i++){
+			
+		}
 		if(drawLines){
 			pen.up();
 			pen.move(Math.cos(Math.toRadians(0))*plot[angle]*scale,Math.sin(Math.toRadians(0))*plot[angle]*scale);
