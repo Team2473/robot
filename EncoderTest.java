@@ -86,7 +86,6 @@ public class EncoderTest {
 //		prevFRValue = frontRight.getEncPosition();
 //		prevBLValue = backLeft.getEncPosition();
 //		prevBRValue = backRight.getEncPosition();
-		System.exit(0);
 	}
 	private void setEncoder(CANTalon tal) {
 //		System.out.println("Current mode is: " + tal.getControlMode());

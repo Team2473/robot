@@ -19,10 +19,12 @@ public class Robot extends IterativeRobot {
      */
 	EncoderDrive encDrive;
 	TankDrive test;
+	EncoderTest encTest;
 	
     public void robotInit() {
         //encDrive = new EncoderDrive();
-    	//test = new TankDrive();
+    	test = new TankDrive();
+    	//encTest = new EncoderTest();
     }
     
     /**
@@ -44,16 +46,18 @@ public class Robot extends IterativeRobot {
      */
     public void teleopInit(){
     	//encDrive.teleopInit();
-    	//test.teleopInit();
+    	test.teleopInit();
+   	//encTest.teleopInit();
     }
     
     /**
      * This function is called periodically during operator control
      */
     public void teleopPeriodic() {
-    	//test.teleop();
+    	test.teleop();
     	//encDrive.teleop();
     	//SmartDashboard.putString("DB/String 8", "r " + Math.random());
+    	//encTest.teleop();
     }
     
     /**

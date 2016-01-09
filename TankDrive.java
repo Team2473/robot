@@ -42,8 +42,6 @@ public class TankDrive {
 	}
 	
 	public void teleopInit(){
-		setEncoder(backLeft);
-		setEncoder(backRight);
 		setEncoder(frontLeft);
 		setEncoder(frontRight);
 		
@@ -60,18 +58,19 @@ public class TankDrive {
 		double y2 = -joyOne.getThrottle();
 		
 		fl += maxSpeed * y1;
+		SmartDashboard.putString("DB/String 0", "fl: " + fl);
 		
 		//backLeft.set(y1*maxSpeed);
 		//frontLeft.set(y1*maxSpeed);
-		backLeft.set(fl*encScale);
+		frontLeft.set(fl*encScale);
 		//frontRight.set(-y2*maxSpeed);
 		//backRight.set(-y2*maxSpeed);
 
 		SmartDashboard.putString("DB/String 1", "Fl: " + frontLeft.getEncPosition());
 		//SmartDashboard.putString("DB/String 2", "Bl: " + backRight.getEncPosition());
-		SmartDashboard.putString("DB/String 2", "Val " + y1);
-		SmartDashboard.putString("DB/String 3", "Fr: " + frontRight.getEncPosition());
-		SmartDashboard.putString("DB/String 4", "Br: " + backRight.getEncPosition());
+		//SmartDashboard.putString("DB/String 2", "Val " + y1);
+		//SmartDashboard.putString("DB/String 3", "Fr: " + frontRight.getEncPosition());
+		//SmartDashboard.putString("DB/String 4", "Br: " + backRight.getEncPosition());
 
 
 //		SmartDashboard.putString("DB/String 6", "Left X: " + x1);
