@@ -9,7 +9,15 @@ import java.awt.event.KeyListener;
 import java.util.Random;
 
 public class Telementry {
-
+	public static void main(String[] arguments){
+		LidarPlot window = new LidarPlot();
+		double[] a = new double[360];
+		for(int i = 0; i < 360; i++){
+			a[i] = (new Random()).nextInt(50) + 300;
+		}
+		window.importArray(a);
+		window.toggleLines(true);
+	}
 }
 
 class LidarPlot implements KeyListener{
@@ -118,16 +126,6 @@ class LidarPlot implements KeyListener{
 		p.up();
 		p.move(x,y);
 		p.down();
-	}
-	
-	public static void main(String[] arguments){
-		LidarPlot window = new LidarPlot();
-		double[] a = new double[360];
-		for(int i = 0; i < 360; i++){
-			a[i] = (new Random()).nextInt(50) + 300;
-		}
-		window.importArray(a);
-		window.toggleLines(true);
 	}
 
 	public void keyTyped(KeyEvent e) {
