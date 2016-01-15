@@ -8,7 +8,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.Random;
 
-public class Telementry {
+public class Telemetry {
 	public static void main(String[] arguments){
 		LidarPlot window = new LidarPlot();
 		double[] a = new double[360];
