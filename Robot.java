@@ -19,7 +19,7 @@ public class Robot extends IterativeRobot {
      */
 	
     public void robotInit() {
-
+    	Motor.motorInit();
     }
     
     /**
