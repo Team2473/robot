@@ -50,7 +50,7 @@ public class Motor {
 		tal.enableControl();
 	}
 
-	public static void moveLeftSideMotors(int value) {
+	public static void moveLeftSideMotors(double value) {
 		if(frontLeft.getControlMode() == MODE_POWER){
 			frontLeft.set(value);
 			backLeft.set(value);
@@ -70,10 +70,10 @@ public class Motor {
 		}
 	}
 
-	public static void moveRightSideMotors(int value) {
+	public static void moveRightSideMotors(double value) {
 		if(frontRight.getControlMode() == MODE_POWER){
-			frontRight.set(value);
-			backRight.set(value);
+			frontRight.set(-value);
+			backRight.set(-value);
 		}else if(frontRight.getControlMode() == MODE_POSITION){
 			frontRight.set(value);
 			backRight.set(3);//frontright integer id
@@ -91,15 +91,15 @@ public class Motor {
 		}
 	}
 	
-	public static void moveGrapplerArmMotor(int value){
+	public static void moveGrapplerArmMotor(double value){
 		arm.set(value);
 	}
 	
-	public static void moveGrapplerElevatorMotor(int value){
+	public static void moveGrapplerElevatorMotor(double value){
 		elevator.set(value);
 	}
 	
-	public static void moveGrapplerMotor(int value){
+	public static void moveGrapplerMotor(double value){
 		grappler.set(value);
 	}
 
