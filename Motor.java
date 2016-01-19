@@ -66,6 +66,7 @@ public class Motor {
 			backLeft.changeControlMode(mode);
 		} else if (mode == MODE_POSITION) {
 			frontLeft.changeControlMode(MODE_POSITION);
+			//set pid for front left
 			backLeft.changeControlMode(ControlMode.Follower);
 		}
 	}
@@ -87,6 +88,8 @@ public class Motor {
 			backRight.changeControlMode(mode);
 		} else if (mode == MODE_POSITION) {
 			frontRight.changeControlMode(MODE_POSITION);
+			//set pid for front right
+			//CANTalon.reverseOutput for front right and test if needed for front back
 			backRight.changeControlMode(ControlMode.Follower);
 		}
 	}
