@@ -9,6 +9,10 @@ public class Motor {
 	private static CANTalon frontLeft;
 	private static CANTalon backRight;
 	private static CANTalon backLeft;
+	
+	private static CANTalon arm;		//the motor to move the arm into position
+	private static CANTalon elevator;	//the motor to extend the arm
+	private static CANTalon grappler;	//the motor to grab onto the rung and pull up
 	// add addition cantalons as they are added to robot
 	public static final ControlMode MODE_POWER = ControlMode.PercentVbus;
 	public static final ControlMode MODE_POSITION = ControlMode.Position;
@@ -20,17 +24,27 @@ public class Motor {
 		frontLeft = new CANTalon(2);
 		backRight = new CANTalon(4);
 		backLeft = new CANTalon(5);
+		
+		//test ids
+		arm = new CANTalon(0);
+		elevator = new CANTalon(0);
+		grappler = new CANTalon(0);
+		
 		setUp(frontRight);
 		setUp(frontLeft);
 		setUp(backRight);
 		setUp(backLeft);
+		
+		setUp(arm);
+		setUp(elevator);
+		setUp(grappler);
 		// add addition cantalons as they are added to robot
 
 	}
 
 	// Should only run once for each cantalon
 	private static void setUp(CANTalon tal) {
-		tal.changeControlMode(ControlMode.PercentVbus);
+		tal.changeControlMode(ControlMode.Position);
 		tal.setFeedbackDevice(FeedbackDevice.QuadEncoder);
 		tal.setPosition(0);
 		tal.enableControl();
@@ -75,6 +89,18 @@ public class Motor {
 			frontRight.changeControlMode(MODE_POSITION);
 			backRight.changeControlMode(ControlMode.Follower);
 		}
+	}
+	
+	public static void moveGrapplerArmMotor(int value){
+		arm.set(value);
+	}
+	
+	public static void moveGrapplerElevatorMotor(int value){
+		elevator.set(value);
+	}
+	
+	public static void moveGrapplerMotor(int value){
+		grappler.set(value);
 	}
 
 	// create additional move methods using the below format
