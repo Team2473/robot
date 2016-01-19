@@ -11,9 +11,20 @@ import org.json.JSONObject;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.*;
+import edu.wpi.first.wpilibj.livewindow.LiveWindow;
+
 //random change
 public class Vision {
-
+	
+	static CameraServer server;
+	
+	public static void cameraInit() {
+        server = CameraServer.getInstance();
+        server.setQuality(50);
+        //the camera name (ex "cam0") can be found through the roborio web interface
+        server.startAutomaticCapture("cam3");
+   }
 }
 
 class TCPSocket {
@@ -120,4 +131,5 @@ class TCPSocket {
 		
 		SmartDashboard.putString("DB/String 3", "" + joy1.getX());
 	}
+
 }

@@ -18,13 +18,10 @@ public class Robot extends IterativeRobot {
      * used for any initialization code.
      */
 	
-	CameraServer server;
+	
 	
     public void robotInit() {
-         server = CameraServer.getInstance();
-         server.setQuality(50);
-         //the camera name (ex "cam0") can be found through the roborio web interface
-         server.startAutomaticCapture("cam3");
+         Vision.cameraInit();
     }
     
     /**
