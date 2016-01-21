@@ -49,12 +49,7 @@ public class Robot extends IterativeRobot {
      * This function is called periodically during operator control
      */
     public void teleopPeriodic() {
-    	SmartDashboard.putString("DB/String 6", "XL; " + Controller.getInstance().getXL() );
-    	SmartDashboard.putString("DB/String 7", "XR; " + Controller.getInstance().getXR() );
-    	SmartDashboard.putString("DB/String 8", "YL; " + Controller.getInstance().getYL() );
-    	SmartDashboard.putString("DB/String 9", "YR; " + Controller.getInstance().getYR() );
-    	SmartDashboard.putString("DB/String 1", "b12 " + Controller.getInstance().getButton(12) );
-    	SmartDashboard.putString("DB/String 2", "b11 " + Controller.getInstance().getButton(11) );
+    	
     }
     
     /**
