@@ -3,6 +3,7 @@ package org.usfirst.frc.team2473.robot;
 import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.CANTalon.ControlMode;
 import edu.wpi.first.wpilibj.CANTalon.FeedbackDevice;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Motor {
 	private static CANTalon frontRight;
@@ -16,6 +17,7 @@ public class Motor {
 	// add addition cantalons as they are added to robot
 	public static final ControlMode MODE_POWER = ControlMode.PercentVbus;
 	public static final ControlMode MODE_POSITION = ControlMode.Position;
+	public static final ControlMode MODE_FOLLOWER = ControlMode.Follower;
 
 	// add more modes as necessary
 
@@ -46,11 +48,12 @@ public class Motor {
 	private static void setUp(CANTalon tal) {
 		tal.changeControlMode(ControlMode.Position);
 		tal.setFeedbackDevice(FeedbackDevice.QuadEncoder);
+		tal.setPID(.1,0,0); //test pid values
 		tal.setPosition(0);
 		tal.enableControl();
 	}
 
-	public static void moveLeftSideMotors(int value) {
+	public static void moveLeftSideMotors(double value) {
 		if(frontLeft.getControlMode() == MODE_POWER){
 			frontLeft.set(value);
 			backLeft.set(value);
@@ -58,6 +61,7 @@ public class Motor {
 			frontLeft.set(value);
 			backLeft.set(2);//frontleft integer id
 		}
+		SmartDashboard.putString("DB/String 2", "FL: " + frontLeft.getEncPosition() );
 	}
 
 	public static void setLeftSideMotorsMode(ControlMode mode) {
@@ -70,15 +74,16 @@ public class Motor {
 		}
 	}
 
-	public static void moveRightSideMotors(int value) {
+	public static void moveRightSideMotors(double value) {
 		if(frontRight.getControlMode() == MODE_POWER){
-			frontRight.set(value);
-			backRight.set(value);
+			frontRight.set(-value);
+			backRight.set(-value);
 		}else if(frontRight.getControlMode() == MODE_POSITION){
 			frontRight.set(value);
 			backRight.set(3);//frontright integer id
 		}
-
+		
+		SmartDashboard.putString("DB/String 3", "FR: " + frontRight.getEncPosition() );
 	}
 
 	public static void setRightSideMotorsMode(ControlMode mode) {
@@ -87,19 +92,24 @@ public class Motor {
 			backRight.changeControlMode(mode);
 		} else if (mode == MODE_POSITION) {
 			frontRight.changeControlMode(MODE_POSITION);
+			frontRight.reverseOutput(true);
 			backRight.changeControlMode(ControlMode.Follower);
+			backRight.reverseOutput(true);
 		}
+		
+		
 	}
+
 	
-	public static void moveGrapplerArmMotor(int value){
+	public static void moveGrapplerArmMotor(double value){
 		arm.set(value);
 	}
 	
-	public static void moveGrapplerElevatorMotor(int value){
+	public static void moveGrapplerElevatorMotor(double value){
 		elevator.set(value);
 	}
 	
-	public static void moveGrapplerMotor(int value){
+	public static void moveGrapplerMotor(double value){
 		grappler.set(value);
 	}
 
