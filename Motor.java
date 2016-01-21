@@ -94,7 +94,8 @@ public class Motor {
 	//potentiometer: incomplete
 	private static void setUpShooterLever(CANTalon tal) {
 		tal.changeControlMode(ControlMode.Voltage);
-		//tal.setFeedbackDevice(FeedbackDevice.QuadEncoder);
+		tal.setFeedBackDevice(FeedbackDevice.AnalogPot);
+		tal.setPID(.1,0,0); //test pid values
 		tal.setPosition(0);
 		tal.enableControl();
 	}
