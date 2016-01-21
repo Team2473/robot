@@ -38,28 +38,9 @@ public class Controller {
 	
 	
 	//buttons joystick 2
-	public boolean button5(){
-		return joy2.getRawButton(5);
-	}
-	public boolean button3(){
-		return joy2.getRawButton(3);
-	}
-	public boolean button4(){
-		return joy2.getRawButton(4);
-	}
-	public boolean button6(){
-		return joy2.getRawButton(6);
-	}
-	public boolean button2(){
-		return joy2.getRawButton(2);
-	}
-	public boolean button11(){
-		return joy2.getRawButton(11);
-	}
-	public boolean button12(){
-		return joy2.getRawButton(12);
-	}
-	
+	public boolean getButton(int b){
+		return joy2.getRawButton(b);
+	}	
 	
 	
 	
