@@ -30,10 +30,10 @@ public class Controller {
 		return joy1.getRawAxis(2);
 	}
 	public double getYL(){
-		return joy1.getRawAxis(1);
+		return -joy1.getRawAxis(1);
 	}
 	public double getYR(){
-		return joy1.getRawAxis(3);
+		return -joy1.getRawAxis(3);
 	}
 	
 	
