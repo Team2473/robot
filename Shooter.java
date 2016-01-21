@@ -11,8 +11,21 @@ public class Shooter {
 		SmartDashboard.putString("DB/String 0", "Potentiometer" + pot.get());			
 	}
 	
-	public static void pickUp(){
-		moveShooterLever(0.5); //potentiometer value
-		
+	public void pickUp(){
+		moveShooterLever(0.5); //potentiometer value, ground level
+		//need to add while loop using lidar
+		spinShooter(0.5); //speed value
+		moveShooterLever(0.2); //carrying position
+	}
+	
+	public void spitOut(){
+		moveShooterLever(0.5); //ground level
+		spinShooter(-0.5);
+	}
+	
+	//reset after spitting out ball
+	public void reset(){
+		spinShooter(0); 
+		moveShooterLever(0); //up position
 	}
 }
