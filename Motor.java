@@ -14,15 +14,11 @@ public class Motor {
 	private static CANTalon arm;		//the motor to move the arm into position
 	private static CANTalon elevator;	//the motor to extend the arm
 	private static CANTalon grappler;	//the motor to grab onto the rung and pull up
-<<<<<<< HEAD
+
 	private static CANTalon shooterLever; //pick up arm for shooter
 	private static CANTalon spinner1; //spinners to grab ball
 	private static CANTalon spinner2;
-=======
-	private static CANTalon shooterArm;
-	private static CANTalon spinLeft;
-	private static CANTalon spinRight;
->>>>>>> origin/Motor
+
 	// add addition cantalons as they are added to robot
 	public static final ControlMode MODE_POWER = ControlMode.PercentVbus;
 	public static final ControlMode MODE_POSITION = ControlMode.Position;
@@ -40,46 +36,75 @@ public class Motor {
 		arm = new CANTalon(0);
 		elevator = new CANTalon(0);
 		grappler = new CANTalon(0);
-<<<<<<< HEAD
+
 		shooterLever = new CANTalon(0);
 		spinner1 = new CANTalon(0);
 		spinner2 = new CANTalon(0);
-=======
-		shooterArm = new CANTalon(0);
-		spinLeft = new CANTalon(0);
-		spinRight = new CANTalon(0);
->>>>>>> origin/Motor
+
+		setUpDriveMotors(frontRight);
+		setUpDriveMotors(frontLeft);
+		setUpDriveMotors(backRight);
+		setUpDriveMotors(backLeft);
 		
-		setUp(frontRight);
-		setUp(frontLeft);
-		setUp(backRight);
-		setUp(backLeft);
-		
-		setUp(arm);
-		setUp(elevator);
-		setUp(grappler);
-<<<<<<< HEAD
-		setUp(shooterLever);
-		setUp(spinner1);
-		setUp(spinner2);
-=======
-		setUp(shooterArm);
-		setUp(spinLeft);
-		setUp(spinRight);
->>>>>>> origin/Motor
+		setUpArm(arm);
+		setUpElevator(elevator);
+		setUpGrappler(grappler);
+
+		setUpShooterLever(shooterLever);
+		setUpSpinners(spinner1);
+		setUpSpinners(spinner2);
 		// add addition cantalons as they are added to robot
 
 	}
 
 	// Should only run once for each cantalon
-	private static void setUp(CANTalon tal) {
+	private static void setUpDriveMotors(CANTalon tal) {
 		tal.changeControlMode(ControlMode.Position);
 		tal.setFeedbackDevice(FeedbackDevice.QuadEncoder);
 		tal.setPID(.1,0,0); //test pid values
 		tal.setPosition(0);
 		tal.enableControl();
 	}
-
+	
+	private static void setUpArm(CANTalon tal) {
+		tal.changeControlMode(ControlMode.Position);
+		tal.setFeedbackDevice(FeedbackDevice.QuadEncoder);
+		tal.setPID(.1,0,0); //test pid values
+		tal.setPosition(0);
+		tal.enableControl();
+	}
+	
+	private static void setUpElevator(CANTalon tal) {
+		tal.changeControlMode(ControlMode.Position);
+		tal.setFeedbackDevice(FeedbackDevice.QuadEncoder);
+		tal.setPID(.1,0,0); //test pid values
+		tal.setPosition(0);
+		tal.enableControl();
+	}
+	
+	private static void setUpGrappler(CANTalon tal) {
+		tal.changeControlMode(ControlMode.Position);
+		tal.setFeedbackDevice(FeedbackDevice.QuadEncoder);
+		tal.setPID(.1,0,0); //test pid values
+		tal.setPosition(0);
+		tal.enableControl();
+	}
+	
+	
+	//potentiometer: incomplete
+	private static void setUpShooterLever(CANTalon tal) {
+		tal.changeControlMode(ControlMode.Voltage);
+		//tal.setFeedbackDevice(FeedbackDevice.QuadEncoder);
+		tal.setPosition(0);
+		tal.enableControl();
+	}
+	
+	private static void setUpSpinners(CANTalon tal) {
+		tal.changeControlMode(ControlMode.PercentVbus);
+		tal.setPosition(0);
+		tal.enableControl();
+	}
+	
 	public static void moveLeftSideMotors(double value) {
 		if(frontLeft.getControlMode() == MODE_POWER){
 			frontLeft.set(value);
@@ -120,12 +145,7 @@ public class Motor {
 			backRight.changeControlMode(mode);
 		} else if (mode == MODE_POSITION) {
 			frontRight.changeControlMode(MODE_POSITION);
-<<<<<<< HEAD
 			frontRight.reverseOutput(true);
-=======
-			//set pid for front right
-			//CANTalon.reverseOutput for front right and test if needed for front back
->>>>>>> origin/Motor
 			backRight.changeControlMode(ControlMode.Follower);
 			backRight.reverseOutput(true);
 		}
@@ -146,34 +166,14 @@ public class Motor {
 		grappler.set(value);
 	}
 	
-<<<<<<< HEAD
-	public static void moveShooterLever(int value){
+	public static void moveShooterLever(double value){
 		shooterLever.set(value);
 	}
 	
-	public static void spinShooter(int value){ //runs on speed
-		spinner1.changeControlMode(MODE_POWER);
-		spinner2.changeControlMode(MODE_POWER);
+	public static void spinShooter(double value){ //runs on speed
 		spinner1.set(value);
 		spinner2.set(value);
 	}
-=======
-	public static void moveShooterArm(double value){
-		shooterArm.set(value);
-	}
-	
-	public static void moveSpinLeft(double value){
-		spinLeft.changeControlMode(MODE_POWER);
-		spinLeft.set(value);
-	}
-	
-	public static void moveSpinRight(double value){
-		spinRight.changeControlMode(MODE_POWER);
-		spinRight.set(value);
-	}
-	
-	
->>>>>>> origin/Motor
 
 	// create additional move methods using the below format
 	/*
