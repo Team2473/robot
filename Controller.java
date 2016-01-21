@@ -12,12 +12,23 @@ public class Controller {
 		joy2 = new Joystick(1); //adjust?
 	}
 	
-	public double getX(){
-		return joy1.getX();
+	//drive joystick controls
+	public double getXL(){
+		return joy1.getRawAxis(0);
 	}
-	public double getY(){
-		return joy1.getY();
+	public double getXR(){
+		return joy1.getRawAxis(2);
 	}
+	public double getYL(){
+		return joy1.getRawAxis(1);
+	}
+	public double getYR(){
+		return joy1.getRawAxis(3);
+	}
+	
+	
+	//buttons
+	
 	
 	
 }
