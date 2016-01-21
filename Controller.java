@@ -7,10 +7,20 @@ public class Controller {
 	Joystick joy1;
 	Joystick joy2;
 	
-	public Controller(){
+	private static Controller controller = null;
+	
+	private Controller(){
 		joy1 = new Joystick(0); //adjust?
 		joy2 = new Joystick(1); //adjust?
 	}
+	public static Controller getInstance(){
+		if(controller == null){
+			controller = new Controller();
+		}
+		return controller;
+	}
+	
+
 	
 	//drive joystick 1 controls
 	public double getXL(){
