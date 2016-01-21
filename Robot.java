@@ -41,10 +41,7 @@ public class Robot extends IterativeRobot {
      * This function is called once each time the robot enters tele-operated mode
      */
     public void teleopInit(){
-    	SmartDashboard.putString("DB/String 6", "XL; " + Controller.getInstance().getXL() );
-    	SmartDashboard.putString("DB/String 7", "XR; " + Controller.getInstance().getXR() );
-    	SmartDashboard.putString("DB/String 8", "YL; " + Controller.getInstance().getYL() );
-    	SmartDashboard.putString("DB/String 9", "YR; " + Controller.getInstance().getYR() );
+ 
     	
     }
     
@@ -52,7 +49,14 @@ public class Robot extends IterativeRobot {
      * This function is called periodically during operator control
      */
     public void teleopPeriodic() {
-    	
+    	SmartDashboard.putString("DB/String 6", "XL; " + Controller.getInstance().getXL() );
+    	SmartDashboard.putString("DB/String 7", "XR; " + Controller.getInstance().getXR() );
+    	SmartDashboard.putString("DB/String 8", "YL; " + Controller.getInstance().getYL() );
+    	SmartDashboard.putString("DB/String 9", "YR; " + Controller.getInstance().getYR() );
+    	SmartDashboard.putString("DB/String 1", "button5; " + Controller.getInstance().button5());
+    	SmartDashboard.putString("DB/String 2", "button3 " + Controller.getInstance().button3());
+    	SmartDashboard.putString("DB/String 3", "button4; " + Controller.getInstance().button4());
+    	SmartDashboard.putString("DB/String 4", "button6; " + Controller.getInstance().button6());
     }
     
     /**
