@@ -53,10 +53,8 @@ public class Robot extends IterativeRobot {
     	SmartDashboard.putString("DB/String 7", "XR; " + Controller.getInstance().getXR() );
     	SmartDashboard.putString("DB/String 8", "YL; " + Controller.getInstance().getYL() );
     	SmartDashboard.putString("DB/String 9", "YR; " + Controller.getInstance().getYR() );
-    	SmartDashboard.putString("DB/String 1", "button5; " + Controller.getInstance().button5());
-    	SmartDashboard.putString("DB/String 2", "button3 " + Controller.getInstance().button3());
-    	SmartDashboard.putString("DB/String 3", "button4; " + Controller.getInstance().button4());
-    	SmartDashboard.putString("DB/String 4", "button6; " + Controller.getInstance().button6());
+    	SmartDashboard.putString("DB/String 1", "b12 " + Controller.getInstance().getButton(12) );
+    	SmartDashboard.putString("DB/String 2", "b11 " + Controller.getInstance().getButton(11) );
     }
     
     /**
