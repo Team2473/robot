@@ -13,9 +13,15 @@ public class Motor {
 	private static CANTalon arm;		//the motor to move the arm into position
 	private static CANTalon elevator;	//the motor to extend the arm
 	private static CANTalon grappler;	//the motor to grab onto the rung and pull up
+<<<<<<< HEAD
 	private static CANTalon shooterLever; //pick up arm for shooter
 	private static CANTalon spinner1; //spinners to grab ball
 	private static CANTalon spinner2;
+=======
+	private static CANTalon shooterArm;
+	private static CANTalon spinLeft;
+	private static CANTalon spinRight;
+>>>>>>> origin/Motor
 	// add addition cantalons as they are added to robot
 	public static final ControlMode MODE_POWER = ControlMode.PercentVbus;
 	public static final ControlMode MODE_POSITION = ControlMode.Position;
@@ -32,9 +38,15 @@ public class Motor {
 		arm = new CANTalon(0);
 		elevator = new CANTalon(0);
 		grappler = new CANTalon(0);
+<<<<<<< HEAD
 		shooterLever = new CANTalon(0);
 		spinner1 = new CANTalon(0);
 		spinner2 = new CANTalon(0);
+=======
+		shooterArm = new CANTalon(0);
+		spinLeft = new CANTalon(0);
+		spinRight = new CANTalon(0);
+>>>>>>> origin/Motor
 		
 		setUp(frontRight);
 		setUp(frontLeft);
@@ -44,9 +56,15 @@ public class Motor {
 		setUp(arm);
 		setUp(elevator);
 		setUp(grappler);
+<<<<<<< HEAD
 		setUp(shooterLever);
 		setUp(spinner1);
 		setUp(spinner2);
+=======
+		setUp(shooterArm);
+		setUp(spinLeft);
+		setUp(spinRight);
+>>>>>>> origin/Motor
 		// add addition cantalons as they are added to robot
 
 	}
@@ -59,7 +77,7 @@ public class Motor {
 		tal.enableControl();
 	}
 
-	public static void moveLeftSideMotors(int value) {
+	public static void moveLeftSideMotors(double value) {
 		if(frontLeft.getControlMode() == MODE_POWER){
 			frontLeft.set(value);
 			backLeft.set(value);
@@ -75,14 +93,15 @@ public class Motor {
 			backLeft.changeControlMode(mode);
 		} else if (mode == MODE_POSITION) {
 			frontLeft.changeControlMode(MODE_POSITION);
+			//set pid for front left
 			backLeft.changeControlMode(ControlMode.Follower);
 		}
 	}
 
-	public static void moveRightSideMotors(int value) {
+	public static void moveRightSideMotors(double value) {
 		if(frontRight.getControlMode() == MODE_POWER){
-			frontRight.set(value);
-			backRight.set(value);
+			frontRight.set(-value);
+			backRight.set(-value);
 		}else if(frontRight.getControlMode() == MODE_POSITION){
 			frontRight.set(value);
 			backRight.set(3);//frontright integer id
@@ -96,22 +115,25 @@ public class Motor {
 			backRight.changeControlMode(mode);
 		} else if (mode == MODE_POSITION) {
 			frontRight.changeControlMode(MODE_POSITION);
+			//set pid for front right
+			//CANTalon.reverseOutput for front right and test if needed for front back
 			backRight.changeControlMode(ControlMode.Follower);
 		}
 	}
 	
-	public static void moveGrapplerArmMotor(int value){
+	public static void moveGrapplerArmMotor(double value){
 		arm.set(value);
 	}
 	
-	public static void moveGrapplerElevatorMotor(int value){
+	public static void moveGrapplerElevatorMotor(double value){
 		elevator.set(value);
 	}
 	
-	public static void moveGrapplerMotor(int value){
+	public static void moveGrapplerMotor(double value){
 		grappler.set(value);
 	}
 	
+<<<<<<< HEAD
 	public static void moveShooterLever(int value){
 		shooterLever.set(value);
 	}
@@ -122,6 +144,23 @@ public class Motor {
 		spinner1.set(value);
 		spinner2.set(value);
 	}
+=======
+	public static void moveShooterArm(double value){
+		shooterArm.set(value);
+	}
+	
+	public static void moveSpinLeft(double value){
+		spinLeft.changeControlMode(MODE_POWER);
+		spinLeft.set(value);
+	}
+	
+	public static void moveSpinRight(double value){
+		spinRight.changeControlMode(MODE_POWER);
+		spinRight.set(value);
+	}
+	
+	
+>>>>>>> origin/Motor
 
 	// create additional move methods using the below format
 	/*
