@@ -13,6 +13,9 @@ public class Motor {
 	private static CANTalon arm;		//the motor to move the arm into position
 	private static CANTalon elevator;	//the motor to extend the arm
 	private static CANTalon grappler;	//the motor to grab onto the rung and pull up
+	private static CANTalon shooterArm;
+	private static CANTalon spinLeft;
+	private static CANTalon spinRight;
 	// add addition cantalons as they are added to robot
 	public static final ControlMode MODE_POWER = ControlMode.PercentVbus;
 	public static final ControlMode MODE_POSITION = ControlMode.Position;
@@ -29,6 +32,9 @@ public class Motor {
 		arm = new CANTalon(0);
 		elevator = new CANTalon(0);
 		grappler = new CANTalon(0);
+		shooterArm = new CANTalon(0);
+		spinLeft = new CANTalon(0);
+		spinRight = new CANTalon(0);
 		
 		setUp(frontRight);
 		setUp(frontLeft);
@@ -38,6 +44,9 @@ public class Motor {
 		setUp(arm);
 		setUp(elevator);
 		setUp(grappler);
+		setUp(shooterArm);
+		setUp(spinLeft);
+		setUp(spinRight);
 		// add addition cantalons as they are added to robot
 
 	}
@@ -105,6 +114,22 @@ public class Motor {
 	public static void moveGrapplerMotor(double value){
 		grappler.set(value);
 	}
+	
+	public static void moveShooterArm(double value){
+		shooterArm.set(value);
+	}
+	
+	public static void moveSpinLeft(double value){
+		spinLeft.changeControlMode(MODE_POWER);
+		spinLeft.set(value);
+	}
+	
+	public static void moveSpinRight(double value){
+		spinRight.changeControlMode(MODE_POWER);
+		spinRight.set(value);
+	}
+	
+	
 
 	// create additional move methods using the below format
 	/*
