@@ -23,18 +23,17 @@ public class Controller {
 
 	
 	//drive joystick 1 controls
-		
 	public double getXL(){
-		return joy1.getX();
+		return joy1.getRawAxis(0);
 	}
 	public double getXR(){
-		return joy1.getY();
+		return joy1.getRawAxis(2);
 	}
 	public double getYL(){
-		return joy1.getZ();
+		return joy1.getRawAxis(1);
 	}
 	public double getYR(){
-		return joy1.getThrottle();
+		return joy1.getRawAxis(3);
 	}
 	
 	
