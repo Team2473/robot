@@ -11,14 +11,6 @@ public class Motor {
 	private static CANTalon backRight;
 	private static CANTalon backLeft;
 	
-	private static CANTalon arm;		//the motor to move the arm into position
-	private static CANTalon elevator;	//the motor to extend the arm
-	private static CANTalon grappler;	//the motor to grab onto the rung and pull up
-
-	private static CANTalon shooterLever; //pick up arm for shooter
-	private static CANTalon spinner1; //spinners to grab ball
-	private static CANTalon spinner2;
-
 	// add addition cantalons as they are added to robot
 	public static final ControlMode MODE_POWER = ControlMode.PercentVbus;
 	public static final ControlMode MODE_POSITION = ControlMode.Position;
@@ -33,26 +25,12 @@ public class Motor {
 		backLeft = new CANTalon(5);
 		
 		//test ids
-		arm = new CANTalon(0);
-		elevator = new CANTalon(0);
-		grappler = new CANTalon(0);
-
-		shooterLever = new CANTalon(0);
-		spinner1 = new CANTalon(0);
-		spinner2 = new CANTalon(0);
 
 		setUpDriveMotors(frontRight);
 		setUpDriveMotors(frontLeft);
 		setUpDriveMotors(backRight);
 		setUpDriveMotors(backLeft);
-		
-		setUpArm(arm);
-		setUpElevator(elevator);
-		setUpGrappler(grappler);
 
-		setUpShooterLever(shooterLever);
-		setUpSpinners(spinner1);
-		setUpSpinners(spinner2);
 		// add addition cantalons as they are added to robot
 
 	}
@@ -122,7 +100,6 @@ public class Motor {
 			backLeft.changeControlMode(mode);
 		} else if (mode == MODE_POSITION) {
 			frontLeft.changeControlMode(MODE_POSITION);
-			//set pid for front left
 			backLeft.changeControlMode(ControlMode.Follower);
 		}
 	}
@@ -151,28 +128,6 @@ public class Motor {
 		}
 		
 		
-	}
-
-	
-	public static void moveGrapplerArmMotor(double value){
-		arm.set(value);
-	}
-	
-	public static void moveGrapplerElevatorMotor(double value){
-		elevator.set(value);
-	}
-	
-	public static void moveGrapplerMotor(double value){
-		grappler.set(value);
-	}
-	
-	public static void moveShooterLever(double value){
-		shooterLever.set(value);
-	}
-	
-	public static void spinShooter(double value){ //runs on speed
-		spinner1.set(value);
-		spinner2.set(value);
 	}
 
 	// create additional move methods using the below format
