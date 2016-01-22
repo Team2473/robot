@@ -4,6 +4,7 @@ import edu.wpi.first.wpilibj.Joystick;
 
 public class Controller {
 	
+
 	Joystick joy1;
 	Joystick joy2;
 	
