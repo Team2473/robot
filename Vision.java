@@ -38,7 +38,7 @@ public class Vision {
         NIVision.IMAQdxConfigureGrab(session);
         
         //create rectangle
-        rect = new NIVision.Rect(10, 10, 100, 100);
+        rect = new NIVision.Rect(50, 100, 100, 200);
         
         //start accquisition
         NIVision.IMAQdxStartAcquisition(session);
@@ -52,7 +52,7 @@ public class Vision {
 
             NIVision.IMAQdxGrab(session, frame, 1);
             NIVision.imaqDrawShapeOnImage(frame, frame, rect,
-                    DrawMode.DRAW_VALUE, ShapeMode.SHAPE_OVAL, 0.0f);
+                    DrawMode.DRAW_VALUE, ShapeMode.SHAPE_RECT, 0.0f);
             
             CameraServer.getInstance().setImage(frame);
     }
