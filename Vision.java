@@ -25,11 +25,11 @@ import edu.wpi.first.wpilibj.Timer;
 
 //random change
 public class Vision {
-	int session;
-    Image frame;
-    NIVision.Rect rect;
+	static int session;
+    static Image frame;
+    static NIVision.Rect rect;
 
-    public Vision() {
+    public static void visionInit() {
         frame = NIVision.imaqCreateImage(NIVision.ImageType.IMAGE_RGB, 0);
 
         // the camera name (ex "cam0") can be found through the roborio web interface
@@ -44,7 +44,7 @@ public class Vision {
         NIVision.IMAQdxStartAcquisition(session);
     }
 
-    public void teleop() {
+    public static void updateDashboard() {
         /**
          * grab an image, draw the circle, and provide it for the camera server
          * which will in turn send it to the dashboard.
