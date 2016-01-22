@@ -2,6 +2,7 @@ package org.usfirst.frc.team2473.robot;
 
 import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.CANTalon.ControlMode;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class TeleOp {
 	
@@ -31,7 +32,13 @@ public class TeleOp {
 		}else{
 			Motor.getInstance().moveRightSideMotors(0);
 		}
+		
+		SmartDashboard.putString("DB/String 6", "LY: " + leftY);
+		SmartDashboard.putString("DB/String 7", "RY: " + rightY);
 	}
+	
+	private static int leftEnc;
+	private static int rightEnc;
 	
 	public static void runPosition(){
 		if(currentMode != Motor.MODE_POSITION){
@@ -39,6 +46,25 @@ public class TeleOp {
 			
 			Motor.getInstance().setLeftSideMotorsMode(currentMode);
 			Motor.getInstance().setRightSideMotorsMode(currentMode);
+			
+			leftEnc = 0;
+			rightEnc = 0;
+			Motor.getInstance().resetDriveEncoders();
 		}
+		
+		double leftY = Controller.getInstance().getYL();
+		double rightY = Controller.getInstance().getYR();
+		
+		if(Math.abs(leftY)>deadZone){
+			leftEnc += leftY*200;
+		}
+		
+		if(Math.abs(rightY)>deadZone){
+			rightEnc += rightY*200;
+		}
+		
+		Motor.getInstance().moveLeftSideMotors(leftEnc);
+		Motor.getInstance().moveRightSideMotors(rightEnc);
+		
 	}
 }
