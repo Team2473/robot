@@ -6,25 +6,26 @@ import edu.wpi.first.wpilibj.CANTalon.FeedbackDevice;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Motor {
-	private static CANTalon frontRight;
-	private static CANTalon frontLeft;
-	private static CANTalon backRight;
-	private static CANTalon backLeft;
-	
+	private CANTalon frontRight;
+	private CANTalon frontLeft;
+	private CANTalon backRight;
+	private CANTalon backLeft;
+
 	// add addition cantalons as they are added to robot
 	public static final ControlMode MODE_POWER = ControlMode.PercentVbus;
 	public static final ControlMode MODE_POSITION = ControlMode.Position;
 	public static final ControlMode MODE_FOLLOWER = ControlMode.Follower;
 
 	// add more modes as necessary
-
-	public static void motorInit() {
+	private static Motor motor = null;
+	
+	private Motor() {
 		frontRight = new CANTalon(3);
 		frontLeft = new CANTalon(2);
 		backRight = new CANTalon(4);
 		backLeft = new CANTalon(5);
-		
-		//test ids
+
+		// test ids
 
 		setUpDriveMotors(frontRight);
 		setUpDriveMotors(frontLeft);
@@ -35,28 +36,35 @@ public class Motor {
 
 	}
 
+	public static Motor getInstance(){
+		if(motor == null){
+			motor = new Motor();
+		}
+		return motor;
+	}
+	
 	// Should only run once for each cantalon
-	private static void setUpDriveMotors(CANTalon tal) {
+	private void setUpDriveMotors(CANTalon tal) {
 		tal.changeControlMode(ControlMode.Position);
 		tal.setFeedbackDevice(FeedbackDevice.QuadEncoder);
-		tal.setPID(.1,0,0); //test pid values
+		tal.setPID(.1, 0, 0); // test pid values
 		tal.setPosition(0);
 		tal.enableControl();
 	}
-	
-	
-	public static void moveLeftSideMotors(double value) {
-		if(frontLeft.getControlMode() == MODE_POWER){
+
+	public void moveLeftSideMotors(double value) {
+		if (frontLeft.getControlMode() == MODE_POWER) {
 			frontLeft.set(value);
 			backLeft.set(value);
-		}else if(frontLeft.getControlMode() == MODE_POSITION){
+		} else if (frontLeft.getControlMode() == MODE_POSITION) {
 			frontLeft.set(value);
-			backLeft.set(2);//frontleft integer id
+			backLeft.set(2);// frontleft integer id
 		}
-		SmartDashboard.putString("DB/String 2", "FL: " + frontLeft.getEncPosition() );
+		SmartDashboard.putString("DB/String 2",
+				"FL: " + frontLeft.getEncPosition());
 	}
 
-	public static void setLeftSideMotorsMode(ControlMode mode) {
+	public void setLeftSideMotorsMode(ControlMode mode) {
 		if (mode == MODE_POWER) {
 			frontLeft.changeControlMode(mode);
 			backLeft.changeControlMode(mode);
@@ -66,19 +74,20 @@ public class Motor {
 		}
 	}
 
-	public static void moveRightSideMotors(double value) {
-		if(frontRight.getControlMode() == MODE_POWER){
+	public void moveRightSideMotors(double value) {
+		if (frontRight.getControlMode() == MODE_POWER) {
 			frontRight.set(-value);
 			backRight.set(-value);
-		}else if(frontRight.getControlMode() == MODE_POSITION){
+		} else if (frontRight.getControlMode() == MODE_POSITION) {
 			frontRight.set(value);
-			backRight.set(3);//frontright integer id
+			backRight.set(3);// frontright integer id
 		}
-		
-		SmartDashboard.putString("DB/String 3", "FR: " + frontRight.getEncPosition() );
+
+		SmartDashboard.putString("DB/String 3",
+				"FR: " + frontRight.getEncPosition());
 	}
 
-	public static void setRightSideMotorsMode(ControlMode mode) {
+	public void setRightSideMotorsMode(ControlMode mode) {
 		if (mode == MODE_POWER) {
 			frontRight.changeControlMode(mode);
 			backRight.changeControlMode(mode);
@@ -88,27 +97,20 @@ public class Motor {
 			backRight.changeControlMode(ControlMode.Follower);
 			backRight.reverseOutput(true);
 		}
-		
-		
+
 	}
 
 	// create additional move methods using the below format
 	/*
-	public static void moveSAMPLE_MOTORMotors(ControlMode mode, int value) {
-		if(SAMPLE_MOTOR.getControlMode() == MODE_POWER){
-			SAMPLE_MOTOR.set(value);
-		}else if(SAMPLE_MOTOR.getControlMode() == MODE_POSITION){
-			SAMPLE_MOTOR.set(value);
-		}
-
-	}
-
-	public static void setSAMPLE_MOTORMotorsMode(ControlMode mode) {
-		if (mode == MODE_POWER) {
-			SAMPLE_MOTOR.changeControlMode(mode);
-		} else if (mode == MODE_POSITION) {
-			SAMPLE_MOTOR.changeControlMode(MODE_POSITION);
-		}
-	}
+	 * public void moveSAMPLE_MOTORMotors(ControlMode mode, int value) {
+	 * if(SAMPLE_MOTOR.getControlMode() == MODE_POWER){ SAMPLE_MOTOR.set(value);
+	 * }else if(SAMPLE_MOTOR.getControlMode() == MODE_POSITION){
+	 * SAMPLE_MOTOR.set(value); }
+	 * 
+	 * }
+	 * 
+	 * public void setSAMPLE_MOTORMotorsMode(ControlMode mode) { if (mode ==
+	 * MODE_POWER) { SAMPLE_MOTOR.changeControlMode(mode); } else if (mode ==
+	 * MODE_POSITION) { SAMPLE_MOTOR.changeControlMode(MODE_POSITION); } }
 	 */
 }
