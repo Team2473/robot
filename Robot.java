@@ -42,8 +42,7 @@ public class Robot extends IterativeRobot {
      * This function is called once each time the robot enters tele-operated mode
      */
     public void teleopInit(){
-    	Motor.getInstance().setLeftSideMotorsMode(Motor.MODE_POWER);
-    	Motor.getInstance().setRightSideMotorsMode(Motor.MODE_POWER);
+
     	
     }
     
@@ -51,8 +50,9 @@ public class Robot extends IterativeRobot {
      * This function is called periodically during operator control
      */
     public void teleopPeriodic() {
-    	Motor.getInstance().moveLeftSideMotors(.2);
-    	Motor.getInstance().moveRightSideMotors(.2);
+
+    	TeleOp.runPosition();
+
     }
     
     /**

@@ -25,7 +25,6 @@ public class Motor {
 	public static final ControlMode MODE_FOLLOWER = ControlMode.Follower;
 
 	// add more modes as necessary
-
 	private static Motor motor = null;
 
 	private Motor() {
@@ -35,6 +34,7 @@ public class Motor {
 		backLeft = new CANTalon(5);
 
 		// test ids
+
 		arm = new CANTalon(0);
 		elevator = new CANTalon(0);
 		grappler = new CANTalon(0);
@@ -69,7 +69,7 @@ public class Motor {
 	private void setUpDriveMotors(CANTalon tal) {
 		tal.changeControlMode(ControlMode.Position);
 		tal.setFeedbackDevice(FeedbackDevice.QuadEncoder);
-		tal.setPID(.1, 0, 0); // test pid values
+		tal.setPID(1, 0, 0); // test pid values
 		tal.setPosition(0);
 		tal.enableControl();
 	}
@@ -158,7 +158,6 @@ public class Motor {
 			backRight.changeControlMode(ControlMode.Follower);
 			backRight.reverseOutput(true);
 		}
-
 	}
 
 	public void moveGrapplerArmMotor(double value) {
@@ -181,6 +180,17 @@ public class Motor {
 		spinner1.set(value);
 		spinner2.set(value);
 	}
+
+
+
+	
+	public void resetDriveEncoders(){
+		frontRight.setPosition(0);
+		frontLeft.setPosition(0);
+		backRight.setPosition(0);
+		backLeft.setPosition(0);
+	}
+
 
 	// create additional move methods using the below format
 	/*
