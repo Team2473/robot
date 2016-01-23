@@ -38,6 +38,7 @@ public class Vision {
         NIVision.IMAQdxConfigureGrab(session);
         
         //create rectangle
+//        rect = new NIVision.Rect(50, 100, 100, 200);
         rect = new NIVision.Rect(50, 100, 100, 200);
         
         //start accquisition
