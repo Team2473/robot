@@ -181,18 +181,16 @@ public class Motor {
 		spinner2.set(value);
 	}
 
-
-	public int getEncoder(CANTalon motor){
+	public int getEncoder(CANTalon motor) {
 		return motor.getEncPosition();
 	}
-	
-	public void resetDriveEncoders(){
+
+	public void resetDriveEncoders() {
 		frontRight.setPosition(0);
 		frontLeft.setPosition(0);
 		backRight.setPosition(0);
 		backLeft.setPosition(0);
 	}
-
 
 	// create additional move methods using the below format
 	/*
