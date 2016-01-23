@@ -182,7 +182,9 @@ public class Motor {
 	}
 
 
-
+	public int getEncoder(CANTalon motor){
+		return motor.getEncPosition();
+	}
 	
 	public void resetDriveEncoders(){
 		frontRight.setPosition(0);
