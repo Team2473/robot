@@ -47,7 +47,7 @@ public class Motor {
 	private void setUpDriveMotors(CANTalon tal) {
 		tal.changeControlMode(ControlMode.Position);
 		tal.setFeedbackDevice(FeedbackDevice.QuadEncoder);
-		tal.setPID(.1, 0, 0); // test pid values
+		tal.setPID(1, 0, 0); // test pid values
 		tal.setPosition(0);
 		tal.enableControl();
 	}
@@ -97,7 +97,13 @@ public class Motor {
 			backRight.changeControlMode(ControlMode.Follower);
 			backRight.reverseOutput(true);
 		}
-
+	}
+	
+	public void resetDriveEncoders(){
+		frontRight.setPosition(0);
+		frontLeft.setPosition(0);
+		backRight.setPosition(0);
+		backLeft.setPosition(0);
 	}
 
 	// create additional move methods using the below format
