@@ -5,10 +5,12 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Shooter {
 
-	private static AnalogPotentiometer pot = new AnalogPotentiometer(0); //channel 0;
+	//private static AnalogPotentiometer pot = new AnalogPotentiometer(0); //channel 0;
+	private static AnalogInput IR = new AnalogInput(1);
 	
 	public static void testPotentiometer(){	
-		SmartDashboard.putString("DB/String 0", "Potentiometer" + pot.get());			
+		//SmartDashboard.putString("DB/String 0", "Potentiometer" + pot.get());		
+		SmartDashboard.putString("DB/String 0", "IR" + IR.getVoltage());
 	}
 	
 	public void pickUp(){
