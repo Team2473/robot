@@ -19,6 +19,7 @@ public class Shooter {
 		else{
 			ballIn = false;
 		}
+		//test
 	}
 	
 	public static void testPotentiometer(){
