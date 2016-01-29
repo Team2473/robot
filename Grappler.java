@@ -6,15 +6,12 @@ import edu.wpi.first.wpilibj.CANTalon.FeedbackDevice;
 
 public class Grappler {
 	
-	//consult with vishal or william over the motor format
 	/*
-	 * check the pull request on github.com for the motor branch
-	 * learn the motor class format in motor class in the motor branch
-	 * write your own motor methods in the motor branch
-	 * only use those methods to move motors
+	 * Current explanation of Grappler:
+	 * 1 or 2 motors to raise the arm with the claw to the bar. The claw does not need
+	 * software to run, and once the claw has grasped the bar, we use the winch to lift 
+	 * the robot. The winch is another single motor not connected to the grappler.
 	 */
-	
-
 
 	public Grappler(){
 		
@@ -26,8 +23,5 @@ public class Grappler {
 		//wait for an input then move motors
 		
 		//temporary values
-		Motor.moveGrapplerArmMotor(2000);
-		Motor.moveGrapplerElevatorMotor(10000);
-		Motor.moveGrappler(2000);
 	}
 }
