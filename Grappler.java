@@ -12,16 +12,29 @@ public class Grappler {
 	 * software to run, and once the claw has grasped the bar, we use the winch to lift 
 	 * the robot. The winch is another single motor not connected to the grappler.
 	 */
-
-	public Grappler(){
+	private static Grappler grappler = null;
+	
+	private Grappler(){
 		
 	}
-	public void teleopInit(){
-		
+	
+	public static Grappler getInstance() {
+		if (grappler == null) {
+			grappler = new Grappler();
+		}
+		return grappler;
 	}
-	public void teleop(){
-		//wait for an input then move motors
-		
-		//temporary values
+	//adjust values for following methods
+	public void moveArmUp() {
+		Motor.getInstance().moveGrapplerArmMotor(100);
+		Motor.getInstance().moveGrapplerElevatorMotor(100);
 	}
+	public void moveArmDown() {
+		Motor.getInstance().moveGrapplerArmMotor(-100);
+		Motor.getInstance().moveGrapplerElevatorMotor(-100);
+	}
+	public void moveWinch(){
+		Motor.getInstance().moveWinchMotor(0);
+	}
+	
 }
