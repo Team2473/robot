@@ -181,7 +181,11 @@ public class Motor {
 		spinner1.set(value);
 		spinner2.set(value);
 	}
-
+	
+	public void testEncoder(){
+		SmartDashboard.putString("DB/String 3",
+				"Enc: " + frontLeft.getEncPosition());
+	}
 	// create additional move methods using the below format
 	/*
 	 * public void moveSAMPLE_MOTORMotors(ControlMode mode, int value) {

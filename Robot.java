@@ -51,8 +51,9 @@ public class Robot extends IterativeRobot {
      * This function is called periodically during operator control
      */
     public void teleopPeriodic() {
-    	Motor.getInstance().moveLeftSideMotors(.2);
-    	Motor.getInstance().moveRightSideMotors(.2);
+    	Motor.getInstance().testEncoder();
+    	//Motor.getInstance().moveLeftSideMotors(.2);
+    	//Motor.getInstance().moveRightSideMotors(.2);
     }
     
     /**
