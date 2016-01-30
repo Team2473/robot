@@ -1,0 +1,6 @@
+INSTALL:
+
+1. Open Chrome
+2. Click the options drop down menu
+3. Under 'more tools' select 'Extensions'
+4. Click 'Load unpacked extensions' and select this directory 'scannable-chrome-app'

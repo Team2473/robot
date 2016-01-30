@@ -1,0 +1,17 @@
+{
+
+  "manifest_version": 2,
+  "name": "Scannable Scan Visualizer",
+  "version": "0.0.1",
+  "app": {
+    "background": {
+      "scripts": ["background.js"]
+    }
+  },
+  "icons": { "16": "imgs/scannable_icon16.png",
+			 "48": "imgs/scannable_icon48.png",
+			 "128": "imgs/scannable_icon128.png" },
+
+
+  "permissions": ["serial"]
+}

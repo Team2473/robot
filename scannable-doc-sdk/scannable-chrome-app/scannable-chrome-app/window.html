@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Scannable</title>
+
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="photon.css">
+    <script type="text/javascript" src="jquery.min.js"></script>
+
+    <!--
+    <style type="text/css">
+      canvas { border: 1px solid black; }
+    </style>
+    -->
+
+  </head>
+
+  <body>
+    <!-- Wrap your entire app inside .window -->
+    <div class="window">
+      <!-- .toolbar-header sits at the top of your app -->
+      <header class="toolbar toolbar-header">
+        <h1 class="title"></h1>
+        <!--<div class="toolbar-actions">
+
+          <div class="btn-group">
+            <button class="btn btn-default">
+              <span class="icon icon-pencil"></span>
+            </button>
+            <button class="btn btn-default">
+              <span class="icon icon-folder"></span>
+            </button>
+            <button class="btn btn-default active">
+              <span class="icon icon-cloud"></span>
+            </button>
+            <button class="btn btn-default">
+              <span class="icon icon-popup"></span>
+            </button>
+            <button class="btn btn-default">
+              <span class="icon icon-shuffle"></span>
+            </button>
+          </div>
+
+          <button class="btn btn-default">
+            <span class="icon icon-home icon-text"></span>
+            Filters
+          </button>
+
+          <button class="btn btn-default btn-dropdown pull-right">
+            <span class="icon icon-menu"></span>
+          </button>
+        </div> -->
+      </header>
+
+      <!-- Your app's content goes inside .window-content -->
+      <div class="window-content">
+        <div class="padded-more">
+
+          <div id="header" style="width:100%;">
+            <img src="imgs/scannable_logo.png" id="scannableLogo" />
+          </div>
+
+          <nav class="nav-group">
+
+            <button id="port-connect" class="btn btn-large btn-default">Connect</button>
+
+
+            <select class="form-control" name="port-selection" id="port-selection">
+            </select>
+
+
+            <button id="startSweep" class="btn btn-large btn-default">Start Sweep</button>
+
+
+            <button id="clearButton" class="btn btn-large btn-default">Clear</button>
+
+          <div class="checkbox">
+
+            <label>
+              <input type="checkbox" name="drawLines" id="drawLines"> Draw on Lines
+            </label>
+
+
+            <label>
+              <input type="checkbox" name="clearOnSweep" id="clearOnSweep"> Clear on Sweep
+            </label>
+
+
+            <label>
+              <input type="checkbox" name="signalStrength" id="signalStrength"> Signal Strength
+            </label>
+
+            <div class="small-1 columns">
+              X Center <input type="range" id = "xcenterRange" name="xcenterRange" value = "500" min ="0" max="1000">
+              </select>
+              <br />
+              Y Center <input type="range" id = "ycenterRange" name="ycenterRange" value = "500" min ="0" max="1000">
+
+            </div>
+
+            <div>
+              Max Distance(cm) <input type="text" name="maxDistance" id="maxDistance" value="400">
+            </div>
+
+            <div>
+              Rotation Speed<input type="range" name="rotationSpeed" id="rotationSpeed" value = "20" min ="15" max="100">
+              <br />
+              <input type="text" name="speedValue" id="speedValue" value = "20" min ="15" max="100">
+            </div>
+          </div>
+        </nav>
+
+        </div>
+
+        <canvas id="canvasRoom" style="display:block;margin-left:auto;margin-right:auto;border:4px solid #c3c3c3;">
+        </canvas>
+      </div>
+    </div>
+    <!--end full container -->
+
+      <script src="app.js"></script>
+  </body>
+</html>
