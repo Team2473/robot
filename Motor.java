@@ -13,7 +13,7 @@ public class Motor {
 
 	private CANTalon arm; // the motor to move the arm into position
 	private CANTalon elevator; // the motor to extend the arm
-	private CANTalon grappler; // the motor to grab onto the rung and pull up
+	private CANTalon winch; // the motor to pull the robot up
 
 	private CANTalon shooterLever; // pick up arm for shooter
 	private CANTalon spinner1; // spinners to grab ball
@@ -37,7 +37,7 @@ public class Motor {
 
 		arm = new CANTalon(0);
 		elevator = new CANTalon(0);
-		grappler = new CANTalon(0);
+		winch = new CANTalon(0);
 
 		shooterLever = new CANTalon(0);
 		spinner1 = new CANTalon(0);
@@ -50,7 +50,7 @@ public class Motor {
 
 		setUpArm(arm);
 		setUpElevator(elevator);
-		setUpGrappler(grappler);
+		setUpGrappler(winch);
 
 		setUpShooterLever(shooterLever);
 		setUpSpinners(spinner1);
@@ -168,8 +168,8 @@ public class Motor {
 		elevator.set(value);
 	}
 
-	public void moveGrapplerMotor(double value) {
-		grappler.set(value);
+	public void moveWinchMotor(double value) {
+		winch.set(value);
 	}
 
 	public void moveShooterLever(double value) {
