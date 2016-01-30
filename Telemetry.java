@@ -1,6 +1,9 @@
 package org.usfirst.frc.team2473.robot;
 
+import java.util.Arrays;
+
 import edu.wpi.first.wpilibj.AnalogInput;
+import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 //import gpdraw.DrawingTool;
 //import gpdraw.SketchPad;
@@ -27,21 +30,32 @@ public class Telemetry {
 	static int pos = 0;
 	
 	public static void ultrasonicValue() {
-		distanceArray[pos] = (gyro1.getValue() * 5) / 25.4;
+		distanceArray[pos] = (ultrasonic1.getValue() * 5) / 25.4;
 		pos = (pos+1)%10;
 		double value = 0;
 		for(int i = 0; i < 10; i++){
 			value +=distanceArray[i];
 		}
 		value /= 10;
-		//value = ((int)((value - 9) * 100))/100.0;
+		value = ((int)((value - 9) * 100))/100.0;
 		SmartDashboard.putString("DB/String 0",
-				"GetValue:" + gyro1.getValue());
+				"GetValue:" + ultrasonic1.getValue());
 		SmartDashboard.putString("DB/String 1",
-				"GetVoltage: " + gyro1.getVoltage());
+				"GetVoltage: " + ultrasonic1.getVoltage());
 		SmartDashboard.putString("DB/String 2", "Distance: " + value);
 	}
+	
 
+		
+	public static void uartTest(){	
+		SerialPort uart = new SerialPort(115200,SerialPort.Port.kMXP);
+		uart.reset();
+		while(true) {
+			byte[] message = uart.read(10);
+			SmartDashboard.putString("DB/String 3", "Uart: " + Arrays.toString(message));
+		}
+	}
+	
 }
 
 //class LidarPlot implements KeyListener {
