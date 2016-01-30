@@ -1,6 +1,8 @@
 package org.usfirst.frc.team2473.robot;
 
 import edu.wpi.first.wpilibj.*;
+import edu.wpi.first.wpilibj.CANTalon.ControlMode;
+import edu.wpi.first.wpilibj.CANTalon.FeedbackDevice;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -19,7 +21,7 @@ public class Robot extends IterativeRobot {
      */
 	
     public void robotInit() {
-
+    	
     }
     
     /**
@@ -40,14 +42,15 @@ public class Robot extends IterativeRobot {
      * This function is called once each time the robot enters tele-operated mode
      */
     public void teleopInit(){
-
+    	
+    	
     }
     
     /**
      * This function is called periodically during operator control
      */
     public void teleopPeriodic() {
-
+    	TeleOp.runPosition();
     }
     
     /**
