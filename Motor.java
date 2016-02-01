@@ -18,7 +18,7 @@ public class Motor {
 
 	// add more modes as necessary
 	private static Motor motor = null;
-	
+
 	private Motor() {
 		frontLeft = new CANTalon(3);
 		frontRight = new CANTalon(2);
@@ -36,13 +36,13 @@ public class Motor {
 
 	}
 
-	public static Motor getInstance(){
-		if(motor == null){
+	public static Motor getInstance() {
+		if (motor == null) {
 			motor = new Motor();
 		}
 		return motor;
 	}
-	
+
 	// Should only run once for each cantalon
 	private void setUpDriveMotors(CANTalon tal) {
 		tal.changeControlMode(ControlMode.Position);
@@ -98,8 +98,12 @@ public class Motor {
 			backLeft.reverseOutput(true);
 		}
 	}
-	
-	public void resetDriveEncoders(){
+
+	public int getEncoder(CANTalon motor) {
+		return motor.getEncPosition();
+	}
+
+	public void resetDriveEncoders() {
 		frontLeft.setPosition(0);
 		frontRight.setPosition(0);
 		backLeft.setPosition(0);
