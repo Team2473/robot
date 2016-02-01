@@ -13,7 +13,7 @@ public class Motor {
 
 	private CANTalon arm; // the motor to move the arm into position
 	private CANTalon elevator; // the motor to extend the arm
-	private CANTalon grappler; // the motor to grab onto the rung and pull up
+	private CANTalon winch; // the motor to pull the robot up
 
 	private CANTalon shooterLever; // pick up arm for shooter
 	private CANTalon spinner1; // spinners to grab ball
@@ -25,7 +25,6 @@ public class Motor {
 	public static final ControlMode MODE_FOLLOWER = ControlMode.Follower;
 
 	// add more modes as necessary
-
 	private static Motor motor = null;
 
 	private Motor() {
@@ -35,9 +34,10 @@ public class Motor {
 		backLeft = new CANTalon(5);
 
 		// test ids
+
 		arm = new CANTalon(0);
 		elevator = new CANTalon(0);
-		grappler = new CANTalon(0);
+		winch = new CANTalon(0);
 
 		shooterLever = new CANTalon(0);
 		spinner1 = new CANTalon(0);
@@ -50,7 +50,7 @@ public class Motor {
 
 		setUpArm(arm);
 		setUpElevator(elevator);
-		setUpGrappler(grappler);
+		setUpGrappler(winch);
 
 		setUpShooterLever(shooterLever);
 		setUpSpinners(spinner1);
@@ -69,7 +69,7 @@ public class Motor {
 	private void setUpDriveMotors(CANTalon tal) {
 		tal.changeControlMode(ControlMode.Position);
 		tal.setFeedbackDevice(FeedbackDevice.QuadEncoder);
-		tal.setPID(.1, 0, 0); // test pid values
+		tal.setPID(1, 0, 0); // test pid values
 		tal.setPosition(0);
 		tal.enableControl();
 	}
@@ -158,7 +158,6 @@ public class Motor {
 			backRight.changeControlMode(ControlMode.Follower);
 			backRight.reverseOutput(true);
 		}
-
 	}
 
 	public void moveGrapplerArmMotor(double value) {
@@ -169,8 +168,8 @@ public class Motor {
 		elevator.set(value);
 	}
 
-	public void moveGrapplerMotor(double value) {
-		grappler.set(value);
+	public void moveWinchMotor(double value) {
+		winch.set(value);
 	}
 
 	public void moveShooterLever(double value) {
@@ -181,11 +180,19 @@ public class Motor {
 		spinner1.set(value);
 		spinner2.set(value);
 	}
-	
-	public void testEncoder(){
-		SmartDashboard.putString("DB/String 3",
-				"Enc: " + frontLeft.getEncPosition());
+
+	public int getEncoder(CANTalon motor) {
+		return motor.getEncPosition();
 	}
+
+	public void resetDriveEncoders() {
+		frontRight.setPosition(0);
+		frontLeft.setPosition(0);
+		backRight.setPosition(0);
+		backLeft.setPosition(0);
+	}
+
+
 	// create additional move methods using the below format
 	/*
 	 * public void moveSAMPLE_MOTORMotors(ControlMode mode, int value) {
