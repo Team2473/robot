@@ -6,10 +6,10 @@ import edu.wpi.first.wpilibj.CANTalon.FeedbackDevice;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Motor {
-	private CANTalon frontRight;
 	private CANTalon frontLeft;
-	private CANTalon backRight;
+	private CANTalon frontRight;
 	private CANTalon backLeft;
+	private CANTalon backRight;
 
 	// add addition cantalons as they are added to robot
 	public static final ControlMode MODE_POWER = ControlMode.PercentVbus;
@@ -20,17 +20,17 @@ public class Motor {
 	private static Motor motor = null;
 
 	private Motor() {
-		frontRight = new CANTalon(3);
-		frontLeft = new CANTalon(2);
-		backRight = new CANTalon(4);
-		backLeft = new CANTalon(5);
+		frontLeft = new CANTalon(3);
+		frontRight = new CANTalon(2);
+		backLeft = new CANTalon(4);
+		backRight = new CANTalon(5);
 
 		// test ids
 
-		setUpDriveMotors(frontRight);
 		setUpDriveMotors(frontLeft);
-		setUpDriveMotors(backRight);
+		setUpDriveMotors(frontRight);
 		setUpDriveMotors(backLeft);
+		setUpDriveMotors(backRight);
 
 		// add addition cantalons as they are added to robot
 
@@ -52,38 +52,15 @@ public class Motor {
 		tal.enableControl();
 	}
 
-	public void moveLeftSideMotors(double value) {
-		if (frontLeft.getControlMode() == MODE_POWER) {
-			frontLeft.set(value);
-			backLeft.set(value);
-		} else if (frontLeft.getControlMode() == MODE_POSITION) {
-			frontLeft.set(value);
-			backLeft.set(2);// frontleft integer id
-		}
-		SmartDashboard.putString("DB/String 2",
-				"FL: " + frontLeft.getEncPosition());
-	}
-
-	public void setLeftSideMotorsMode(ControlMode mode) {
-		if (mode == MODE_POWER) {
-			frontLeft.changeControlMode(mode);
-			backLeft.changeControlMode(mode);
-		} else if (mode == MODE_POSITION) {
-			frontLeft.changeControlMode(MODE_POSITION);
-			backLeft.changeControlMode(ControlMode.Follower);
-		}
-	}
-
 	public void moveRightSideMotors(double value) {
 		if (frontRight.getControlMode() == MODE_POWER) {
-			frontRight.set(-value);
-			backRight.set(-value);
+			frontRight.set(value);
+			backRight.set(value);
 		} else if (frontRight.getControlMode() == MODE_POSITION) {
 			frontRight.set(value);
-			backRight.set(3);// frontright integer id
+			backRight.set(2);// frontRight integer id
 		}
-
-		SmartDashboard.putString("DB/String 3",
+		SmartDashboard.putString("DB/String 2",
 				"FR: " + frontRight.getEncPosition());
 	}
 
@@ -93,9 +70,32 @@ public class Motor {
 			backRight.changeControlMode(mode);
 		} else if (mode == MODE_POSITION) {
 			frontRight.changeControlMode(MODE_POSITION);
-			frontRight.reverseOutput(true);
 			backRight.changeControlMode(ControlMode.Follower);
-			backRight.reverseOutput(true);
+		}
+	}
+
+	public void moveLeftSideMotors(double value) {
+		if (frontLeft.getControlMode() == MODE_POWER) {
+			frontLeft.set(-value);
+			backLeft.set(-value);
+		} else if (frontLeft.getControlMode() == MODE_POSITION) {
+			frontLeft.set(value);
+			backLeft.set(3);// frontLeft integer id
+		}
+
+		SmartDashboard.putString("DB/String 3",
+				"FL: " + frontLeft.getEncPosition());
+	}
+
+	public void setLeftSideMotorsMode(ControlMode mode) {
+		if (mode == MODE_POWER) {
+			frontLeft.changeControlMode(mode);
+			backLeft.changeControlMode(mode);
+		} else if (mode == MODE_POSITION) {
+			frontLeft.changeControlMode(MODE_POSITION);
+			frontLeft.reverseOutput(true);
+			backLeft.changeControlMode(ControlMode.Follower);
+			backLeft.reverseOutput(true);
 		}
 	}
 
@@ -104,10 +104,10 @@ public class Motor {
 	}
 
 	public void resetDriveEncoders() {
-		frontRight.setPosition(0);
 		frontLeft.setPosition(0);
-		backRight.setPosition(0);
+		frontRight.setPosition(0);
 		backLeft.setPosition(0);
+		backRight.setPosition(0);
 	}
 
 	// create additional move methods using the below format
