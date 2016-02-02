@@ -56,11 +56,11 @@ public class TeleOp {
 		double rightY = Controller.getInstance().getYR();
 		
 		if(Math.abs(leftY)>deadZone){
-			leftEnc += leftY*100;
+			leftEnc += leftY*30;
 		}
 		
 		if(Math.abs(rightY)>deadZone){
-			rightEnc += rightY*100;
+			rightEnc += rightY*20;
 		}
 		
 		Motor.getInstance().moveLeftSideMotors(leftEnc);

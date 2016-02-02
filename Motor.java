@@ -21,9 +21,9 @@ public class Motor {
 
 	private Motor() {
 		frontLeft = new CANTalon(3);
-		frontRight = new CANTalon(2);
-		backLeft = new CANTalon(4);
-		backRight = new CANTalon(5);
+		frontRight = new CANTalon(7);
+		backLeft = new CANTalon(8);
+		backRight = new CANTalon(2);
 
 		// test ids
 
@@ -58,7 +58,7 @@ public class Motor {
 			backRight.set(value);
 		} else if (frontRight.getControlMode() == MODE_POSITION) {
 			frontRight.set(value);
-			backRight.set(2);// frontRight integer id
+			backRight.set(7);// frontRight integer id
 		}
 		SmartDashboard.putString("DB/String 2",
 				"FR: " + frontRight.getEncPosition());
@@ -67,9 +67,13 @@ public class Motor {
 	public void setRightSideMotorsMode(ControlMode mode) {
 		if (mode == MODE_POWER) {
 			frontRight.changeControlMode(mode);
+			frontRight.ConfigRevLimitSwitchNormallyOpen(true);
+			frontRight.ConfigFwdLimitSwitchNormallyOpen(true);
 			backRight.changeControlMode(mode);
 		} else if (mode == MODE_POSITION) {
 			frontRight.changeControlMode(MODE_POSITION);
+			frontRight.ConfigRevLimitSwitchNormallyOpen(true);
+			frontRight.ConfigFwdLimitSwitchNormallyOpen(true);
 			backRight.changeControlMode(ControlMode.Follower);
 		}
 	}
@@ -90,12 +94,13 @@ public class Motor {
 	public void setLeftSideMotorsMode(ControlMode mode) {
 		if (mode == MODE_POWER) {
 			frontLeft.changeControlMode(mode);
+			frontLeft.reverseOutput(false);
 			backLeft.changeControlMode(mode);
 		} else if (mode == MODE_POSITION) {
 			frontLeft.changeControlMode(MODE_POSITION);
 			frontLeft.reverseOutput(true);
 			backLeft.changeControlMode(ControlMode.Follower);
-			backLeft.reverseOutput(true);
+			//backLeft.reverseOutput(true);
 		}
 	}
 
@@ -109,7 +114,9 @@ public class Motor {
 		backLeft.setPosition(0);
 		backRight.setPosition(0);
 	}
+	
 
+	
 	// create additional move methods using the below format
 	/*
 	 * public void moveSAMPLE_MOTORMotors(ControlMode mode, int value) {
