@@ -51,7 +51,7 @@ public class Robot extends IterativeRobot {
      */
     public void teleopPeriodic() {
 
-    	Telemetry.uartTest();
+    	//Telemetry.gryoTest();
     }
     
     /**

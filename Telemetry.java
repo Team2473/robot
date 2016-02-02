@@ -4,6 +4,7 @@ import java.util.Arrays;
 
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.CANTalon;
+import edu.wpi.first.wpilibj.Gyro;
 import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 //import gpdraw.DrawingTool;
@@ -25,8 +26,8 @@ public class Telemetry {
 //		window.toggleLines(true);
 //	}
 
-	private AnalogInput ultrasonic1 = new AnalogInput(0);
-	private AnalogInput ultrasonic2 = new AnalogInput(1);
+	private AnalogInput ultrasonic1;
+	private AnalogInput ultrasonic2;
 	
 	private double[] distanceArray1;
 	private double[] distanceArray2;
@@ -93,6 +94,12 @@ public class Telemetry {
 		}
 	}
 	
+	//public static AnalogGyro gyro1;
+	
+	//public static void gryoTest(){
+	//	gyro1 = new Gyro(2);
+	//	SmartDashboard.putString("DB/String 3", "Gyro: " + gyro1.getAngle());
+	//}
 }
 
 //class LidarPlot implements KeyListener {
