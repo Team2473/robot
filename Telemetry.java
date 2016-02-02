@@ -3,6 +3,7 @@ package org.usfirst.frc.team2473.robot;
 import java.util.Arrays;
 
 import edu.wpi.first.wpilibj.AnalogInput;
+import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 //import gpdraw.DrawingTool;
@@ -24,29 +25,65 @@ public class Telemetry {
 //		window.toggleLines(true);
 //	}
 
-	static AnalogInput ultrasonic1 = new AnalogInput(0);
-	static AnalogInput gyro1 = new AnalogInput(1);
-	static double[] distanceArray = new double[10];
-	static int pos = 0;
+	private AnalogInput ultrasonic1 = new AnalogInput(0);
+	private AnalogInput ultrasonic2 = new AnalogInput(1);
 	
-	public static void ultrasonicValue() {
-		distanceArray[pos] = (ultrasonic1.getValue() * 5) / 25.4;
-		pos = (pos+1)%10;
+	private double[] distanceArray1;
+	private double[] distanceArray2;
+	private int posUltra1;
+	private int posUltra2;
+	
+	
+	private static Telemetry telemetry = null;
+
+	private Telemetry() {
+		ultrasonic1 = new AnalogInput(0);
+		ultrasonic2 = new AnalogInput(1);
+		
+		distanceArray1 = new double[10];
+		distanceArray2 = new double[10];
+		posUltra1 = 0;
+		posUltra2 = 0;
+	}
+
+	public static Telemetry getInstance() {
+		if (telemetry == null) {
+			telemetry = new Telemetry();
+		}
+		return telemetry;
+	}
+	
+	//needs to run continuously for values to be correct
+	public void updateUltrasonicValue() {
+		distanceArray1[posUltra1] = (ultrasonic1.getValue() * 5) / 25.4;
+		posUltra1 = (posUltra1+1)%10;
+		
+		distanceArray2[posUltra2] = (ultrasonic2.getValue() * 5) / 25.4;
+		posUltra2 = (posUltra2+1)%10;
+	}
+	
+	public double getLeftUltrasonicValue(){
 		double value = 0;
 		for(int i = 0; i < 10; i++){
-			value +=distanceArray[i];
+			value +=distanceArray2[i];
 		}
 		value /= 10;
 		value = ((int)((value - 9) * 100))/100.0;
-		SmartDashboard.putString("DB/String 0",
-				"GetValue:" + ultrasonic1.getValue());
-		SmartDashboard.putString("DB/String 1",
-				"GetVoltage: " + ultrasonic1.getVoltage());
-		SmartDashboard.putString("DB/String 2", "Distance: " + value);
+		return value;
+	}
+	
+	public double getRightUltrasonicValue(){
+		double value = 0;
+		for(int i = 0; i < 10; i++){
+			value +=distanceArray1[i];
+		}
+		value /= 10;
+		value = ((int)((value - 9) * 100))/100.0;
+		return value;
 	}
 	
 
-		
+	//test code
 	public static void uartTest(){	
 		SerialPort uart = new SerialPort(115200,SerialPort.Port.kMXP);
 		uart.reset();
