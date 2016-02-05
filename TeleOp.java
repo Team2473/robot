@@ -7,7 +7,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class TeleOp {
 	
 	private static ControlMode currentMode = null;
-	private static double deadZone = .03;
+	private static double deadZone = .3;
 	private static double maxSpeed = .50;
 	
 	public static void runPower(){
@@ -18,16 +18,16 @@ public class TeleOp {
 			Motor.getInstance().setRightSideMotorsMode(currentMode);
 		}
 		
-		double leftY = Controller.getInstance().getYL();
-		double rightY = Controller.getInstance().getYR();
+		double leftY = Controller.getInstance().getYL() * Math.abs(Controller.getInstance().getYL());
+		double rightY = Controller.getInstance().getYR()* Math.abs(Controller.getInstance().getYR());
 		
-		if(Math.abs(leftY)>deadZone){
+		if(Math.abs(Controller.getInstance().getYL())>deadZone){
 			Motor.getInstance().moveLeftSideMotors(leftY * maxSpeed);
 		}else{
 			Motor.getInstance().moveLeftSideMotors(0);
 		}
 		
-		if(Math.abs(rightY)>deadZone){
+		if(Math.abs(Controller.getInstance().getYR())>deadZone){
 			Motor.getInstance().moveRightSideMotors(rightY * maxSpeed);
 		}else{
 			Motor.getInstance().moveRightSideMotors(0);
@@ -56,11 +56,11 @@ public class TeleOp {
 		double rightY = Controller.getInstance().getYR();
 		
 		if(Math.abs(leftY)>deadZone){
-			leftEnc += leftY*100;
+			leftEnc += leftY*75;
 		}
 		
 		if(Math.abs(rightY)>deadZone){
-			rightEnc += rightY*100;
+			rightEnc += rightY*50;
 		}
 		
 		Motor.getInstance().moveLeftSideMotors(leftEnc);
