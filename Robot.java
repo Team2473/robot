@@ -50,8 +50,9 @@ public class Robot extends IterativeRobot {
      * This function is called periodically during operator control
      */
     public void teleopPeriodic() {
-
-    	//Telemetry.gryoTest();
+    	Telemetry.getInstance().updateUltrasonicValue();
+    	SmartDashboard.putString("DB/String 7", "LeftUltra: " + Telemetry.getInstance().getLeftUltrasonicValue());
+    	SmartDashboard.putString("DB/String 8", "LeftUltra: " + Telemetry.getInstance().getRightUltrasonicValue());
     }
     
     /**

@@ -69,7 +69,7 @@ public class Telemetry {
 			value +=distanceArray2[i];
 		}
 		value /= 10;
-		value = ((int)((value - 9) * 100))/100.0;
+		value = ((int)((value - 3) * 100))/100.0;
 		return value;
 	}
 	
@@ -79,7 +79,7 @@ public class Telemetry {
 			value +=distanceArray1[i];
 		}
 		value /= 10;
-		value = ((int)((value - 9) * 100))/100.0;
+		value = ((int)((value - 3) * 100))/100.0;
 		return value;
 	}
 	
