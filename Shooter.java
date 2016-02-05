@@ -1,12 +1,14 @@
 package org.usfirst.frc.team2473.robot;
 
 import edu.wpi.first.wpilibj.AnalogInput;
+import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Shooter {
 	//private static AnalogPotentiometer pot = new AnalogPotentiometer(0); //channel 0;
 	private static AnalogInput IR = new AnalogInput(0);
 	private static boolean ballIn = false;
+	private static CANTalon shooter = new CANTalon(6);
 	
 	public static void testIR(){	
 		//SmartDashboard.putString("DB/String 0", "Potentiometer" + pot.get());	
@@ -23,6 +25,8 @@ public class Shooter {
 	
 	public static void testPotentiometer(){
 	//	SmartDashboard.putString("DB/String 0", "Potentiometer" + pot.get());	
+		SmartDashboard.putString("DB/String 0", "Pot: " + shooter.getAnalogInPosition());
+		SmartDashboard.putString("DB/String 4", "test");
 	}
 	
 	public void pickUp(){

@@ -12,14 +12,14 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * directory.
  */
 
-public class Robot extends IterativeRobot {
+public class Robot extends IterativeRobot {	
 	/**
      * This function is run when the robot is first started up and should be
      * used for any initialization code.
      */
 	
     public void robotInit() {
-
+    	SmartDashboard.putString("DB/String 4", "test");
     }
     
     /**
@@ -47,7 +47,8 @@ public class Robot extends IterativeRobot {
      * This function is called periodically during operator control
      */
     public void teleopPeriodic() {
-    	Shooter.testIR();
+    	SmartDashboard.putString("DB/String 4", "test");
+    	Shooter.testPotentiometer();
     }
     
     /**
