@@ -47,7 +47,7 @@ public class Motor {
 	private void setUpDriveMotors(CANTalon tal) {
 		tal.changeControlMode(ControlMode.Position);
 		tal.setFeedbackDevice(FeedbackDevice.QuadEncoder);
-		tal.setPID(1, 0, 0); // test pid values
+		tal.setPID(.8, 0, 0.02); // test pid values
 		tal.setPosition(0);
 		tal.enableControl();
 	}
