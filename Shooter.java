@@ -2,8 +2,10 @@
 package org.usfirst.frc.team2473.robot;
 
 import edu.wpi.first.wpilibj.AnalogInput;
+import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 
 public class Shooter {
 	//private static AnalogPotentiometer pot = new AnalogPotentiometer(0); //channel 0;
@@ -28,8 +30,14 @@ public class Shooter {
 		SmartDashboard.putString("DB/String 9", "Value: " + in.get());
 	}
 	
+	//potentiometer
+	public static CANTalon pot = new CANTalon(7);
+//	public static AnalogPotentiometer pot = new AnalogPotentiometer(7);
+	
 	public static void testPotentiometer(){
-	//	SmartDashboard.putString("DB/String 0", "Potentiometer" + pot.get());	
+		SmartDashboard.putString("DB/String 0", "Potentiometer " + pot.getAnalogInRaw());
+		//returns value 1 - 1023
+		//equivalent to voltage: 0.026 - 3.285
 	}
 	
 	public void pickUp(){
