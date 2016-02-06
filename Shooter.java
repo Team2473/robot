@@ -1,11 +1,13 @@
+
 package org.usfirst.frc.team2473.robot;
 
 import edu.wpi.first.wpilibj.AnalogInput;
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Shooter {
 	//private static AnalogPotentiometer pot = new AnalogPotentiometer(0); //channel 0;
-	private static AnalogInput IR = new AnalogInput(0);
+	private static AnalogInput IR = new AnalogInput(1);
 	private static boolean ballIn = false;
 	
 	public static void testIR(){	
@@ -19,6 +21,11 @@ public class Shooter {
 			ballIn = false;
 		}
 		//test
+	}
+	public static DigitalInput in = new DigitalInput(0);
+	public static void testDigitalIO(){
+		//true means nothing in the beam, false means something in the beam
+		SmartDashboard.putString("DB/String 9", "Value: " + in.get());
 	}
 	
 	public static void testPotentiometer(){
