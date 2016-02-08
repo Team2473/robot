@@ -1,7 +1,6 @@
 package org.usfirst.frc.team2473.robot;
 
 import edu.wpi.first.wpilibj.*;
-import edu.wpi.first.wpilibj.CANTalon.ControlMode;
 import edu.wpi.first.wpilibj.CANTalon.FeedbackDevice;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -20,9 +19,9 @@ public class Motor {
 	private CANTalon spinner2;
 
 	// add addition cantalons as they are added to robot
-	public static final ControlMode MODE_POWER = ControlMode.PercentVbus;
-	public static final ControlMode MODE_POSITION = ControlMode.Position;
-	public static final ControlMode MODE_FOLLOWER = ControlMode.Follower;
+	public static final CANTalon.TalonControlMode MODE_POWER = CANTalon.TalonControlMode.PercentVbus;
+	public static final CANTalon.TalonControlMode MODE_POSITION = CANTalon.TalonControlMode.Position;
+	public static final CANTalon.TalonControlMode MODE_FOLLOWER = CANTalon.TalonControlMode.Follower;
 
 	// add more modes as necessary
 	private static Motor motor = null;
@@ -67,7 +66,7 @@ public class Motor {
 
 	// Should only run once for each cantalon
 	private void setUpDriveMotors(CANTalon tal) {
-		tal.changeControlMode(ControlMode.Position);
+		tal.changeControlMode(MODE_POSITION);
 		tal.setFeedbackDevice(FeedbackDevice.QuadEncoder);
 		tal.setPID(1, 0, 0); // test pid values
 		tal.setPosition(0);
@@ -75,7 +74,7 @@ public class Motor {
 	}
 
 	private void setUpArm(CANTalon tal) {
-		tal.changeControlMode(ControlMode.Position);
+		tal.changeControlMode(MODE_POSITION);
 		tal.setFeedbackDevice(FeedbackDevice.QuadEncoder);
 		tal.setPID(.1, 0, 0); // test pid values
 		tal.setPosition(0);
@@ -83,7 +82,7 @@ public class Motor {
 	}
 
 	private void setUpElevator(CANTalon tal) {
-		tal.changeControlMode(ControlMode.Position);
+		tal.changeControlMode(MODE_POSITION);
 		tal.setFeedbackDevice(FeedbackDevice.QuadEncoder);
 		tal.setPID(.1, 0, 0); // test pid values
 		tal.setPosition(0);
@@ -91,7 +90,7 @@ public class Motor {
 	}
 
 	private void setUpGrappler(CANTalon tal) {
-		tal.changeControlMode(ControlMode.Position);
+		tal.changeControlMode(MODE_POSITION);
 		tal.setFeedbackDevice(FeedbackDevice.QuadEncoder);
 		tal.setPID(.1, 0, 0); // test pid values
 		tal.setPosition(0);
@@ -99,7 +98,7 @@ public class Motor {
 	}
 
 	private void setUpShooterLever(CANTalon tal) {
-		tal.changeControlMode(ControlMode.Voltage);
+		tal.changeControlMode(CANTalon.TalonControlMode.Voltage);
 		tal.setFeedbackDevice(FeedbackDevice.AnalogPot);
 		tal.setPID(.1, 0, 0); // test pid values
 		tal.setPosition(0);
@@ -107,7 +106,7 @@ public class Motor {
 	}
 
 	private void setUpSpinners(CANTalon tal) {
-		tal.changeControlMode(ControlMode.PercentVbus);
+		tal.changeControlMode(MODE_POWER);
 		tal.setPosition(0);
 		tal.enableControl();
 	}
@@ -124,14 +123,14 @@ public class Motor {
 				"FL: " + frontLeft.getEncPosition());
 	}
 
-	public void setLeftSideMotorsMode(ControlMode mode) {
+	public void setLeftSideMotorsMode(CANTalon.TalonControlMode mode) {
 		if (mode == MODE_POWER) {
 			frontLeft.changeControlMode(mode);
 			backLeft.changeControlMode(mode);
 		} else if (mode == MODE_POSITION) {
 			frontLeft.changeControlMode(MODE_POSITION);
 			// set pid for front left
-			backLeft.changeControlMode(ControlMode.Follower);
+			backLeft.changeControlMode(MODE_FOLLOWER);
 		}
 	}
 
@@ -148,14 +147,14 @@ public class Motor {
 				"FR: " + frontRight.getEncPosition());
 	}
 
-	public void setRightSideMotorsMode(ControlMode mode) {
+	public void setRightSideMotorsMode(CANTalon.TalonControlMode mode) {
 		if (mode == MODE_POWER) {
 			frontRight.changeControlMode(mode);
 			backRight.changeControlMode(mode);
 		} else if (mode == MODE_POSITION) {
 			frontRight.changeControlMode(MODE_POSITION);
 			frontRight.reverseOutput(true);
-			backRight.changeControlMode(ControlMode.Follower);
+			backRight.changeControlMode(MODE_FOLLOWER);
 			backRight.reverseOutput(true);
 		}
 	}
