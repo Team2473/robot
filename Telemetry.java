@@ -3,8 +3,6 @@ package org.usfirst.frc.team2473.robot;
 import java.util.Arrays;
 
 import edu.wpi.first.wpilibj.AnalogInput;
-import edu.wpi.first.wpilibj.CANTalon;
-import edu.wpi.first.wpilibj.Gyro;
 import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 //import gpdraw.DrawingTool;
@@ -82,6 +80,22 @@ public class Telemetry {
 		value = ((int)((value - 9) * 100))/100.0;
 		return value;
 	}
+	
+	/*
+	FOR LIDAR:
+	SerialPort class
+	baudrate = 115200
+	buffer: about 1024
+	WRITE buffer: about 16
+	port: some enum, probably SP___?
+	*/
+	//I will attempt:
+	SerialPort lidar = new SerialPort(115200, ??);
+	lidar.setWriteBufferSize(16); //jk is this supposed to be 1024
+	char[] arr = {'S','D','\n'};
+	lidar.write(arr,3);
+	
+	
 	
 
 	//test code
