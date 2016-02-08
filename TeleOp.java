@@ -1,12 +1,11 @@
 package org.usfirst.frc.team2473.robot;
 
 import edu.wpi.first.wpilibj.*;
-import edu.wpi.first.wpilibj.CANTalon.ControlMode;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class TeleOp {
 	
-	private static ControlMode currentMode = null;
+	private static CANTalon.TalonControlMode currentMode = null;
 	private static double deadZone = .3;
 	private static double maxSpeed = .50;
 	
