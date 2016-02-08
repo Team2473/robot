@@ -31,9 +31,13 @@ public class Shooter {
 	}
 	
 	//potentiometer
+	/*
+	 * To do: Create a table of values based on potentiometer readings.
+	 * While motor is running, read pot values. For a certain value, give
+	 * a certain amount of power to the motors. May or may not change with ball.
+	 * Run motor on power mode. 
+	 */
 	public static CANTalon pot = new CANTalon(7);
-//	public static AnalogPotentiometer pot = new AnalogPotentiometer(7);
-	
 	public static void testPotentiometer(){
 		SmartDashboard.putString("DB/String 0", "Potentiometer " + pot.getAnalogInRaw());
 		//returns value 1 - 1023
