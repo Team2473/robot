@@ -50,7 +50,9 @@ public class Robot extends IterativeRobot {
 //    	Shooter.testDigitalIO();
     	Shooter.testPotentiometer();
     	Shooter.checkLS();
-    	Shooter.moveForward();
+    	//Shooter.moveBackward();
+    	//Shooter.moveForward();
+    	Shooter.moveWithJoy();
     }
     
     /**

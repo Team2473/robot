@@ -4,6 +4,7 @@ package org.usfirst.frc.team2473.robot;
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 
@@ -47,17 +48,40 @@ public class Shooter {
 	
 	public static void checkLS(){
 		//talon 6 = TALON for arm + limit switches
-		pot.ConfigFwdLimitSwitchNormallyOpen(true);
-		pot.ConfigRevLimitSwitchNormallyOpen(true);
+		pot.ConfigFwdLimitSwitchNormallyOpen(false);
+		pot.ConfigRevLimitSwitchNormallyOpen(false);
 		
 		SmartDashboard.putString("DB/String 3", "Fwd: " + pot.isFwdLimitSwitchClosed());
 		SmartDashboard.putString("DB/String 4", "Rev: " + pot.isRevLimitSwitchClosed());
 	}
 	
 	public static void moveForward(){
-		pot.set(0.5);
+		pot.changeControlMode(CANTalon.TalonControlMode.PercentVbus);
+		pot.set(0.3);
 	}
 	
+	public static void moveBackward(){ //365 pot
+		pot.changeControlMode(CANTalon.TalonControlMode.PercentVbus);
+		pot.set(-0.3);
+	}
+	
+	public static void stop(){
+		pot.changeControlMode(CANTalon.TalonControlMode.PercentVbus);
+		pot.set(0);
+	}
+	
+	public static void moveWithJoy(){
+		Joystick joy1 = new Joystick(0);
+		if(joy1.getRawButton(3)){
+			moveForward();
+		}
+		else if(joy1.getRawButton(2)){
+			moveBackward();
+		}
+		else{
+			stop();
+		}
+	}
 //	public void pickUp(){
 //		moveShooterLever(0.5); //potentiometer value, ground level
 //		//test value
