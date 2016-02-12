@@ -11,8 +11,8 @@ public class Motor {
 	private CANTalon backLeft;
 
 	private CANTalon arm; // the motor to move the arm into position
-	private CANTalon elevator; // the motor to extend the arm
-	private CANTalon winch; // the motor to pull the robot up
+	private CANTalon winch1; // the motor to extend the arm
+	private CANTalon winch2; // the motor to pull the robot up
 
 	private CANTalon shooterLever; // pick up arm for shooter
 	private CANTalon spinner1; // spinners to grab ball
@@ -35,8 +35,8 @@ public class Motor {
 		// test ids
 
 		arm = new CANTalon(0);
-		elevator = new CANTalon(0);
-		winch = new CANTalon(0);
+		winch1 = new CANTalon(0);
+		winch2 = new CANTalon(0);
 
 		shooterLever = new CANTalon(0);
 		spinner1 = new CANTalon(0);
@@ -47,13 +47,12 @@ public class Motor {
 		setUpDriveMotors(backRight);
 		setUpDriveMotors(backLeft);
 
-		setUpArm(arm);
-		setUpElevator(elevator);
-		setUpGrappler(winch);
+		setUpArm();
+		setUpWinches();
 
-		setUpShooterLever(shooterLever);
-		setUpSpinners(spinner1);
-		setUpSpinners(spinner2);
+
+		setUpShooterLever();
+		setUpSpinners();
 		// add addition cantalons as they are added to robot
 	}
 
@@ -73,42 +72,41 @@ public class Motor {
 		tal.enableControl();
 	}
 
-	private void setUpArm(CANTalon tal) {
-		tal.changeControlMode(MODE_POSITION);
-		tal.setFeedbackDevice(FeedbackDevice.QuadEncoder);
-		tal.setPID(.1, 0, 0); // test pid values
-		tal.setPosition(0);
-		tal.enableControl();
+	private void setUpArm() {
+		arm.changeControlMode(MODE_POSITION);
+		arm.setFeedbackDevice(FeedbackDevice.QuadEncoder);
+		arm.setPID(.1, 0, 0); // test pid values
+		arm.setPosition(0);
+		arm.enableControl();
 	}
 
-	private void setUpElevator(CANTalon tal) {
-		tal.changeControlMode(MODE_POSITION);
-		tal.setFeedbackDevice(FeedbackDevice.QuadEncoder);
-		tal.setPID(.1, 0, 0); // test pid values
-		tal.setPosition(0);
-		tal.enableControl();
+	private void setUpWinches() {
+		winch1.changeControlMode(MODE_POSITION);
+		winch1.setFeedbackDevice(FeedbackDevice.QuadEncoder);
+		winch1.setPID(.1, 0, 0); // test pid values
+		winch1.setPosition(0);
+		winch1.enableControl();
+		
+		winch2.changeControlMode(MODE_FOLLOWER);
+		winch2.enableControl();
 	}
 
-	private void setUpGrappler(CANTalon tal) {
-		tal.changeControlMode(MODE_POSITION);
-		tal.setFeedbackDevice(FeedbackDevice.QuadEncoder);
-		tal.setPID(.1, 0, 0); // test pid values
-		tal.setPosition(0);
-		tal.enableControl();
+	private void setUpShooterLever() {
+		shooterLever.changeControlMode(CANTalon.TalonControlMode.Voltage);
+		shooterLever.setFeedbackDevice(FeedbackDevice.AnalogPot);
+		shooterLever.setPID(.1, 0, 0); // test pid values
+		shooterLever.setPosition(0);
+		shooterLever.enableControl();
 	}
 
-	private void setUpShooterLever(CANTalon tal) {
-		tal.changeControlMode(CANTalon.TalonControlMode.Voltage);
-		tal.setFeedbackDevice(FeedbackDevice.AnalogPot);
-		tal.setPID(.1, 0, 0); // test pid values
-		tal.setPosition(0);
-		tal.enableControl();
-	}
-
-	private void setUpSpinners(CANTalon tal) {
-		tal.changeControlMode(MODE_POWER);
-		tal.setPosition(0);
-		tal.enableControl();
+	private void setUpSpinners() {
+		spinner1.changeControlMode(MODE_POWER);
+		spinner1.setPosition(0);
+		spinner1.enableControl();
+		
+		spinner2.changeControlMode(MODE_POWER);
+		spinner2.setPosition(0);
+		spinner2.enableControl();
 	}
 
 	public void moveLeftSideMotors(double value) {
@@ -163,12 +161,9 @@ public class Motor {
 		arm.set(value);
 	}
 
-	public void moveGrapplerElevatorMotor(double value) {
-		elevator.set(value);
-	}
-
-	public void moveWinchMotor(double value) {
-		winch.set(value);
+	public void moveWinchMotors(double value) {
+		winch1.set(value);
+		winch2.set(0); /*winch1 motor id*/
 	}
 
 	public void moveShooterLever(double value) {
