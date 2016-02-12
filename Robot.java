@@ -49,6 +49,8 @@ public class Robot extends IterativeRobot {
     public void teleopPeriodic() {
 //    	Shooter.testDigitalIO();
     	Shooter.testPotentiometer();
+    	Shooter.checkLS();
+    	Shooter.moveForward();
     }
     
     /**

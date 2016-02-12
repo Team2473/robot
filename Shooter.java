@@ -37,14 +37,28 @@ public class Shooter {
 	 * a certain amount of power to the motors. May or may not change with ball.
 	 * Run motor on power mode. 
 	 */
-	public static CANTalon pot = new CANTalon(7);
+	public static CANTalon pot = new CANTalon(6);
 	public static void testPotentiometer(){
 		SmartDashboard.putString("DB/String 0", "Potentiometer " + pot.getAnalogInRaw());
 		//returns value 1 - 1023
 		//equivalent to voltage: 0.026 - 3.285
 	}
 	
-	public void pickUp(){
+	
+	public static void checkLS(){
+		//talon 6 = TALON for arm + limit switches
+		pot.ConfigFwdLimitSwitchNormallyOpen(true);
+		pot.ConfigRevLimitSwitchNormallyOpen(true);
+		
+		SmartDashboard.putString("DB/String 3", "Fwd: " + pot.isFwdLimitSwitchClosed());
+		SmartDashboard.putString("DB/String 4", "Rev: " + pot.isRevLimitSwitchClosed());
+	}
+	
+	public static void moveForward(){
+		pot.set(0.5);
+	}
+	
+//	public void pickUp(){
 //		moveShooterLever(0.5); //potentiometer value, ground level
 //		//test value
 //		while(IR.getVoltage() < 2.3){
@@ -62,5 +76,5 @@ public class Shooter {
 //	public void reset(){
 //		spinShooter(0); 
 //		moveShooterLever(0); //up position
-	} 
+//	} 
 }
