@@ -29,14 +29,7 @@ public class Grappler {
 	}
 	//adjust values for following methods
 	
-	public void checkLS(){
-		//talon 6 = TALON for arm + limit switches
-		Motor.getInstance().arm.ConfigFwdLimitSwitchNormallyOpen(true); //how do i access the arm talon?? placeholder is currently "arm"
-		Motor.getInstance().arm.ConfigRevLimitSwitchNormallyOpen(true);
-		
-		SmartDashboard.putString("DB/String 3", "Fwd: " + Motor.getInstance().arm.isFwdLimitSwitchClosed());
-		SmartDashboard.putString("DB/String 4", "Rev: " + Motor.getInstance().arm.isRevLimitSwitchClosed());
-	}
+
 	public void moveArmUp() {
 		Motor.getInstance().moveGrapplerArmMotor(100);
 		Motor.getInstance().moveGrapplerElevatorMotor(100);
