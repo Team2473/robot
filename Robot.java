@@ -20,7 +20,7 @@ public class Robot extends IterativeRobot {
      */
 	
     public void robotInit() {
-
+    	
     }
     
     /**
@@ -41,14 +41,23 @@ public class Robot extends IterativeRobot {
      * This function is called once each time the robot enters tele-operated mode
      */
     public void teleopInit(){
+<<<<<<< HEAD
     	s = new Switches();
+=======
+    	
+    	
+>>>>>>> refs/remotes/origin/master
     }
     
     /**
      * This function is called periodically during operator control
      */
     public void teleopPeriodic() {
+<<<<<<< HEAD
     	s.printDigitalInputs();
+=======
+    	TeleOp.runPower();
+>>>>>>> refs/remotes/origin/master
     }
     
     /**

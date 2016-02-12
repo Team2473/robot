@@ -26,7 +26,6 @@ public class Switches {
 		// switch3
 		ioSwitch7 = new DigitalInput(7);
 		ioSwitch8 = new DigitalInput(8);
-
 	}
 
 	public void printDigitalInputs() {
