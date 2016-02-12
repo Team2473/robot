@@ -23,24 +23,36 @@ import edu.wpi.first.wpilibj.Timer;
 
 //random change
 public class Vision {
-	static int session;
-    static Image frame;
+	static int session1;
+	static int session2;
+    static Image frame1;
+    static Image frame2;
     static NIVision.Rect rect;
 
     public static void visionInit() {
-        frame = NIVision.imaqCreateImage(NIVision.ImageType.IMAGE_RGB, 0);
+        frame1 = NIVision.imaqCreateImage(NIVision.ImageType.IMAGE_RGB, 0);
+        
+        frame2 = NIVision.imaqCreateImage(NIVision.ImageType.IMAGE_RGB, 0);
 
         // the camera name (ex "cam0") can be found through the roborio web interface
-        session = NIVision.IMAQdxOpenCamera("cam0",
+        session1 = NIVision.IMAQdxOpenCamera("cam0",
                 NIVision.IMAQdxCameraControlMode.CameraControlModeController);
-        NIVision.IMAQdxConfigureGrab(session);
+        
+        session2 = NIVision.IMAQdxOpenCamera("cam1",
+                NIVision.IMAQdxCameraControlMode.CameraControlModeListener);
+        
+        NIVision.IMAQdxConfigureGrab(session1);
+        
+        NIVision.IMAQdxConfigureGrab(session2);
         
         //create rectangle
 //        rect = new NIVision.Rect(ypos, xpos, height, width); x, y top left
         rect = new NIVision.Rect(50, 100, 100, 200);
         
         //start accquisition
-        NIVision.IMAQdxStartAcquisition(session);
+        NIVision.IMAQdxStartAcquisition(session1);
+        
+        NIVision.IMAQdxStartAcquisition(session2);
     }
 
     public static void updateDashboard() {
@@ -49,13 +61,18 @@ public class Vision {
          * which will in turn send it to the dashboard.
          */
 
-            NIVision.IMAQdxGrab(session, frame, 1);
+            NIVision.IMAQdxGrab(session1, frame1, 1);
             
-            NIVision.imaqDrawShapeOnImage(frame, frame, rect,
+            NIVision.IMAQdxGrab(session2, frame2, 1);
+            
+            NIVision.imaqDrawShapeOnImage(frame1, frame1, rect,
                     DrawMode.DRAW_VALUE, ShapeMode.SHAPE_RECT, 25.0f);
             
-
-            CameraServer.getInstance().setImage(frame);
+            if (Controller.getInstance().getButton(0))
+            	CameraServer.getInstance().setImage(frame1);
+            
+            if (Controller.getInstance().getButton(1))
+            	CameraServer.getInstance().setImage(frame2);
     }
 }
 

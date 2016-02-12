@@ -1,105 +1,125 @@
 package org.usfirst.frc.team2473.robot;
 
 import edu.wpi.first.wpilibj.*;
-import edu.wpi.first.wpilibj.CANTalon.ControlMode;
 import edu.wpi.first.wpilibj.CANTalon.FeedbackDevice;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Motor {
-	private CANTalon frontRight;
 	private CANTalon frontLeft;
-	private CANTalon backRight;
+	private CANTalon frontRight;
 	private CANTalon backLeft;
+	private CANTalon backRight;
 
 	// add addition cantalons as they are added to robot
-	public static final ControlMode MODE_POWER = ControlMode.PercentVbus;
-	public static final ControlMode MODE_POSITION = ControlMode.Position;
-	public static final ControlMode MODE_FOLLOWER = ControlMode.Follower;
+	public static final CANTalon.TalonControlMode MODE_POWER = CANTalon.TalonControlMode.PercentVbus;
+	public static final CANTalon.TalonControlMode MODE_POSITION = CANTalon.TalonControlMode.Position;
+	public static final CANTalon.TalonControlMode MODE_FOLLOWER = CANTalon.TalonControlMode.Follower;
 
+	
+	
 	// add more modes as necessary
 	private static Motor motor = null;
-	
+
 	private Motor() {
-		frontRight = new CANTalon(3);
-		frontLeft = new CANTalon(2);
-		backRight = new CANTalon(4);
-		backLeft = new CANTalon(5);
+		frontLeft = new CANTalon(3);
+		frontRight = new CANTalon(7);
+		backLeft = new CANTalon(8);
+		backRight = new CANTalon(2);
 
 		// test ids
 
-		setUpDriveMotors(frontRight);
 		setUpDriveMotors(frontLeft);
-		setUpDriveMotors(backRight);
+		setUpDriveMotors(frontRight);
 		setUpDriveMotors(backLeft);
+		setUpDriveMotors(backRight);
 
 		// add addition cantalons as they are added to robot
 
 	}
 
-	public static Motor getInstance(){
-		if(motor == null){
+	public static Motor getInstance() {
+		if (motor == null) {
 			motor = new Motor();
 		}
 		return motor;
+		
+		
 	}
-	
+
 	// Should only run once for each cantalon
 	private void setUpDriveMotors(CANTalon tal) {
-		tal.changeControlMode(ControlMode.Position);
+		tal.changeControlMode(MODE_POSITION);
 		tal.setFeedbackDevice(FeedbackDevice.QuadEncoder);
-		tal.setPID(.1, 0, 0); // test pid values
+		tal.setPID(.8, 0, 0.02); // test pid values
 		tal.setPosition(0);
 		tal.enableControl();
 	}
 
-	public void moveLeftSideMotors(double value) {
-		if (frontLeft.getControlMode() == MODE_POWER) {
-			frontLeft.set(value);
-			backLeft.set(value);
-		} else if (frontLeft.getControlMode() == MODE_POSITION) {
-			frontLeft.set(value);
-			backLeft.set(2);// frontleft integer id
-		}
-		SmartDashboard.putString("DB/String 2",
-				"FL: " + frontLeft.getEncPosition());
-	}
-
-	public void setLeftSideMotorsMode(ControlMode mode) {
-		if (mode == MODE_POWER) {
-			frontLeft.changeControlMode(mode);
-			backLeft.changeControlMode(mode);
-		} else if (mode == MODE_POSITION) {
-			frontLeft.changeControlMode(MODE_POSITION);
-			backLeft.changeControlMode(ControlMode.Follower);
-		}
-	}
-
 	public void moveRightSideMotors(double value) {
 		if (frontRight.getControlMode() == MODE_POWER) {
-			frontRight.set(-value);
-			backRight.set(-value);
+			frontRight.set(value);
+			backRight.set(value);
 		} else if (frontRight.getControlMode() == MODE_POSITION) {
 			frontRight.set(value);
-			backRight.set(3);// frontright integer id
+			backRight.set(7);// frontRight integer id
 		}
-
-		SmartDashboard.putString("DB/String 3",
+		SmartDashboard.putString("DB/String 2",
 				"FR: " + frontRight.getEncPosition());
 	}
 
-	public void setRightSideMotorsMode(ControlMode mode) {
+	public void setRightSideMotorsMode(CANTalon.TalonControlMode mode) {
 		if (mode == MODE_POWER) {
 			frontRight.changeControlMode(mode);
+			frontRight.ConfigRevLimitSwitchNormallyOpen(true);
+			frontRight.ConfigFwdLimitSwitchNormallyOpen(true);
 			backRight.changeControlMode(mode);
 		} else if (mode == MODE_POSITION) {
 			frontRight.changeControlMode(MODE_POSITION);
-			frontRight.reverseOutput(true);
-			backRight.changeControlMode(ControlMode.Follower);
-			backRight.reverseOutput(true);
+			frontRight.ConfigRevLimitSwitchNormallyOpen(true);
+			frontRight.ConfigFwdLimitSwitchNormallyOpen(true);
+			backRight.changeControlMode(MODE_FOLLOWER);
 		}
-
 	}
 
+	public void moveLeftSideMotors(double value) {
+		if (frontLeft.getControlMode() == MODE_POWER) {
+			frontLeft.set(-value);
+			backLeft.set(-value);
+		} else if (frontLeft.getControlMode() == MODE_POSITION) {
+			frontLeft.set(value);
+			backLeft.set(3);// frontLeft integer id
+		}
+
+		SmartDashboard.putString("DB/String 3",
+				"FL: " + frontLeft.getEncPosition());
+	}
+
+	public void setLeftSideMotorsMode(CANTalon.TalonControlMode mode) {
+		if (mode == MODE_POWER) {
+			frontLeft.changeControlMode(mode);
+			frontLeft.reverseOutput(false);
+			backLeft.changeControlMode(mode);
+		} else if (mode == MODE_POSITION) {
+			frontLeft.changeControlMode(MODE_POSITION);
+			frontLeft.reverseOutput(true);
+			backLeft.changeControlMode(MODE_FOLLOWER);
+			//backLeft.reverseOutput(true);
+		}
+	}
+
+	public int getEncoder(CANTalon motor) {
+		return motor.getEncPosition();
+	}
+
+	public void resetDriveEncoders() {
+		frontLeft.setPosition(0);
+		frontRight.setPosition(0);
+		backLeft.setPosition(0);
+		backRight.setPosition(0);
+	}
+	
+
+	
 	// create additional move methods using the below format
 	/*
 	 * public void moveSAMPLE_MOTORMotors(ControlMode mode, int value) {
