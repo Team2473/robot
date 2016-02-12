@@ -1,6 +1,7 @@
 package org.usfirst.frc.team2473.robot;
 
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Switches {
@@ -13,8 +14,10 @@ public class Switches {
 	DigitalInput ioSwitch6;
 	DigitalInput ioSwitch7;
 	DigitalInput ioSwitch8;
-
-	public Switches() {
+	
+	private static Switches switches = null;
+	
+	private Switches() {
 		// switch 1
 		ioSwitch1 = new DigitalInput(1);
 		ioSwitch2 = new DigitalInput(2);
@@ -27,16 +30,23 @@ public class Switches {
 		ioSwitch7 = new DigitalInput(7);
 		ioSwitch8 = new DigitalInput(8);
 	}
+	
+	public static Switches getInstance() {
+		if (switches == null) {
+			switches = new Switches();
+		}
+		return switches;
+	}
 
 	public void printDigitalInputs() {
-		SmartDashboard.putString("DB/String 1", "" + ioSwitch1);
-		SmartDashboard.putString("DB/String 2", "" + ioSwitch2);
-		SmartDashboard.putString("DB/String 3", "" + ioSwitch3);
-		SmartDashboard.putString("DB/String 4", "" + ioSwitch4);
-		SmartDashboard.putString("DB/String 5", "" + ioSwitch5);
-		SmartDashboard.putString("DB/String 6", "" + ioSwitch6);
-		SmartDashboard.putString("DB/String 7", "" + ioSwitch7);
-		SmartDashboard.putString("DB/String 8", "" + ioSwitch8);
+		SmartDashboard.putString("DB/String 1", "" + ioSwitch1.get());
+		SmartDashboard.putString("DB/String 2", "" + ioSwitch2.get());
+		SmartDashboard.putString("DB/String 3", "" + ioSwitch3.get());
+		SmartDashboard.putString("DB/String 4", "" + ioSwitch4.get());
+		SmartDashboard.putString("DB/String 5", "" + ioSwitch5.get());
+		SmartDashboard.putString("DB/String 6", "" + ioSwitch6.get());
+		SmartDashboard.putString("DB/String 7", "" + ioSwitch7.get());
+		SmartDashboard.putString("DB/String 8", "" + ioSwitch8.get());
 	}
 
 	public int getSwitch1Value() {
@@ -44,7 +54,7 @@ public class Switches {
 		if (ioSwitch1.get()) {
 			total += Math.pow(2, 0);
 		}
-		SmartDashboard.putString("DB/String 1", "" + ioSwitch1);
+		SmartDashboard.putString("DB/String 1", "" + ioSwitch1.get());
 		return total;
 	}
 
@@ -52,9 +62,8 @@ public class Switches {
 		int total = 0;
 		if (ioSwitch2.get()) {
 			total += Math.pow(2, 0);
-
 		}
-		SmartDashboard.putString("DB/String 2", "" + ioSwitch2);
+		SmartDashboard.putString("DB/String 2", "" + ioSwitch2.get());
 		return total;
 	}
 
@@ -64,7 +73,7 @@ public class Switches {
 			total += Math.pow(2, 0);
 
 		}
-		SmartDashboard.putString("DB/String 3", "" + ioSwitch3);
+		SmartDashboard.putString("DB/String 3", "" + ioSwitch3.get());
 		return total;
 	}
 
@@ -82,9 +91,9 @@ public class Switches {
 			total += Math.pow(2, 2);
 
 		}
-		SmartDashboard.putString("DB/String 4", "" + ioSwitch4);
-		SmartDashboard.putString("DB/String 5", "" + ioSwitch5);
-		SmartDashboard.putString("DB/String 6", "" + ioSwitch6);
+		SmartDashboard.putString("DB/String 4", "" + ioSwitch4.get());
+		SmartDashboard.putString("DB/String 5", "" + ioSwitch5.get());
+		SmartDashboard.putString("DB/String 6", "" + ioSwitch6.get());
 		return total;
 	}
 
@@ -98,8 +107,8 @@ public class Switches {
 			total += Math.pow(2, 1);
 
 		}
-		SmartDashboard.putString("DB/String 7", "" + ioSwitch7);
-		SmartDashboard.putString("DB/String 8", "" + ioSwitch8);
+		SmartDashboard.putString("DB/String 7", "" + ioSwitch7.get());
+		SmartDashboard.putString("DB/String 8", "" + ioSwitch8.get());
 		return total;
 	}
 }

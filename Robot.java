@@ -13,7 +13,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 
 public class Robot extends IterativeRobot {
-	Switches s;
 	/**
      * This function is run when the robot is first started up and should be
      * used for any initialization code.
@@ -41,14 +40,14 @@ public class Robot extends IterativeRobot {
      * This function is called once each time the robot enters tele-operated mode
      */
     public void teleopInit(){
-    	s = new Switches();
+
     }
     
     /**
      * This function is called periodically during operator control
      */
     public void teleopPeriodic() {
-    	s.printDigitalInputs();
+    	Switches.getInstance().printDigitalInputs();
     }
     
     /**
