@@ -26,7 +26,7 @@ public class Robot extends IterativeRobot {
      * This function is run once each time the robot enters autonomous mode
      */
     public void autonomousInit() {
-    	
+ 
     }
     
     /**
@@ -40,7 +40,7 @@ public class Robot extends IterativeRobot {
      * This function is called once each time the robot enters tele-operated mode
      */
     public void teleopInit(){
-
+    	Shooter.calibration();
     }
     
     /**
@@ -48,11 +48,12 @@ public class Robot extends IterativeRobot {
      */
     public void teleopPeriodic() {
 //    	Shooter.testDigitalIO();
-    	Shooter.testPotentiometer();
-    	Shooter.checkLS();
+//    	Shooter.testPotentiometer();
+//    	Shooter.checkLS();
     	//Shooter.moveBackward();
     	//Shooter.moveForward();
-    	Shooter.moveWithJoy();
+//    	Shooter.moveWithJoy();
+    	//Shooter.calibration();
     }
     
     /**
