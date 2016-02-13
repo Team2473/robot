@@ -33,6 +33,11 @@ public class Vision {
 	static boolean session1NotStarted = true;
 	static boolean session2NotStarted = true;
 	static boolean session3NotStarted = true;
+	
+	static boolean button1Pressed = false;
+	static boolean button2Pressed = false;
+	static boolean button3Pressed = false;
+
 
 	public static void visionInit() {
 		frame1 = NIVision.imaqCreateImage(NIVision.ImageType.IMAGE_RGB, 0);
@@ -59,41 +64,61 @@ public class Vision {
 	}
 
 	public static void updateDashboard() {
+		
+		
 		//session 1
 		if (Controller.getInstance().getButton(1)) {
-			// sessions 2 & 3 is no longer started
-			session2NotStarted = true;
-			session3NotStarted = true;
-
-			// configure if session not started
-			if (session1NotStarted) {
-				// End previous sessions
-				NIVision.IMAQdxUnconfigureAcquisition(session2);
-				NIVision.IMAQdxUnconfigureAcquisition(session3);
-
-				// Configure Grab
-				NIVision.IMAQdxConfigureGrab(session1);
-
-				// start acquisition
-				NIVision.IMAQdxStartAcquisition(session1);
-
-				// session 1 is started
-				session1NotStarted = false;
-			}
-
-			// grab image
-			NIVision.IMAQdxGrab(session1, frame1, 1);
-
-			// draw on image
-			NIVision.imaqDrawShapeOnImage(frame1, frame1, rect,
-					DrawMode.DRAW_VALUE, ShapeMode.SHAPE_RECT, 25.0f);
-
-			// send image to dashboard
-			CameraServer.getInstance().setImage(frame1);
+			button1Pressed = true;
+			button2Pressed = false;
+			button3Pressed = false;
+		
+			
+			
+		}else if(Controller.getInstance().getButton(2)){
+			button1Pressed = false;
+			button2Pressed = true;
+			button3Pressed = false;
+		
+			
+		}else if(Controller.getInstance().getButton(3)){
+			button1Pressed = false;
+			button2Pressed = false;
+			button3Pressed = true;
+			
 		}
 		
-		//session 2
-		if (Controller.getInstance().getButton(2)) {
+		if(button1Pressed && !Controller.getInstance().getButton(2) && !Controller.getInstance().getButton(3)){
+			// sessions 2 & 3 is no longer started
+						session2NotStarted = true;
+						session3NotStarted = true;
+
+						// configure if session not started
+						if (session1NotStarted) {
+							// End previous sessions
+							NIVision.IMAQdxUnconfigureAcquisition(session2);
+							NIVision.IMAQdxUnconfigureAcquisition(session3);
+
+							// Configure Grab
+							NIVision.IMAQdxConfigureGrab(session1);
+
+							// start acquisition
+							NIVision.IMAQdxStartAcquisition(session1);
+
+							// session 1 is started
+							session1NotStarted = false;
+						}
+						
+						// grab image
+						NIVision.IMAQdxGrab(session1, frame1, 1);
+
+						// draw on image
+						NIVision.imaqDrawShapeOnImage(frame1, frame1, rect,
+								DrawMode.DRAW_VALUE, ShapeMode.SHAPE_RECT, 25.0f);
+
+						// send image to dashboard
+						CameraServer.getInstance().setImage(frame1);
+			
+		}else if (button2Pressed && !Controller.getInstance().getButton(1) && !Controller.getInstance().getButton(3)) {
 			// sessions 1 & 3 is no longer started
 			session1NotStarted = true;
 			session3NotStarted = true;
@@ -123,10 +148,7 @@ public class Vision {
 
 			// send image to dashboard
 			CameraServer.getInstance().setImage(frame2);
-		}
-		
-		//session 3
-		if (Controller.getInstance().getButton(3)) {
+		}else if (button3Pressed && !Controller.getInstance().getButton(2) && !Controller.getInstance().getButton(1)) {
 			// sessions 1 & 2 is no longer started
 			session1NotStarted = true;
 			session2NotStarted = true;
@@ -157,5 +179,7 @@ public class Vision {
 			// send image to dashboard
 			CameraServer.getInstance().setImage(frame3);
 		}
+		
+		
 	}
 }
