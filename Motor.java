@@ -34,7 +34,7 @@ public class Motor {
 
 		// test ids
 
-		arm = new CANTalon(0);
+		arm = new CANTalon(8);
 		winch1 = new CANTalon(0);
 		winch2 = new CANTalon(0);
 
@@ -73,10 +73,10 @@ public class Motor {
 	}
 
 	private void setUpArm() {
-		arm.changeControlMode(MODE_POSITION);
+		arm.changeControlMode(MODE_POWER);
 		arm.setFeedbackDevice(FeedbackDevice.QuadEncoder);
-		arm.setPID(.1, 0, 0); // test pid values
-		arm.setPosition(0);
+		//arm.ConfigRevLimitSwitchNormallyOpen(false);
+		//arm.ConfigFwdLimitSwitchNormallyOpen(false);
 		arm.enableControl();
 	}
 
@@ -101,11 +101,9 @@ public class Motor {
 
 	private void setUpSpinners() {
 		spinner1.changeControlMode(MODE_POWER);
-		spinner1.setPosition(0);
 		spinner1.enableControl();
 		
 		spinner2.changeControlMode(MODE_POWER);
-		spinner2.setPosition(0);
 		spinner2.enableControl();
 	}
 
@@ -159,6 +157,8 @@ public class Motor {
 
 	public void moveGrapplerArmMotor(double value) {
 		arm.set(value);
+		SmartDashboard.putString("DB/String 6",
+				"Arm: " + arm.getEncPosition());
 	}
 
 	public void moveWinchMotors(double value) {
