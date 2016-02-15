@@ -17,7 +17,8 @@ public class Shooter {
 	public static int fwdPot;
 	public static int backPot;
 	public static double delta;
-	public static double[] fwdTable = {0.25, 0.24, 0.23, 0.22, 0.21, 0.20, 0.19, 0.18, 0.17, 0.16, 0.15, 0.14, 0.13, 0.12, 0.05, 0.03, 0.02, 0.01, 0.01, 0};
+	public static double[] fwdTable = {0.25, 0.24, 0.23, 0.22, 0.21, 0.20, 0.19, 0.18, 0.17, 0.16, 0.15, 0.14, 0.14, 0.14, 0.13, 0.12, 0.12, 0.06, 0.06, 0.02};
+		//0.13, 0.12, 0.12, 0.11, 0.10, 0.08, 0.04, 0};
 	//0.25, 0.23, 0.21, 0.19, 0.17, 0.15, 0.13, 0.11, 0.09, 0.07, 0.05, 0.05, 
 	
 	public Shooter(){
@@ -117,7 +118,7 @@ public class Shooter {
 			e.printStackTrace();
 		}
 		backPot = pot.getAnalogInRaw();
-		delta = Math.floor((double)(fwdPot - backPot)/20.0);
+		delta = (fwdPot - backPot) / 20.0;
 		
 		SmartDashboard.putString("DB/String 5", "fwdPot: " + fwdPot);
 		SmartDashboard.putString("DB/String 6", "backPot: " + backPot);
@@ -126,8 +127,15 @@ public class Shooter {
 	
 	public static void mapTable(){
 		int count = 0;
-		for(int i = backPot; i < fwdPot; i+=delta){
-			pot.set(fwdTable[0]);
+		for(double i = backPot + delta; i < fwdPot; i += delta){
+			SmartDashboard.putString("DB/String 1", "count: " + count);
+			SmartDashboard.putString("DB/String 2", "pot: " + pot.getAnalogInRaw());
+			SmartDashboard.putString("DB/String 8", "pwr: " + fwdTable[count]);
+			SmartDashboard.putString("DB/String 9", "i: " + i);
+			
+			while(pot.getAnalogInRaw() < i && count < fwdTable.length){
+				pot.set(fwdTable[count]);
+			}
 			count++;
 		}
 	}
