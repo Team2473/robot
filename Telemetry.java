@@ -3,9 +3,10 @@ package org.usfirst.frc.team2473.robot;
 import java.util.Arrays;
 
 import edu.wpi.first.wpilibj.AnalogInput;
+import edu.wpi.first.wpilibj.BuiltInAccelerometer;
 import edu.wpi.first.wpilibj.CANTalon;
-import edu.wpi.first.wpilibj.Gyro;
 import edu.wpi.first.wpilibj.SerialPort;
+import edu.wpi.first.wpilibj.hal.AccelerometerJNI;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 //import gpdraw.DrawingTool;
 //import gpdraw.SketchPad;
@@ -29,6 +30,8 @@ public class Telemetry {
 	private AnalogInput ultrasonic1;
 	private AnalogInput ultrasonic2;
 	
+	private BuiltInAccelerometer accel1;
+	
 	private double[] distanceArray1;
 	private double[] distanceArray2;
 	private int posUltra1;
@@ -41,10 +44,17 @@ public class Telemetry {
 		ultrasonic1 = new AnalogInput(0);
 		ultrasonic2 = new AnalogInput(1);
 		
+		//initialize accel
+		accel1 = new BuiltInAccelerometer();
+		
 		distanceArray1 = new double[10];
 		distanceArray2 = new double[10];
 		posUltra1 = 0;
 		posUltra2 = 0;
+	}
+	
+	public void readAccel () {
+		SmartDashboard.putString("DB/String 8", "Accel: " + accel1.getZ());
 	}
 
 	public static Telemetry getInstance() {
