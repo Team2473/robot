@@ -13,16 +13,22 @@ public class Shooter {
 	private static AnalogInput IR = new AnalogInput(1);
 	private static boolean ballIn = false;
 	public static CANTalon pot = new CANTalon(6);
+	public static CANTalon shootR = new CANTalon(9);
+	public static CANTalon shootL = new CANTalon(10);
 	public static Joystick joy1 = new Joystick(0);
-	public static int fwdPot;
-	public static int backPot;
+	
+	public static int fwdPot = 1023; //failsafe
+	public static int backPot = 851; //failsafe
+	
 	public static double delta;
 	//make backwards array by flipping fwdTable or make 2D array
-	public static double[] fwdTable = {0.25, 0.24, 0.23, 0.22, 0.21, 0.20, 0.19, 0.18, 0.17, 0.16, 0.15, 0.14, 0.14, 0.14, 0.13, 0.12, 0.12, 0.06, 0.06, 0.02};  
+	public static double[] fwdTable = {0.28, 0.26, 0.23, 0.22, 0.21, 0.20, 0.19, 0.18, 0.17, 0.15, 0.12, 0.08, 0.08, 0.08, 0.08, 0.08, 0.08, 0.06, 0.06, 0.02};  
 	
 	public Shooter(){
 		pot.enableBrakeMode(true);
 		pot.changeControlMode(CANTalon.TalonControlMode.PercentVbus);
+		shootR.changeControlMode(CANTalon.TalonControlMode.PercentVbus);
+		shootL.changeControlMode(CANTalon.TalonControlMode.PercentVbus);
 	}
 	
 	public static void testIR(){	
@@ -69,12 +75,12 @@ public class Shooter {
 	
 	public static void moveForward(){
 		pot.changeControlMode(CANTalon.TalonControlMode.PercentVbus);
-		pot.set(0.2);
+		pot.set(0.15);
 	}
 	
 	public static void moveBackward(){ //365 pot
 		pot.changeControlMode(CANTalon.TalonControlMode.PercentVbus);
-		pot.set(-0.2);
+		pot.set(-0.15);
 	}
 	
 	public static void stop(){
@@ -82,19 +88,36 @@ public class Shooter {
 		pot.set(0);
 	}
 	
-	public static void moveWithJoy(){
+	
+	public static void moveWithJoy(){ // finding index value of table (bucket) given an AnalogInRaw value
+									  // can't use for and while loops as we did in mapTable() method
+									  // basically: no endpoints
+		//works, but only if I stop pressing 3 and then press it again, otherwise doesn't search for the next value
 		if(joy1.getRawButton(3)){
-			moveForward();
+//			moveForward();
+			int pos = pot.getAnalogInRaw();
+			int one = backPot;
+			boolean found = false;
+			int n = 1;
+			while(!found && joy1.getRawButton(3)){
+				SmartDashboard.putString("DB/String 1", "n: " + n);
+				while((pos >= one) && (pos < backPot + n*(int)(delta)) && joy1.getRawButton(3)){ //if between two ranges, finds arr value
+					pot.set(fwdTable[n-1]);
+				}
+				one = (int)(backPot + n*delta);
+				n++;
+			}
 		}
-		else if(joy1.getRawButton(2)){
-			moveBackward();
-		}
+//		else if(joy1.getRawButton(2)){
+////			moveBackward();
+//			
+//		}
 		else{
 			stop();
 		}
 	}
+		
 	
-
 	
 	public static void calibration(){
 		while(pot.isFwdLimitSwitchClosed()){ //when forward is not pressed
@@ -124,6 +147,10 @@ public class Shooter {
 		SmartDashboard.putString("DB/String 7", "delta: " + delta);
 	}
 	
+	
+	
+	
+	
 	//Make same method for backwards, put fwd and back onto buttons to make life easier
 	public static void mapTable(){
 		int count = 0;
@@ -138,7 +165,42 @@ public class Shooter {
 			}
 			count++;
 		}
+		
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		int count2 = 0;
+		for(double i = fwdPot - delta; i > backPot; i -= delta){
+			SmartDashboard.putString("DB/String 1", "count: " + count2);
+			SmartDashboard.putString("DB/String 2", "pot: " + pot.getAnalogInRaw());
+			SmartDashboard.putString("DB/String 8", "pwr: " + fwdTable[count2]);
+			SmartDashboard.putString("DB/String 9", "i: " + i);
+			
+			while(pot.getAnalogInRaw() > i && count2 < fwdTable.length){
+				pot.set(-fwdTable[count2]);
+			}
+			count2++;
+		}
+		
 	}
+	
+	
+	//move spinner in until break beams broken
+	public void getBall(){
+		while(/*break beams not interrupted*/){
+			shootR.set(0.3); //arbitrary values
+			shootL.set(-0.3);
+		}
+		//break beams interrupted
+		shootR.set(0);
+		shootL.set(0);
+	}
+	
+	
 	
 //	public void pickUp(){
 //		moveShooterLever(0.5); //potentiometer value, ground level

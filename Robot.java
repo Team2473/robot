@@ -41,6 +41,7 @@ public class Robot extends IterativeRobot {
      */
     public void teleopInit(){
     	Shooter.calibration();
+//    	Shooter.mapTable();
     }
     
     /**
@@ -51,10 +52,10 @@ public class Robot extends IterativeRobot {
      * 
      */
     public void teleopPeriodic() {
-    	Shooter.mapTable();
+    	
     	Shooter.testPotentiometer();
     	Shooter.checkLS();
-    	//Shooter.moveWithJoy(); 
+    	Shooter.moveWithJoy(); 
     }
     
     /**
