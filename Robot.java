@@ -40,18 +40,21 @@ public class Robot extends IterativeRobot {
      * This function is called once each time the robot enters tele-operated mode
      */
     public void teleopInit(){
-    	//Shooter.calibration();
+    	Shooter.calibration();
     }
     
     /**
      * This function is called periodically during operator control
      */
+    /*
+     * Note to Rucha: Uncomment calibration method and mapTable method to test.
+     * 
+     */
     public void teleopPeriodic() {
-    	//Shooter.mapTable();
+    	Shooter.mapTable();
     	Shooter.testPotentiometer();
     	Shooter.checkLS();
-    	Shooter.moveWithJoy();
-    	//Shooter.calibration()   
+    	//Shooter.moveWithJoy(); 
     }
     
     /**

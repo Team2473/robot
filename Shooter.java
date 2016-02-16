@@ -17,9 +17,8 @@ public class Shooter {
 	public static int fwdPot;
 	public static int backPot;
 	public static double delta;
-	public static double[] fwdTable = {0.25, 0.24, 0.23, 0.22, 0.21, 0.20, 0.19, 0.18, 0.17, 0.16, 0.15, 0.14, 0.14, 0.14, 0.13, 0.12, 0.12, 0.06, 0.06, 0.02};
-		//0.13, 0.12, 0.12, 0.11, 0.10, 0.08, 0.04, 0};
-	//0.25, 0.23, 0.21, 0.19, 0.17, 0.15, 0.13, 0.11, 0.09, 0.07, 0.05, 0.05, 
+	//make backwards array by flipping fwdTable or make 2D array
+	public static double[] fwdTable = {0.25, 0.24, 0.23, 0.22, 0.21, 0.20, 0.19, 0.18, 0.17, 0.16, 0.15, 0.14, 0.14, 0.14, 0.13, 0.12, 0.12, 0.06, 0.06, 0.02};  
 	
 	public Shooter(){
 		pot.enableBrakeMode(true);
@@ -125,6 +124,7 @@ public class Shooter {
 		SmartDashboard.putString("DB/String 7", "delta: " + delta);
 	}
 	
+	//Make same method for backwards, put fwd and back onto buttons to make life easier
 	public static void mapTable(){
 		int count = 0;
 		for(double i = backPot + delta; i < fwdPot; i += delta){
