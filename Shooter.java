@@ -89,6 +89,7 @@ public class Shooter {
 	}
 	
 	
+	//Note from Ekta: This just looks wrong, see method below mapping
 	public static void moveWithJoy(){ // finding index value of table (bucket) given an AnalogInRaw value
 									  // can't use for and while loops as we did in mapTable() method
 									  // basically: no endpoints
@@ -148,11 +149,7 @@ public class Shooter {
 	}
 	
 	
-	
-	
-	
-	//Make same method for backwards, put fwd and back onto buttons to make life easier
-	public static void mapTable(){
+	public static void mapFwdTable(){
 		int count = 0;
 		for(double i = backPot + delta; i < fwdPot; i += delta){
 			SmartDashboard.putString("DB/String 1", "count: " + count);
@@ -166,13 +163,9 @@ public class Shooter {
 			count++;
 		}
 		
-		try {
-			Thread.sleep(1000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
+	}
+	
+	public static void mapBackTable(){	
 		int count2 = 0;
 		for(double i = fwdPot - delta; i > backPot; i -= delta){
 			SmartDashboard.putString("DB/String 1", "count: " + count2);
@@ -186,6 +179,15 @@ public class Shooter {
 			count2++;
 		}
 		
+	}
+	
+	public static void joyControlled(){
+		if(joy1.getRawButton(3)){
+			mapFwdTable();
+		}
+		else if(joy1.getRawButton(4)){
+			mapBackTable();
+		}
 	}
 	
 	
@@ -203,7 +205,7 @@ public class Shooter {
 	
 	
 //	public void pickUp(){
-//		moveShooterLever(0.5); //potentiometer value, ground level
+//		mapFwdTable(); //potentiometer value, ground level
 //		//test value
 //		while(IR.getVoltage() < 2.3){
 //			spinShooter(0.5); //speed value
