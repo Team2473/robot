@@ -1,5 +1,7 @@
 package org.usfirst.frc.team2473.robot;
 
+
+import edu.wpi.first.wpilibj.DigitalInput;
 import java.util.Arrays;
 
 import edu.wpi.first.wpilibj.AnalogInput;
@@ -32,6 +34,7 @@ public class Telemetry {
 	private int posUltra1;
 	private int posUltra2;
 	
+	private static DigitalInput breakbeam = new DigitalInput(1);
 	
 	private static Telemetry telemetry = null;
 
@@ -50,6 +53,10 @@ public class Telemetry {
 			telemetry = new Telemetry();
 		}
 		return telemetry;
+	}
+	public static void testBreakBeam(){
+		SmartDashboard.putString("DB/String 1", "Breakbeam: " + breakbeam.get());
+		
 	}
 	
 	//needs to run continuously for values to be correct
@@ -90,10 +97,10 @@ public class Telemetry {
 	port: some enum, probably SP___?
 	*/
 	//I will attempt:
-	SerialPort lidar = new SerialPort(115200, ??);
-	lidar.setWriteBufferSize(16); //jk is this supposed to be 1024
+//	SerialPort lidar = new SerialPort(115200, ??);
+//	lidar.setWriteBufferSize(16); //jk is this supposed to be 1024
 	char[] arr = {'S','D','\n'};
-	lidar.write(arr,3);
+//	lidar.write(arr,3);
 	
 	
 	

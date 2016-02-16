@@ -27,14 +27,14 @@ public class Switches {
     	
     }
     public static void printDigitalInputs(){
-		SmartDashboard.putString("DB/String 10", ioSwitch1);
-		SmartDashboard.putString("DB/String 10", ioSwitch2);
-		SmartDashboard.putString("DB/String 10", ioSwitch3);
-		SmartDashboard.putString("DB/String 10", ioSwitch4);
-		SmartDashboard.putString("DB/String 10", ioSwitch5);
-		SmartDashboard.putString("DB/String 10", ioSwitch6);
-		SmartDashboard.putString("DB/String 10", ioSwitch7);
-		SmartDashboard.putString("DB/String 10", ioSwitch8);
+		SmartDashboard.putString("DB/String 10", ioSwitch1.get());
+		SmartDashboard.putString("DB/String 10", ioSwitch2.get());
+		SmartDashboard.putString("DB/String 10", ioSwitch3.get());
+		SmartDashboard.putString("DB/String 10", ioSwitch4.get());
+		SmartDashboard.putString("DB/String 10", ioSwitch5.get());
+		SmartDashboard.putString("DB/String 10", ioSwitch6.get());
+		SmartDashboard.putString("DB/String 10", ioSwitch7.get());
+		SmartDashboard.putString("DB/String 10", ioSwitch8.get());
 
 		
     	
@@ -45,7 +45,7 @@ public class Switches {
     public int getSwitch1Value(){
     	int total = 0;
     	if(ioSwitch1.get()){
-    		total += Math.pow(2, 0)
+    		total += Math.pow(2, 0);
     		
     	}
     	
@@ -57,7 +57,7 @@ public class Switches {
     public int getSwitch2Value(){
     	int total = 0;
     	if(ioSwitch2.get()){
-    		total += Math.pow(2, 0)
+    		total += Math.pow(2, 0);
     		
     	}
     	
@@ -68,7 +68,7 @@ public class Switches {
     public int getSwitch3Value(){
     	int total = 0;
     	if(ioSwitch3.get()){
-    		total += Math.pow(2, 0)
+    		total += Math.pow(2, 0);
     		
     	}
     	
