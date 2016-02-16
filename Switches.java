@@ -1,15 +1,16 @@
 package org.usfirst.frc.team2473.robot;
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class Switches {
 	
-	DigitalInput ioSwitch1; 
-	DigitalInput ioSwitch2;
-	DigitalInput ioSwitch3;
-	DigitalInput ioSwitch4;
-	DigitalInput ioSwitch5;
-	DigitalInput ioSwitch6;
-	DigitalInput ioSwitch7;
-	DigitalInput ioSwitch8; 
+	static DigitalInput ioSwitch1; 
+	static DigitalInput ioSwitch2;
+	static DigitalInput ioSwitch3;
+	static DigitalInput ioSwitch4;
+	static DigitalInput ioSwitch5;
+	static DigitalInput ioSwitch6;
+	static DigitalInput ioSwitch7;
+	static DigitalInput ioSwitch8; 
     public Switches{
     	//switch 1
     	ioSwitch1 = new DigitalInput(1);
@@ -27,14 +28,14 @@ public class Switches {
     	
     }
     public static void printDigitalInputs(){
-		SmartDashboard.putString("DB/String 10", ioSwitch1.get());
-		SmartDashboard.putString("DB/String 10", ioSwitch2.get());
-		SmartDashboard.putString("DB/String 10", ioSwitch3.get());
-		SmartDashboard.putString("DB/String 10", ioSwitch4.get());
-		SmartDashboard.putString("DB/String 10", ioSwitch5.get());
-		SmartDashboard.putString("DB/String 10", ioSwitch6.get());
-		SmartDashboard.putString("DB/String 10", ioSwitch7.get());
-		SmartDashboard.putString("DB/String 10", ioSwitch8.get());
+		SmartDashboard.putString("DB/String 10", "1" + ioSwitch1.get());
+		SmartDashboard.putString("DB/String 10", "2" + ioSwitch2.get());
+		SmartDashboard.putString("DB/String 10", "3" + ioSwitch3.get());
+		SmartDashboard.putString("DB/String 10", "4" + ioSwitch4.get());
+		SmartDashboard.putString("DB/String 10", "5" + ioSwitch5.get());
+		SmartDashboard.putString("DB/String 10", "6" + ioSwitch6.get());
+		SmartDashboard.putString("DB/String 10", "7" + ioSwitch7.get());
+		SmartDashboard.putString("DB/String 10", "8" + ioSwitch8.get());
 
 		
     	
