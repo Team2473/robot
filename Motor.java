@@ -81,10 +81,8 @@ public class Motor {
 	}
 
 	private void setUpWinches() {
-		winch1.changeControlMode(MODE_POSITION);
+		winch1.changeControlMode(MODE_POWER);
 		winch1.setFeedbackDevice(FeedbackDevice.QuadEncoder);
-		winch1.setPID(.1, 0, 0); // test pid values
-		winch1.setPosition(0);
 		winch1.enableControl();
 
 		winch2.changeControlMode(MODE_FOLLOWER);
@@ -166,7 +164,8 @@ public class Motor {
 
 	public void moveWinchMotors(double value) {
 		winch1.set(value);
-		winch2.set(0); /* winch1 motor id */
+		winch2.set(1); /* winch1 motor id */
+		SmartDashboard.putString("DB/String 8", "Winch: " + winch1.getEncPosition());
 	}
 
 	public void moveShooterLever(double value) {
