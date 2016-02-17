@@ -53,13 +53,7 @@ public class Robot extends IterativeRobot {
      */
 
     public void teleopPeriodic() {
-<<<<<<< HEAD
-
     	Vision.updateDashboard();
-
-=======
-    	
->>>>>>> refs/remotes/origin/master
     }
     
     /**
