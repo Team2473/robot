@@ -36,13 +36,13 @@ public class Controller {
 
 	public double getYR() {
 		return -joy1.getRawAxis(5);
-
 	}
-
+	
+	public boolean getJoy1Button(int b) {
+		return joy1.getRawButton(b);
+	}
 	// buttons joystick 2
-	public boolean getButton(int b) {
+	public boolean getJoy2Button(int b) {
 		return joy2.getRawButton(b);
 	}
-
-
 }
