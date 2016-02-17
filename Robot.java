@@ -45,17 +45,21 @@ public class Robot extends IterativeRobot {
      * This function is called once each time the robot enters tele-operated mode
      */
     public void teleopInit(){
-    	
-    	
+
     }
     
     /**
      * This function is called periodically during operator control
      */
+
     public void teleopPeriodic() {
+<<<<<<< HEAD
 
     	Vision.updateDashboard();
 
+=======
+    	
+>>>>>>> refs/remotes/origin/master
     }
     
     /**
