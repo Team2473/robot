@@ -54,8 +54,8 @@ public class Vision {
 		session2 = NIVision.IMAQdxOpenCamera("cam1",
 				NIVision.IMAQdxCameraControlMode.CameraControlModeListener);
 		
-		session3 = NIVision.IMAQdxOpenCamera("cam2",
-				NIVision.IMAQdxCameraControlMode.CameraControlModeListener);
+//		session3 = NIVision.IMAQdxOpenCamera("cam2",
+//				NIVision.IMAQdxCameraControlMode.CameraControlModeListener);
 
 		// create rectangle
 		// rect = new NIVision.Rect(ypos, xpos, height, width); x, y top left
@@ -96,7 +96,7 @@ public class Vision {
 						if (session1NotStarted) {
 							// End previous sessions
 							NIVision.IMAQdxUnconfigureAcquisition(session2);
-							NIVision.IMAQdxUnconfigureAcquisition(session3);
+//							NIVision.IMAQdxUnconfigureAcquisition(session3);
 
 							// Configure Grab
 							NIVision.IMAQdxConfigureGrab(session1);
@@ -127,7 +127,7 @@ public class Vision {
 			if (session2NotStarted) {
 				// End previous sessions
 				NIVision.IMAQdxUnconfigureAcquisition(session1);
-				NIVision.IMAQdxUnconfigureAcquisition(session3);
+//				NIVision.IMAQdxUnconfigureAcquisition(session3);
 
 				// Configure Grab
 				NIVision.IMAQdxConfigureGrab(session2);
@@ -148,37 +148,38 @@ public class Vision {
 
 			// send image to dashboard
 			CameraServer.getInstance().setImage(frame2);
-		}else if (button3Pressed && !Controller.getInstance().getButton(2) && !Controller.getInstance().getButton(1)) {
-			// sessions 1 & 2 is no longer started
-			session1NotStarted = true;
-			session2NotStarted = true;
-
-			// configure if session not started
-			if (session3NotStarted) {
-				// End previous sessions
-				NIVision.IMAQdxUnconfigureAcquisition(session1);
-				NIVision.IMAQdxUnconfigureAcquisition(session2);
-
-				// Configure Grab
-				NIVision.IMAQdxConfigureGrab(session3);
-
-				// start acquisition
-				NIVision.IMAQdxStartAcquisition(session3);
-
-				// session 3 is started
-				session3NotStarted = false;
-			}
-
-			// grab image
-			NIVision.IMAQdxGrab(session3, frame3, 1);
-
-			// draw on image
-			NIVision.imaqDrawShapeOnImage(frame3, frame3, rect,
-					DrawMode.DRAW_VALUE, ShapeMode.SHAPE_RECT, 25.0f);
-
-			// send image to dashboard
-			CameraServer.getInstance().setImage(frame3);
 		}
+//		else if (button3Pressed && !Controller.getInstance().getButton(2) && !Controller.getInstance().getButton(1)) {
+//			// sessions 1 & 2 is no longer started
+//			session1NotStarted = true;
+//			session2NotStarted = true;
+//
+//			// configure if session not started
+//			if (session3NotStarted) {
+//				// End previous sessions
+//				NIVision.IMAQdxUnconfigureAcquisition(session1);
+//				NIVision.IMAQdxUnconfigureAcquisition(session2);
+//
+//				// Configure Grab
+//				NIVision.IMAQdxConfigureGrab(session3);
+//
+//				// start acquisition
+//				NIVision.IMAQdxStartAcquisition(session3);
+//
+//				// session 3 is started
+//				session3NotStarted = false;
+//			}
+//
+//			// grab image
+//			NIVision.IMAQdxGrab(session3, frame3, 1);
+//
+//			// draw on image
+//			NIVision.imaqDrawShapeOnImage(frame3, frame3, rect,
+//					DrawMode.DRAW_VALUE, ShapeMode.SHAPE_RECT, 25.0f);
+//
+//			// send image to dashboard
+//			CameraServer.getInstance().setImage(frame3);
+//		}
 		
 		
 	}
