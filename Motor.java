@@ -41,9 +41,6 @@ public class Motor {
 
 		setUpArm();
 		setUpWinches();
-
-		setUpShooterLever();
-		setUpSpinners();
 		// add addition cantalons as they are added to robot
 	}
 
