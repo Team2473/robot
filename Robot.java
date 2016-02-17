@@ -1,6 +1,9 @@
 package org.usfirst.frc.team2473.robot;
 
 import edu.wpi.first.wpilibj.*;
+
+import edu.wpi.first.wpilibj.CANTalon.FeedbackDevice;
+
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -18,8 +21,10 @@ public class Robot extends IterativeRobot {
      * used for any initialization code.
      */
 	
+	
+	
     public void robotInit() {
-    	
+    	Vision.visionInit();
     }
     
     /**
@@ -50,6 +55,7 @@ public class Robot extends IterativeRobot {
     public void teleopPeriodic() {
     	TeleOp.runPower();
     	TeleOp.runUtilities();
+    	Vision.updateDashboard();
     }
     
     /**
