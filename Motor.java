@@ -75,17 +75,25 @@ public class Motor {
 	private void setUpArm() {
 		arm.changeControlMode(MODE_POWER);
 		arm.setFeedbackDevice(FeedbackDevice.QuadEncoder);
-		// arm.ConfigRevLimitSwitchNormallyOpen(false);
-		// arm.ConfigFwdLimitSwitchNormallyOpen(false);
+		arm.setPosition(0);
+		arm.ConfigRevLimitSwitchNormallyOpen(false);
+		arm.ConfigFwdLimitSwitchNormallyOpen(false);
 		arm.enableControl();
+		moveGrapplerArmMotor(-260);
+		arm.setPosition(0);
 	}
 
 	private void setUpWinches() {
 		winch1.changeControlMode(MODE_POWER);
 		winch1.setFeedbackDevice(FeedbackDevice.QuadEncoder);
+		winch1.ConfigFwdLimitSwitchNormallyOpen(true);
+		winch1.ConfigRevLimitSwitchNormallyOpen(true);
+		winch1.setPosition(0);
 		winch1.enableControl();
-
-		winch2.changeControlMode(MODE_FOLLOWER);
+		
+		winch2.changeControlMode(MODE_POWER);
+		winch2.ConfigFwdLimitSwitchNormallyOpen(true);
+		winch2.ConfigRevLimitSwitchNormallyOpen(true);
 		winch2.enableControl();
 	}
 
@@ -157,14 +165,29 @@ public class Motor {
 		}
 	}
 
-	public void moveGrapplerArmMotor(double value) {
-		arm.set(value);
+	//260 is pointing up, 0 is pointing level
+	public void moveGrapplerArmMotor(double encValue) {
+		if(-arm.getPosition() - encValue < -20){
+			arm.set(.25);//test constant
+			arm.set(.25); //test constant
+		}else if(-arm.getPosition() - encValue > 20){
+			arm.set(-.05);//test constant
+			arm.set(-.05); //test constant
+		}else{
+			arm.set(0);
+		}
 		SmartDashboard.putString("DB/String 6", "Arm: " + arm.getEncPosition());
 	}
 
-	public void moveWinchMotors(double value) {
-		winch1.set(value);
-		winch2.set(1); /* winch1 motor id */
+	//140 is one full rotation
+	public void moveWinchMotors(double encValue) {
+		if(-winch1.getPosition() < encValue){
+			winch1.set(-.3);//test constant
+			winch2.set(-.3); //test constant
+		}else{
+			winch1.set(0);
+			winch2.set(0);
+		}
 		SmartDashboard.putString("DB/String 8", "Winch: " + winch1.getEncPosition());
 	}
 
