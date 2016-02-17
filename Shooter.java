@@ -89,6 +89,8 @@ public class Shooter {
 	}
 	
 	
+	//DON'T DELETE THIS YET: CONVERSION TOOL:
+	
 //	public static void moveWithJoy(){ // finding index value of table (bucket) given an AnalogInRaw value
 //		if(joy1.getRawButton(3)){
 ////			moveForward();
@@ -145,7 +147,8 @@ public class Shooter {
 	}
 	
 	
-	public static void mapFwdTable(){
+	//20 means that it goes ALL THE WAY forward or ALL THE WAY backward
+	public static void mapFwdTable(int n){
 		int count = 0;
 		for(double i = backPot + delta; i < fwdPot; i += delta){
 			SmartDashboard.putString("DB/String 1", "count: " + count);
@@ -154,7 +157,7 @@ public class Shooter {
 			SmartDashboard.putString("DB/String 9", "i: " + i);
 			
 			while(pot.getAnalogInRaw() < i && count < fwdTable.length){
-				if(!joy1.getRawButton(3)){
+				if(!joy1.getRawButton(n) && n!= 20){
 					stop();
 					break;
 				}
@@ -165,7 +168,7 @@ public class Shooter {
 		
 	}
 	
-	public static void mapBackTable(){	
+	public static void mapBackTable(int n){	
 		int count2 = 0;
 		for(double i = fwdPot - delta; i > backPot; i -= delta){
 			SmartDashboard.putString("DB/String 1", "count: " + count2);
@@ -174,7 +177,7 @@ public class Shooter {
 			SmartDashboard.putString("DB/String 9", "i: " + i);
 			
 			while(pot.getAnalogInRaw() > i && count2 < fwdTable.length){
-				if(!joy1.getRawButton(2)){
+				if(!joy1.getRawButton(n) && n!=20){
 					stop();
 					break;
 				}
@@ -188,10 +191,10 @@ public class Shooter {
 	//works with joystick, but if below 45 degrees, falls on its own due to weight
 	public static void joyControlled(){
 		if(joy1.getRawButton(3)){
-			mapFwdTable();
+			mapFwdTable(3);
 		}
 		else if(joy1.getRawButton(2)){
-			mapBackTable();
+			mapBackTable(2);
 		}
 		else{
 			stop();
@@ -200,15 +203,41 @@ public class Shooter {
 	
 	
 	
-//	move spinner in until break beams broken
-	public void loading(){
-		while(/*break beams not interrupted*/){
-			shootR.set(0.3); //arbitrary values
-			shootL.set(-0.3);
+	DigitalInput spin = new DigitalInput(2); //placeholder for wheel input
+	
+	public void load(){
+		if(joy1.getRawButton(4)){
+			mapFwdTable(4);
 		}
-		//break beams interrupted
-		shootR.set(0);
-		shootL.set(0);
+		while(!spin.get()){ 							//beam is whole; no break; spins in
+			shootR.set(0.2);
+			shootL.set(-0.2);
+		}
+		if(spin.get()){ 								//beam broken
+			shootR.set(0);		 						//0 = 0 power? no VBus mode?
+			shootL.set(0);
+			//set arm to with ball position
+		}
+		else if(!joy1.getRawButton(4)){ 				//button release
+			mapBackTable(20);
+		}
+	}
+	
+	
+	public void unload(){
+		if(joy1.getRawButton(5)){						//bring arm fwd
+			mapFwdTable(5);
+		}
+		while(spin.get()){								//break beam is broken, unload
+			shootR.set(-0.2);
+			shootL.set(0.2);
+		}
+		if(!spin.get()){								//break beam is whole
+			mapBackTable(20);
+		}
+		else if(!joy1.getRawButton(5)){
+			mapBackTable(20);
+		}
 	}
 	
 	
