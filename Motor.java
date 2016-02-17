@@ -5,10 +5,10 @@ import edu.wpi.first.wpilibj.CANTalon.FeedbackDevice;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Motor {
-	private CANTalon frontRight;
 	private CANTalon frontLeft;
-	private CANTalon backRight;
+	private CANTalon frontRight;
 	private CANTalon backLeft;
+	private CANTalon backRight;
 
 	private CANTalon arm; // the motor to move the arm into position
 	private CANTalon winch1; // the motor to extend the arm
@@ -27,29 +27,28 @@ public class Motor {
 	private static Motor motor = null;
 
 	private Motor() {
-		frontRight = new CANTalon(3);
-		frontLeft = new CANTalon(2);
-		backRight = new CANTalon(4);
-		backLeft = new CANTalon(5);
+		frontLeft = new CANTalon(3);
+		frontRight = new CANTalon(7);
+		backLeft = new CANTalon(8);
+		backRight = new CANTalon(2);
 
 		// test ids
 
-		arm = new CANTalon(8);
-		winch1 = new CANTalon(0);
-		winch2 = new CANTalon(0);
+		arm = new CANTalon(5);
+		winch1 = new CANTalon(1);
+		winch2 = new CANTalon(4);
 
-		shooterLever = new CANTalon(0);
+		shooterLever = new CANTalon(6);
 		spinner1 = new CANTalon(0);
 		spinner2 = new CANTalon(0);
 
-		setUpDriveMotors(frontRight);
 		setUpDriveMotors(frontLeft);
-		setUpDriveMotors(backRight);
+		setUpDriveMotors(frontRight);
 		setUpDriveMotors(backLeft);
+		setUpDriveMotors(backRight);
 
 		setUpArm();
 		setUpWinches();
-
 
 		setUpShooterLever();
 		setUpSpinners();
@@ -61,13 +60,14 @@ public class Motor {
 			motor = new Motor();
 		}
 		return motor;
+
 	}
 
 	// Should only run once for each cantalon
 	private void setUpDriveMotors(CANTalon tal) {
 		tal.changeControlMode(MODE_POSITION);
 		tal.setFeedbackDevice(FeedbackDevice.QuadEncoder);
-		tal.setPID(1, 0, 0); // test pid values
+		tal.setPID(.8, 0, 0.02); // test pid values
 		tal.setPosition(0);
 		tal.enableControl();
 	}
@@ -75,8 +75,8 @@ public class Motor {
 	private void setUpArm() {
 		arm.changeControlMode(MODE_POWER);
 		arm.setFeedbackDevice(FeedbackDevice.QuadEncoder);
-		//arm.ConfigRevLimitSwitchNormallyOpen(false);
-		//arm.ConfigFwdLimitSwitchNormallyOpen(false);
+		// arm.ConfigRevLimitSwitchNormallyOpen(false);
+		// arm.ConfigFwdLimitSwitchNormallyOpen(false);
 		arm.enableControl();
 	}
 
@@ -86,7 +86,7 @@ public class Motor {
 		winch1.setPID(.1, 0, 0); // test pid values
 		winch1.setPosition(0);
 		winch1.enableControl();
-		
+
 		winch2.changeControlMode(MODE_FOLLOWER);
 		winch2.enableControl();
 	}
@@ -102,68 +102,71 @@ public class Motor {
 	private void setUpSpinners() {
 		spinner1.changeControlMode(MODE_POWER);
 		spinner1.enableControl();
-		
+
 		spinner2.changeControlMode(MODE_POWER);
 		spinner2.enableControl();
 	}
 
-	public void moveLeftSideMotors(double value) {
-		if (frontLeft.getControlMode() == MODE_POWER) {
-			frontLeft.set(value);
-			backLeft.set(value);
-		} else if (frontLeft.getControlMode() == MODE_POSITION) {
-			frontLeft.set(value);
-			backLeft.set(2);// frontleft integer id
-		}
-		SmartDashboard.putString("DB/String 2",
-				"FL: " + frontLeft.getEncPosition());
-	}
-
-	public void setLeftSideMotorsMode(CANTalon.TalonControlMode mode) {
-		if (mode == MODE_POWER) {
-			frontLeft.changeControlMode(mode);
-			backLeft.changeControlMode(mode);
-		} else if (mode == MODE_POSITION) {
-			frontLeft.changeControlMode(MODE_POSITION);
-			// set pid for front left
-			backLeft.changeControlMode(MODE_FOLLOWER);
-		}
-	}
-
 	public void moveRightSideMotors(double value) {
 		if (frontRight.getControlMode() == MODE_POWER) {
-			frontRight.set(-value);
-			backRight.set(-value);
+			frontRight.set(value);
+			backRight.set(value);
 		} else if (frontRight.getControlMode() == MODE_POSITION) {
 			frontRight.set(value);
-			backRight.set(3);// frontright integer id
+			backRight.set(7);// frontRight integer id
 		}
-
-		SmartDashboard.putString("DB/String 3",
+		SmartDashboard.putString("DB/String 2",
 				"FR: " + frontRight.getEncPosition());
 	}
 
 	public void setRightSideMotorsMode(CANTalon.TalonControlMode mode) {
 		if (mode == MODE_POWER) {
 			frontRight.changeControlMode(mode);
+			frontRight.ConfigRevLimitSwitchNormallyOpen(true);
+			frontRight.ConfigFwdLimitSwitchNormallyOpen(true);
 			backRight.changeControlMode(mode);
 		} else if (mode == MODE_POSITION) {
 			frontRight.changeControlMode(MODE_POSITION);
-			frontRight.reverseOutput(true);
+			frontRight.ConfigRevLimitSwitchNormallyOpen(true);
+			frontRight.ConfigFwdLimitSwitchNormallyOpen(true);
 			backRight.changeControlMode(MODE_FOLLOWER);
-			backRight.reverseOutput(true);
+		}
+	}
+
+	public void moveLeftSideMotors(double value) {
+		if (frontLeft.getControlMode() == MODE_POWER) {
+			frontLeft.set(-value);
+			backLeft.set(-value);
+		} else if (frontLeft.getControlMode() == MODE_POSITION) {
+			frontLeft.set(value);
+			backLeft.set(3);// frontLeft integer id
+		}
+
+		SmartDashboard.putString("DB/String 3",
+				"FL: " + frontLeft.getEncPosition());
+	}
+
+	public void setLeftSideMotorsMode(CANTalon.TalonControlMode mode) {
+		if (mode == MODE_POWER) {
+			frontLeft.changeControlMode(mode);
+			frontLeft.reverseOutput(false);
+			backLeft.changeControlMode(mode);
+		} else if (mode == MODE_POSITION) {
+			frontLeft.changeControlMode(MODE_POSITION);
+			frontLeft.reverseOutput(true);
+			backLeft.changeControlMode(MODE_FOLLOWER);
+			// backLeft.reverseOutput(true);
 		}
 	}
 
 	public void moveGrapplerArmMotor(double value) {
 		arm.set(value);
-		SmartDashboard.putString("DB/String 6",
-				"Arm: " + arm.getEncPosition());
+		SmartDashboard.putString("DB/String 6", "Arm: " + arm.getEncPosition());
 	}
 
 	public void moveWinchMotors(double value) {
 		winch1.set(value);
-		winch2.set(0); /*winch1 motor id*/
+		winch2.set(0); /* winch1 motor id */
 	}
 
 	public void moveShooterLever(double value) {
@@ -180,12 +183,11 @@ public class Motor {
 	}
 
 	public void resetDriveEncoders() {
-		frontRight.setPosition(0);
 		frontLeft.setPosition(0);
-		backRight.setPosition(0);
+		frontRight.setPosition(0);
 		backLeft.setPosition(0);
+		backRight.setPosition(0);
 	}
-
 
 	// create additional move methods using the below format
 	/*
