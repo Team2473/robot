@@ -89,34 +89,30 @@ public class Shooter {
 	}
 	
 	
-	//Note from Ekta: This just looks wrong, see method below mapping
-	public static void moveWithJoy(){ // finding index value of table (bucket) given an AnalogInRaw value
-									  // can't use for and while loops as we did in mapTable() method
-									  // basically: no endpoints
-		//works, but only if I stop pressing 3 and then press it again, otherwise doesn't search for the next value
-		if(joy1.getRawButton(3)){
-//			moveForward();
-			int pos = pot.getAnalogInRaw();
-			int one = backPot;
-			boolean found = false;
-			int n = 1;
-			while(!found && joy1.getRawButton(3)){
-				SmartDashboard.putString("DB/String 1", "n: " + n);
-				while((pos >= one) && (pos < backPot + n*(int)(delta)) && joy1.getRawButton(3)){ //if between two ranges, finds arr value
-					pot.set(fwdTable[n-1]);
-				}
-				one = (int)(backPot + n*delta);
-				n++;
-			}
-		}
+//	public static void moveWithJoy(){ // finding index value of table (bucket) given an AnalogInRaw value
+//		if(joy1.getRawButton(3)){
+////			moveForward();
+//			int pos = pot.getAnalogInRaw();
+//			int one = backPot;
+//			boolean found = false;
+//			int n = 1;
+//			while(!found && joy1.getRawButton(3)){
+//				SmartDashboard.putString("DB/String 1", "n: " + n);
+//				while((pos >= one) && (pos < backPot + n*(int)(delta)) && joy1.getRawButton(3)){ //if between two ranges, finds arr value
+//					pot.set(fwdTable[n-1]);
+//				}
+//				one = (int)(backPot + n*delta);
+//				n++;
+//			}
+//		}
 //		else if(joy1.getRawButton(2)){
 ////			moveBackward();
 //			
 //		}
-		else{
-			stop();
-		}
-	}
+//		else{
+//			stop();
+//		}
+//	}
 		
 	
 	
@@ -158,6 +154,10 @@ public class Shooter {
 			SmartDashboard.putString("DB/String 9", "i: " + i);
 			
 			while(pot.getAnalogInRaw() < i && count < fwdTable.length){
+				if(!joy1.getRawButton(3)){
+					stop();
+					break;
+				}
 				pot.set(fwdTable[count]);
 			}
 			count++;
@@ -174,6 +174,10 @@ public class Shooter {
 			SmartDashboard.putString("DB/String 9", "i: " + i);
 			
 			while(pot.getAnalogInRaw() > i && count2 < fwdTable.length){
+				if(!joy1.getRawButton(2)){
+					stop();
+					break;
+				}
 				pot.set(-fwdTable[count2]);
 			}
 			count2++;
@@ -181,18 +185,23 @@ public class Shooter {
 		
 	}
 	
+	//works with joystick, but if below 45 degrees, falls on its own due to weight
 	public static void joyControlled(){
 		if(joy1.getRawButton(3)){
 			mapFwdTable();
 		}
-		else if(joy1.getRawButton(4)){
+		else if(joy1.getRawButton(2)){
 			mapBackTable();
+		}
+		else{
+			stop();
 		}
 	}
 	
 	
-	//move spinner in until break beams broken
-	public void getBall(){
+	
+//	move spinner in until break beams broken
+	public void loading(){
 		while(/*break beams not interrupted*/){
 			shootR.set(0.3); //arbitrary values
 			shootL.set(-0.3);

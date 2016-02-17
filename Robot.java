@@ -49,13 +49,14 @@ public class Robot extends IterativeRobot {
      */
     /*
      * Note to Rucha: Uncomment calibration method and mapTable method to test.
+     * Ekta: ^^ mapTable doesn't exist anymore ^^
      * 
      */
     public void teleopPeriodic() {
     	
     	Shooter.testPotentiometer();
     	Shooter.checkLS();
-    	Shooter.moveWithJoy(); 
+    	Shooter.joyControlled(); 
     }
     
     /**
