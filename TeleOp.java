@@ -66,4 +66,26 @@ public class TeleOp {
 		Motor.getInstance().moveRightSideMotors(rightEnc);
 		
 	}
+	
+	private static boolean armUp = false;
+	private static boolean moveWinch = false;
+	
+	public static void runUtilities(){
+		if(Controller.getInstance().getJoy2Button(3)){
+			armUp = true;
+		}else if(Controller.getInstance().getJoy2Button(4)){
+			armUp = false;
+			moveWinch = true;
+		}
+		
+		if(armUp){
+			Motor.getInstance().moveGrapplerArmMotor(260);
+		}else{
+			Motor.getInstance().moveGrapplerArmMotor(0);
+		}
+		
+		if(moveWinch){
+			Motor.getInstance().moveWinchMotors(420);
+		}
+	}
 }
