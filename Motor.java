@@ -14,10 +14,6 @@ public class Motor {
 	private CANTalon winch1; // the motor to extend the arm
 	private CANTalon winch2; // the motor to pull the robot up
 
-	private CANTalon shooterLever; // pick up arm for shooter
-	private CANTalon spinner1; // spinners to grab ball
-	private CANTalon spinner2;
-
 	// add addition cantalons as they are added to robot
 	public static final CANTalon.TalonControlMode MODE_POWER = CANTalon.TalonControlMode.PercentVbus;
 	public static final CANTalon.TalonControlMode MODE_POSITION = CANTalon.TalonControlMode.Position;
@@ -37,10 +33,6 @@ public class Motor {
 		arm = new CANTalon(5);
 		winch1 = new CANTalon(1);
 		winch2 = new CANTalon(4);
-
-		shooterLever = new CANTalon(6);
-		spinner1 = new CANTalon(0);
-		spinner2 = new CANTalon(0);
 
 		setUpDriveMotors(frontLeft);
 		setUpDriveMotors(frontRight);
@@ -95,22 +87,6 @@ public class Motor {
 		winch2.ConfigFwdLimitSwitchNormallyOpen(true);
 		winch2.ConfigRevLimitSwitchNormallyOpen(true);
 		winch2.enableControl();
-	}
-
-	private void setUpShooterLever() {
-		shooterLever.changeControlMode(CANTalon.TalonControlMode.Voltage);
-		shooterLever.setFeedbackDevice(FeedbackDevice.AnalogPot);
-		shooterLever.setPID(.1, 0, 0); // test pid values
-		shooterLever.setPosition(0);
-		shooterLever.enableControl();
-	}
-
-	private void setUpSpinners() {
-		spinner1.changeControlMode(MODE_POWER);
-		spinner1.enableControl();
-
-		spinner2.changeControlMode(MODE_POWER);
-		spinner2.enableControl();
 	}
 
 	public void moveRightSideMotors(double value) {
@@ -189,15 +165,6 @@ public class Motor {
 			winch2.set(0);
 		}
 		SmartDashboard.putString("DB/String 8", "Winch: " + winch1.getEncPosition());
-	}
-
-	public void moveShooterLever(double value) {
-		shooterLever.set(value);
-	}
-
-	public void spinShooter(double value) { // runs on speed
-		spinner1.set(value);
-		spinner2.set(value);
 	}
 
 	public int getEncoder(CANTalon motor) {
