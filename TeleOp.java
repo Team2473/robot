@@ -6,7 +6,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class TeleOp {
 	
 	private static CANTalon.TalonControlMode currentMode = null;
-	private static double deadZone = .3;
+	private static double deadZone = .03;
 	private static double maxSpeed = .50;
 	
 	public static void runPower(){
