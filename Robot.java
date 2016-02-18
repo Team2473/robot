@@ -56,8 +56,8 @@ public class Robot extends IterativeRobot {
     	
 //    	Shooter.testPotentiometer();
 //    	Shooter.checkLS();
-    	Shooter.joyControlled(); 
-//    	Shooter.load();
+//    	Shooter.joyControlled(); 
+    	Shooter.load();
     }
     
     /**
