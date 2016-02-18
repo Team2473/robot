@@ -147,7 +147,7 @@ public class Shooter {
 	}
 	
 	
-	//20 means that it goes ALL THE WAY forward or ALL THE WAY backward
+	//100 means that it goes ALL THE WAY forward or ALL THE WAY backward
 	public static void mapFwdTable(int n){
 		int count = 0;
 		for(double i = backPot + delta; i < fwdPot; i += delta){
@@ -157,7 +157,7 @@ public class Shooter {
 			SmartDashboard.putString("DB/String 9", "i: " + i);
 			
 			while(pot.getAnalogInRaw() < i && count < fwdTable.length){
-				if(!joy1.getRawButton(n) && n!= 20){
+				if(!joy1.getRawButton(n) && n!= 100){
 					stop();
 					break;
 				}
@@ -177,7 +177,7 @@ public class Shooter {
 			SmartDashboard.putString("DB/String 9", "i: " + i);
 			
 			while(pot.getAnalogInRaw() > i && count2 < fwdTable.length){
-				if(!joy1.getRawButton(n) && n!=20){
+				if(!joy1.getRawButton(n) && n!=100){
 					stop();
 					break;
 				}
@@ -203,40 +203,40 @@ public class Shooter {
 	
 	
 	
-	DigitalInput spin = new DigitalInput(2); //placeholder for wheel input
+	public static DigitalInput spin = new DigitalInput(0); //placeholder for wheel input
 	
-	public void load(){
-		if(joy1.getRawButton(4)){
-			mapFwdTable(4);
-		}
-		while(!spin.get()){ 							//beam is whole; no break; spins in
-			shootR.set(0.2);
-			shootL.set(-0.2);
-		}
-		if(spin.get()){ 								//beam broken
-			shootR.set(0);		 						//0 = 0 power? no VBus mode?
-			shootL.set(0);
-			//set arm to with ball position
-		}
-		else if(!joy1.getRawButton(4)){ 				//button release
-			mapBackTable(20);
-		}
+	public static void load(){
+		
+		SmartDashboard.putString("DB/String 5", "spin.get: " + spin.get());
+		
+//		
+//		if(joy1.getRawButton(4)){
+//			mapFwdTable(4);
+//		}
+//		while(!spin.get()){ 							//beam is whole; no break; spins in
+//			shootR.set(-0.2);
+//			shootL.set(0.2);
+//		}
+//			shootR.set(0);
+//			shootL.set(0);
+//			//set arm to with ball position             //need to do this
+//		if(!joy1.getRawButton(4)){ 				//button release
+//			mapBackTable(100);
+//		}
 	}
 	
 	
-	public void unload(){
+	public static void unload(){
 		if(joy1.getRawButton(5)){						//bring arm fwd
 			mapFwdTable(5);
 		}
 		while(spin.get()){								//break beam is broken, unload
-			shootR.set(-0.2);
-			shootL.set(0.2);
-		}
-		if(!spin.get()){								//break beam is whole
-			mapBackTable(20);
-		}
-		else if(!joy1.getRawButton(5)){
-			mapBackTable(20);
+			shootR.set(0.2);
+			shootL.set(-0.2);
+		}							
+			mapBackTable(100);
+		if(!joy1.getRawButton(5)){
+			mapBackTable(100);
 		}
 	}
 	
