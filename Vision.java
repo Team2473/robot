@@ -64,30 +64,25 @@ public class Vision {
 	}
 
 	public static void updateDashboard() {
-		
+		SmartDashboard.putString("DB/String 6", "Camera Running");
 		
 		//session 1
 		if (Controller.getInstance().getJoy1Button(1)) {
 			button1Pressed = true;
 			button2Pressed = false;
-			button3Pressed = false;
+		
 		
 			
 			
 		}else if(Controller.getInstance().getJoy1Button(2)){
 			button1Pressed = false;
 			button2Pressed = true;
-			button3Pressed = false;
 		
-			
-		}else if(Controller.getInstance().getJoy1Button(3)){
-			button1Pressed = false;
-			button2Pressed = false;
-			button3Pressed = true;
+		
 			
 		}
-		
-		if(button1Pressed && !Controller.getInstance().getJoy1Button(2) && !Controller.getInstance().getJoy1Button(3)){
+		if(button1Pressed){
+			SmartDashboard.putString("DB/String 7", "Session 1 Running");
 			// sessions 2 & 3 is no longer started
 						session2NotStarted = true;
 						session3NotStarted = true;
@@ -118,7 +113,8 @@ public class Vision {
 						// send image to dashboard
 						CameraServer.getInstance().setImage(frame1);
 			
-		}else if (button2Pressed && !Controller.getInstance().getJoy1Button(1) && !Controller.getInstance().getJoy1Button(3)) {
+		}else if (button2Pressed) {
+			SmartDashboard.putString("DB/String 8", "Session 2 Running");
 			// sessions 1 & 3 is no longer started
 			session1NotStarted = true;
 			session3NotStarted = true;
