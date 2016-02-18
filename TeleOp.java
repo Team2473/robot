@@ -10,6 +10,10 @@ public class TeleOp {
 	private static double maxSpeed = .50;
 	
 	public static void runPower(){
+		if(waiting){
+			return;
+		}
+		
 		if(currentMode != Motor.MODE_POWER){
 			currentMode = Motor.MODE_POWER;
 			
@@ -17,8 +21,8 @@ public class TeleOp {
 			Motor.getInstance().setRightSideMotorsMode(currentMode);
 		}
 		
-		double leftY = Controller.getInstance().getYL() * Math.abs(Controller.getInstance().getYL());
-		double rightY = Controller.getInstance().getYR()* Math.abs(Controller.getInstance().getYR());
+		double leftY = Controller.getInstance().getYL() /* Math.abs(Controller.getInstance().getYL())*/;
+		double rightY = Controller.getInstance().getYR() /* Math.abs(Controller.getInstance().getYR())*/;
 		
 		if(Math.abs(Controller.getInstance().getYL())>deadZone){
 			Motor.getInstance().moveLeftSideMotors(leftY * maxSpeed);
@@ -67,25 +71,88 @@ public class TeleOp {
 		
 	}
 	
-	private static boolean armUp = false;
-	private static boolean moveWinch = false;
+	private static boolean waiting = false;
 	
 	public static void runUtilities(){
+		
+		/*if(Controller.getInstance().getJoy2Button(3)){
+			if(currentMode != Motor.MODE_POWER){
+				currentMode = Motor.MODE_POWER;
+				
+				Motor.getInstance().setLeftSideMotorsMode(currentMode);
+				Motor.getInstance().setRightSideMotorsMode(currentMode);
+			}
+			Motor.getInstance().moveLeftSideMotors(.25);
+			Motor.getInstance().moveRightSideMotors(.25);
+			
+			try {
+				Thread.sleep(3000);
+			} catch (InterruptedException e) {}
+			
+			Motor.getInstance().moveLeftSideMotors(0);
+			Motor.getInstance().moveRightSideMotors(-0.1);
+			
+			
+			try {
+				Thread.sleep(800);
+			} catch (InterruptedException e) {}
+			
+			Motor.getInstance().moveLeftSideMotors(0.09);
+			Motor.getInstance().moveRightSideMotors(0.09);
+			
+			try {
+				Thread.sleep(400);
+			} catch (InterruptedException e) {}
+			
+			for(int i = 0; i < 50; i++){
+				Motor.getInstance().moveGrapplerArmMotor(260);
+				try {
+					Thread.sleep(25);
+				} catch (InterruptedException e) {}
+			}
+			
+			Motor.getInstance().moveLeftSideMotors(.25);
+			Motor.getInstance().moveRightSideMotors(.25);
+			
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {}
+			
+			Motor.getInstance().moveLeftSideMotors(0.09);
+			Motor.getInstance().moveRightSideMotors(0.09);
+			
+			waiting = true;
+		}
+		
+		if(Controller.getInstance().getJoy2Button(4)){
+			for(int i = 0; i < 75; i++){
+				Motor.getInstance().moveWinchMotors(140);
+				Motor.getInstance().moveGrapplerArmMotor(0);
+				try {
+					Thread.sleep(25);
+				} catch (InterruptedException e) {}
+			}
+			
+			Motor.getInstance().moveLeftSideMotors(0);
+			Motor.getInstance().moveRightSideMotors(0);
+			
+			while(true){
+				Motor.getInstance().moveWinchMotors(140);
+				Motor.getInstance().moveGrapplerArmMotor(0);
+			}
+		}
+		
+		if(Controller.getInstance().getJoy1Button(2)){
+			waiting = false;
+		}*/
+		
+		//arm test
 		if(Controller.getInstance().getJoy2Button(3)){
-			armUp = true;
-		}else if(Controller.getInstance().getJoy2Button(4)){
-			armUp = false;
-			moveWinch = true;
-		}
-		
-		if(armUp){
 			Motor.getInstance().moveGrapplerArmMotor(260);
-		}else{
-			Motor.getInstance().moveGrapplerArmMotor(0);
+		}
+		if(Controller.getInstance().getJoy2Button(4)){
+			Motor.getInstance().moveGrapplerArmMotor(-260);
 		}
 		
-		if(moveWinch){
-			Motor.getInstance().moveWinchMotors(420);
-		}
 	}
 }

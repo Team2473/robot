@@ -114,8 +114,8 @@ public class Motor {
 
 	public void moveLeftSideMotors(double value) {
 		if (frontLeft.getControlMode() == MODE_POWER) {
-			frontLeft.set(-value);
-			backLeft.set(-value);
+			frontLeft.set(-value*.72);
+			backLeft.set(-value*.72);
 		} else if (frontLeft.getControlMode() == MODE_POSITION) {
 			frontLeft.set(value);
 			backLeft.set(3);// frontLeft integer id
@@ -141,14 +141,12 @@ public class Motor {
 	//260 is pointing up, 0 is pointing level
 	public void moveGrapplerArmMotor(double encValue) {
 		if(-arm.getPosition() - encValue < -20){
-			arm.set(.25);//test constant
-			arm.set(.25); //test constant
-		}else if(-arm.getPosition() - encValue > 20){
-			arm.set(-.05);//test constant
-			arm.set(-.05); //test constant
-		}else{
-			arm.set(0);
-		}
+			arm.set(.19);//test constant
+		}else //if(-arm.getPosition() - encValue > 20){
+			arm.set(-.04);//test constant
+		//}else{
+		//	arm.set(0);
+		//}
 		SmartDashboard.putString("DB/String 6", "Arm: " + arm.getEncPosition());
 	}
 
