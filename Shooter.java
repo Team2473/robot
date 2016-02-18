@@ -43,10 +43,10 @@ public class Shooter {
 		}
 		//test
 	}
-	public static DigitalInput in = new DigitalInput(0);
+//	public static DigitalInput in = new DigitalInput(0);
 	public static void testDigitalIO(){
 		//true means nothing in the beam, false means something in the beam
-		SmartDashboard.putString("DB/String 9", "Value: " + in.get());
+//		SmartDashboard.putString("DB/String 9", "Value: " + in.get());
 	}
 	
 	//potentiometer
@@ -203,26 +203,28 @@ public class Shooter {
 	
 	
 	
-	public static DigitalInput spin = new DigitalInput(0); //placeholder for wheel input
+	public static DigitalInput spin = new DigitalInput(0); 
 	
 	public static void load(){
 		
-		SmartDashboard.putString("DB/String 5", "spin.get: " + spin.get());
 		
-//		
-//		if(joy1.getRawButton(4)){
-//			mapFwdTable(4);
-//		}
-//		while(!spin.get()){ 							//beam is whole; no break; spins in
-//			shootR.set(-0.2);
-//			shootL.set(0.2);
-//		}
-//			shootR.set(0);
-//			shootL.set(0);
-//			//set arm to with ball position             //need to do this
-//		if(!joy1.getRawButton(4)){ 				//button release
-//			mapBackTable(100);
-//		}
+		if(joy1.getRawButton(4)){
+			mapFwdTable(4);
+		}
+		while(spin.get()){ 							//beam is whole; no break; spins in  TRUE --> WHOLE BEAM
+			shootR.set(-0.2);
+			shootL.set(0.2);
+		}
+			shootR.set(0);
+			shootL.set(0);
+		if(!joy1.getRawButton(4)){ 				//button release
+			if(spin.get()){
+				mapBackTable(100);
+			}
+			else{
+				//move to have ball position
+			}
+		}
 	}
 	
 	
@@ -230,7 +232,7 @@ public class Shooter {
 		if(joy1.getRawButton(5)){						//bring arm fwd
 			mapFwdTable(5);
 		}
-		while(spin.get()){								//break beam is broken, unload
+		while(!spin.get()){								//break beam is broken, unload
 			shootR.set(0.2);
 			shootL.set(-0.2);
 		}							
