@@ -126,8 +126,10 @@ public class TeleOp {
 		
 		if(Controller.getInstance().getJoy2Button(4)){
 			for(int i = 0; i < 75; i++){
-				Motor.getInstance().moveWinchMotors(140);
 				Motor.getInstance().moveGrapplerArmMotor(0);
+				if(i>20){
+					Motor.getInstance().moveWinchMotors(5000);
+				}
 				try {
 					Thread.sleep(25);
 				} catch (InterruptedException e) {}
@@ -137,7 +139,7 @@ public class TeleOp {
 			Motor.getInstance().moveRightSideMotors(0);
 			
 			while(true){
-				Motor.getInstance().moveWinchMotors(2800);
+				Motor.getInstance().moveWinchMotors(5000);
 				Motor.getInstance().moveGrapplerArmMotor(0);
 			}
 		}
