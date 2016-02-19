@@ -44,16 +44,16 @@ public class TeleOp {
 			Motor.getInstance().setRightSideMotorsMode(currentMode);
 		}
 		
-		double leftY = Controller.getInstance().getYLNeg() * Math.abs(Controller.getInstance().getYLNeg());
-		double rightY = Controller.getInstance().getYRNeg()* Math.abs(Controller.getInstance().getYRNeg());
+		double leftY = Controller.getInstance().getYRNeg() * Math.abs(Controller.getInstance().getYRNeg());
+		double rightY = Controller.getInstance().getYLNeg()* Math.abs(Controller.getInstance().getYLNeg());
 		
-		if(Math.abs(Controller.getInstance().getYLNeg())>deadZone){
+		if(Math.abs(Controller.getInstance().getYRNeg())>deadZone){
 			Motor.getInstance().moveLeftSideMotors(leftY * maxSpeed);
 		}else{
 			Motor.getInstance().moveLeftSideMotors(0);
 		}
 		
-		if(Math.abs(Controller.getInstance().getYRNeg())>deadZone){
+		if(Math.abs(Controller.getInstance().getYLNeg())>deadZone){
 			Motor.getInstance().moveRightSideMotors(rightY * maxSpeed);
 		}else{
 			Motor.getInstance().moveRightSideMotors(0);
