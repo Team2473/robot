@@ -6,10 +6,14 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class TeleOp {
 	
 	private static CANTalon.TalonControlMode currentMode = null;
-	private static double deadZone = .03;
-	private static double maxSpeed = .50;
+	private static double deadZone = .02;
+	private static double maxSpeed = .40;
 	
 	public static void runPower(){
+		if(waiting){
+			return;
+		}
+		
 		if(currentMode != Motor.MODE_POWER){
 			currentMode = Motor.MODE_POWER;
 			
@@ -17,11 +21,11 @@ public class TeleOp {
 			Motor.getInstance().setRightSideMotorsMode(currentMode);
 		}
 		
-		double leftY = Controller.getInstance().getYL() * Math.abs(Controller.getInstance().getYL());
-		double rightY = Controller.getInstance().getYR()* Math.abs(Controller.getInstance().getYR());
+		double leftY = Controller.getInstance().getYL()/Math.abs(Controller.getInstance().getYL()) * Math.sqrt(Math.abs(Controller.getInstance().getYL()));
+		double rightY = Controller.getInstance().getYR()/Math.abs(Controller.getInstance().getYR()) * Math.sqrt(Math.abs(Controller.getInstance().getYR()));
 		
 		if(Math.abs(Controller.getInstance().getYL())>deadZone){
-			Motor.getInstance().moveLeftSideMotors(leftY * maxSpeed);
+			Motor.getInstance().moveLeftSideMotors(leftY * maxSpeed * 1.1);
 		}else{
 			Motor.getInstance().moveLeftSideMotors(0);
 		}
