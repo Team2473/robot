@@ -217,6 +217,9 @@ public class Shooter {
 		}
 			shootR.set(0);
 			shootL.set(0);
+			for(int i = 0; i < 100; i++){
+				i++;
+			}
 		if(!joy1.getRawButton(4)){ 				//button release
 			if(spin.get()){
 				mapBackTable(100);
