@@ -153,8 +153,8 @@ public class Motor {
 	//140 is one full rotation
 	public void moveWinchMotors(double encValue) {
 		if(-winch1.getPosition() < encValue){
-			winch1.set(-.3);//test constant
-			winch2.set(-.3); //test constant
+			winch1.set(-.4);//test constant
+			winch2.set(-.4); //test constant
 		}else{
 			winch1.set(0);
 			winch2.set(0);
