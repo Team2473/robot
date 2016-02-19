@@ -6,8 +6,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class TeleOp {
 	
 	private static CANTalon.TalonControlMode currentMode = null;
-	private static double deadZone = .03;
-	private static double maxSpeed = .50;
+	private static double deadZone = .02;
+	private static double maxSpeed = .40;
 	
 	public static void runPower(){
 		if(waiting){
@@ -21,11 +21,11 @@ public class TeleOp {
 			Motor.getInstance().setRightSideMotorsMode(currentMode);
 		}
 		
-		double leftY = Controller.getInstance().getYL() /* Math.abs(Controller.getInstance().getYL())*/;
-		double rightY = Controller.getInstance().getYR() /* Math.abs(Controller.getInstance().getYR())*/;
+		double leftY = Controller.getInstance().getYL()/Math.abs(Controller.getInstance().getYL()) * Math.sqrt(Math.abs(Controller.getInstance().getYL()));
+		double rightY = Controller.getInstance().getYR()/Math.abs(Controller.getInstance().getYR()) * Math.sqrt(Math.abs(Controller.getInstance().getYR()));
 		
 		if(Math.abs(Controller.getInstance().getYL())>deadZone){
-			Motor.getInstance().moveLeftSideMotors(leftY * maxSpeed);
+			Motor.getInstance().moveLeftSideMotors(leftY * maxSpeed * 1.1);
 		}else{
 			Motor.getInstance().moveLeftSideMotors(0);
 		}
@@ -75,7 +75,7 @@ public class TeleOp {
 	
 	public static void runUtilities(){
 		
-		/*if(Controller.getInstance().getJoy2Button(3)){
+		if(Controller.getInstance().getJoy2Button(3)){
 			if(currentMode != Motor.MODE_POWER){
 				currentMode = Motor.MODE_POWER;
 				
@@ -104,7 +104,7 @@ public class TeleOp {
 				Thread.sleep(400);
 			} catch (InterruptedException e) {}
 			
-			for(int i = 0; i < 50; i++){
+			for(int i = 0; i < 100; i++){
 				Motor.getInstance().moveGrapplerArmMotor(260);
 				try {
 					Thread.sleep(25);
@@ -137,21 +137,13 @@ public class TeleOp {
 			Motor.getInstance().moveRightSideMotors(0);
 			
 			while(true){
-				Motor.getInstance().moveWinchMotors(140);
+				Motor.getInstance().moveWinchMotors(2800);
 				Motor.getInstance().moveGrapplerArmMotor(0);
 			}
 		}
 		
 		if(Controller.getInstance().getJoy1Button(2)){
 			waiting = false;
-		}*/
-		
-		//arm test
-		if(Controller.getInstance().getJoy2Button(3)){
-			Motor.getInstance().moveGrapplerArmMotor(260);
-		}
-		if(Controller.getInstance().getJoy2Button(4)){
-			Motor.getInstance().moveGrapplerArmMotor(-260);
 		}
 		
 	}

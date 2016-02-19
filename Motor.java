@@ -141,12 +141,12 @@ public class Motor {
 	//260 is pointing up, 0 is pointing level
 	public void moveGrapplerArmMotor(double encValue) {
 		if(-arm.getPosition() - encValue < -20){
-			arm.set(.19);//test constant
-		}else //if(-arm.getPosition() - encValue > 20){
-			arm.set(-.04);//test constant
-		//}else{
-		//	arm.set(0);
-		//}
+			arm.set(.26);//test constant
+		}else if(-arm.getPosition() - encValue > 20){
+			arm.set(-.12);//test constant
+		}else{
+			arm.set(0);
+		}
 		SmartDashboard.putString("DB/String 6", "Arm: " + arm.getEncPosition());
 	}
 
