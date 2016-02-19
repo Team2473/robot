@@ -49,14 +49,12 @@ public class Vision {
 		frame1 = NIVision.imaqCreateImage(NIVision.ImageType.IMAGE_RGB, 0);
 
 		frame2 = NIVision.imaqCreateImage(NIVision.ImageType.IMAGE_RGB, 0);
-		
 
 		session1 = NIVision.IMAQdxOpenCamera("cam0",
 				NIVision.IMAQdxCameraControlMode.CameraControlModeController);
 
 		session2 = NIVision.IMAQdxOpenCamera("cam1",
 				NIVision.IMAQdxCameraControlMode.CameraControlModeListener);
-		
 
 		// create rectangle
 		rect = new NIVision.Rect(50, 100, 100, 200);
