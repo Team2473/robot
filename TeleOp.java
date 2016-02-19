@@ -36,6 +36,33 @@ public class TeleOp {
 		SmartDashboard.putString("DB/String 7", "RY: " + rightY);
 	}
 	
+	public static void runPowerReverse(){
+		if(currentMode != Motor.MODE_POWER){
+			currentMode = Motor.MODE_POWER;
+			
+			Motor.getInstance().setLeftSideMotorsMode(currentMode);
+			Motor.getInstance().setRightSideMotorsMode(currentMode);
+		}
+		
+		double leftY = Controller.getInstance().getYLNeg() * Math.abs(Controller.getInstance().getYLNeg());
+		double rightY = Controller.getInstance().getYRNeg()* Math.abs(Controller.getInstance().getYRNeg());
+		
+		if(Math.abs(Controller.getInstance().getYLNeg())>deadZone){
+			Motor.getInstance().moveLeftSideMotors(leftY * maxSpeed);
+		}else{
+			Motor.getInstance().moveLeftSideMotors(0);
+		}
+		
+		if(Math.abs(Controller.getInstance().getYRNeg())>deadZone){
+			Motor.getInstance().moveRightSideMotors(rightY * maxSpeed);
+		}else{
+			Motor.getInstance().moveRightSideMotors(0);
+		}
+		
+		SmartDashboard.putString("DB/String 6", "LY: " + leftY);
+		SmartDashboard.putString("DB/String 7", "RY: " + rightY);
+	}
+	
 	private static int leftEnc;
 	private static int rightEnc;
 	
