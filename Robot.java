@@ -55,7 +55,7 @@ public class Robot extends IterativeRobot {
     public void teleopPeriodic() {
     	TeleOp.runPower();
     	TeleOp.runUtilities();
-    	Vision.updateDashboard();
+//    	Vision.updateDashboard();
     }
     
     /**

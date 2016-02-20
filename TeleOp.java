@@ -111,7 +111,7 @@ public class TeleOp {
 				} catch (InterruptedException e) {}
 			}
 			
-			Motor.getInstance().moveLeftSideMotors(.25);
+			Motor.getInstance().moveLeftSideMotors(.3);
 			Motor.getInstance().moveRightSideMotors(.25);
 			
 			try {
