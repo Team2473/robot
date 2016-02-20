@@ -114,8 +114,8 @@ public class Motor {
 
 	public void moveLeftSideMotors(double value) {
 		if (frontLeft.getControlMode() == MODE_POWER) {
-			frontLeft.set(-value*.72);
-			backLeft.set(-value*.72);
+			frontLeft.set(-value*.80);
+			backLeft.set(-value*.80);
 		} else if (frontLeft.getControlMode() == MODE_POSITION) {
 			frontLeft.set(value);
 			backLeft.set(3);// frontLeft integer id
@@ -141,7 +141,7 @@ public class Motor {
 	//260 is pointing up, 0 is pointing level
 	public void moveGrapplerArmMotor(double encValue) {
 		if(-arm.getPosition() - encValue < -20){
-			arm.set(.26);//test constant
+			arm.set(.32);//test constant
 		}else if(-arm.getPosition() - encValue > 20){
 			arm.set(-.12);//test constant
 		}else{
@@ -153,8 +153,8 @@ public class Motor {
 	//140 is one full rotation
 	public void moveWinchMotors(double encValue) {
 		if(-winch1.getPosition() < encValue){
-			winch1.set(-.4);//test constant
-			winch2.set(-.4); //test constant
+			winch1.set(-.3);//test constant
+			winch2.set(-.3); //test constant
 		}else{
 			winch1.set(0);
 			winch2.set(0);

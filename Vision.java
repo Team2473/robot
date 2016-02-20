@@ -71,6 +71,7 @@ public class Vision {
 		}
 		
 		if(!reverse){
+			SmartDashboard.putString("DB/String 6", "Session 1 running");
 			// sessions 2 & 3 is no longer started
 						session2NotStarted = true;
 
@@ -101,6 +102,7 @@ public class Vision {
 						CameraServer.getInstance().setImage(frame1);
 			
 		}else {
+			SmartDashboard.putString("DB/String 6", "Session 2 running");
 			// sessions 1 & 3 is no longer started
 			session1NotStarted = true;
 

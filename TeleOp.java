@@ -25,7 +25,7 @@ public class TeleOp {
 		double rightY = Controller.getInstance().getYR()/Math.abs(Controller.getInstance().getYR()) * Math.sqrt(Math.abs(Controller.getInstance().getYR()));
 		
 		if(Math.abs(Controller.getInstance().getYL())>deadZone){
-			Motor.getInstance().moveLeftSideMotors(leftY * maxSpeed * 1.1);
+			Motor.getInstance().moveLeftSideMotors(leftY * maxSpeed * 1.17);
 		}else{
 			Motor.getInstance().moveLeftSideMotors(0);
 		}
@@ -41,6 +41,9 @@ public class TeleOp {
 	}
 	
 	public static void runPowerReverse(){
+		if(waiting){
+			return;
+		}
 		if(currentMode != Motor.MODE_POWER){
 			currentMode = Motor.MODE_POWER;
 			
@@ -52,7 +55,7 @@ public class TeleOp {
 		double rightY = Controller.getInstance().getYLNeg()/Math.abs(Controller.getInstance().getYLNeg()) * Math.sqrt(Math.abs(Controller.getInstance().getYLNeg()));
 		
 		if(Math.abs(Controller.getInstance().getYRNeg())>deadZone){
-			Motor.getInstance().moveLeftSideMotors(leftY * maxSpeed);
+			Motor.getInstance().moveLeftSideMotors(leftY * maxSpeed * 1.17);
 		}else{
 			Motor.getInstance().moveLeftSideMotors(0);
 		}
@@ -121,7 +124,7 @@ private static boolean waiting = false;
 			
 			
 			try {
-				Thread.sleep(800);
+				Thread.sleep(1100);
 			} catch (InterruptedException e) {}
 			
 			Motor.getInstance().moveLeftSideMotors(0.09);
@@ -153,9 +156,9 @@ private static boolean waiting = false;
 		
 		if(Controller.getInstance().getJoy2Button(4)){
 			for(int i = 0; i < 75; i++){
-				Motor.getInstance().moveGrapplerArmMotor(0);
-				if(i>20){
-					Motor.getInstance().moveWinchMotors(2800);
+				Motor.getInstance().moveWinchMotors(8000);
+				if(i>50){
+					Motor.getInstance().moveGrapplerArmMotor(0);
 				}
 				try {
 					Thread.sleep(25);
@@ -166,12 +169,12 @@ private static boolean waiting = false;
 			Motor.getInstance().moveRightSideMotors(0);
 			
 			while(true){
-				Motor.getInstance().moveWinchMotors(5000);
-				Motor.getInstance().moveGrapplerArmMotor(0);
+				Motor.getInstance().moveWinchMotors(8000);
+				Motor.getInstance().moveGrapplerArmMotor(-260);
 			}
 		}
 		
-		if(Controller.getInstance().getJoy1Button(2)){
+		if(Controller.getInstance().getJoy1Button(4)){
 			waiting = false;
 		}
 		
