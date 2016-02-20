@@ -114,8 +114,8 @@ public class Motor {
 
 	public void moveLeftSideMotors(double value) {
 		if (frontLeft.getControlMode() == MODE_POWER) {
-			frontLeft.set(-value*.80);
-			backLeft.set(-value*.80);
+			frontLeft.set(-value*.95);
+			backLeft.set(-value*.95);
 		} else if (frontLeft.getControlMode() == MODE_POSITION) {
 			frontLeft.set(value);
 			backLeft.set(3);// frontLeft integer id

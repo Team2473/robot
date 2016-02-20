@@ -7,7 +7,7 @@ public class TeleOp {
 	
 	private static CANTalon.TalonControlMode currentMode = null;
 	private static double deadZone = .02;
-	private static double maxSpeed = .40;
+	private static double maxSpeed = .23;
 	
 	public static void runPower(){
 		if(waiting){
@@ -25,7 +25,7 @@ public class TeleOp {
 		double rightY = Controller.getInstance().getYR()/Math.abs(Controller.getInstance().getYR()) * Math.sqrt(Math.abs(Controller.getInstance().getYR()));
 		
 		if(Math.abs(Controller.getInstance().getYL())>deadZone){
-			Motor.getInstance().moveLeftSideMotors(leftY * maxSpeed * 1.17);
+			Motor.getInstance().moveLeftSideMotors(leftY * maxSpeed * 1.06);
 		}else{
 			Motor.getInstance().moveLeftSideMotors(0);
 		}
@@ -55,7 +55,7 @@ public class TeleOp {
 		double rightY = Controller.getInstance().getYLNeg()/Math.abs(Controller.getInstance().getYLNeg()) * Math.sqrt(Math.abs(Controller.getInstance().getYLNeg()));
 		
 		if(Math.abs(Controller.getInstance().getYRNeg())>deadZone){
-			Motor.getInstance().moveLeftSideMotors(leftY * maxSpeed * 1.17);
+			Motor.getInstance().moveLeftSideMotors(leftY * maxSpeed * 1.06);
 		}else{
 			Motor.getInstance().moveLeftSideMotors(0);
 		}
@@ -105,7 +105,13 @@ private static boolean waiting = false;
 	
 	public static void runUtilities(){
 		
-		if(Controller.getInstance().getJoy2Button(3)){
+		if(Controller.getInstance().getJoy1Button(6)){
+			maxSpeed = .5;
+		}else{
+			maxSpeed = .23;
+		}
+		
+		if(Controller.getInstance().getJoy2Button(1)){
 			if(currentMode != Motor.MODE_POWER){
 				currentMode = Motor.MODE_POWER;
 				
@@ -154,11 +160,11 @@ private static boolean waiting = false;
 			waiting = true;
 		}
 		
-		if(Controller.getInstance().getJoy2Button(4)){
+		if(Controller.getInstance().getJoy2Button(2)){
 			for(int i = 0; i < 75; i++){
-				Motor.getInstance().moveWinchMotors(8000);
-				if(i>50){
-					Motor.getInstance().moveGrapplerArmMotor(0);
+				Motor.getInstance().moveGrapplerArmMotor(0);
+				if(i>20){
+					Motor.getInstance().moveWinchMotors(8000);
 				}
 				try {
 					Thread.sleep(25);
@@ -174,7 +180,7 @@ private static boolean waiting = false;
 			}
 		}
 		
-		if(Controller.getInstance().getJoy1Button(4)){
+		if(Controller.getInstance().getJoy1Button(2)){
 			waiting = false;
 		}
 		
