@@ -63,7 +63,7 @@ public class Vision {
 
 	public void updateDashboard() {
 		
-		if (Controller.getInstance().getJoy1Button(1)) {
+		if (Controller.getInstance().getJoy2Button(3)) {
 			reverse = true;
 		}
 		else {

@@ -60,7 +60,7 @@ public class Robot extends IterativeRobot {
     	else {
     		TeleOp.runPower();
     	}
-    	TeleOp.runUtilities();
+//    	TeleOp.runUtilities();
     }
     
     /**
