@@ -32,9 +32,17 @@ public class Controller {
 	public double getYL() {
 		return -joy1.getRawAxis(1);
 	}
+	
+	public double getYLNeg() {
+		return joy1.getRawAxis(1);
+	}
 
 	public double getYR() {
 		return -joy1.getRawAxis(5);
+	}
+	
+	public double getYRNeg() {
+		return joy1.getRawAxis(5);
 	}
 	
 	public boolean getJoy1Button(int b) {
