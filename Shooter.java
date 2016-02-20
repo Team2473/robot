@@ -195,6 +195,9 @@ public class Shooter {
 			double toDegrees = (pot.getAnalogInRaw() - backPotMax) * 180 / diff;
 			//9 is 180/20 (because 20 buckets)
 			index = (int) toDegrees/9;
+			if(direction == -1){
+				index = Math.abs(index- 20);
+			}
 			
 			// Prevent motor from going outside safe zone
 			if(index > 19 || index < 0){
