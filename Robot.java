@@ -58,19 +58,18 @@ public class Robot extends IterativeRobot {
 //    	Shooter.joyControlled(); 
     	
 //    	Shooter.load();
+//    	Shooter.setPosition(0);
+    	
 //    	Shooter.unload();
 //    	Shooter.test();
-    	
-//    	Shooter.setPosition(90);
-    	
-    	
-    	Shooter.spinIn();
-    	Shooter.spinOut();
-    	Shooter.stopSpin();
-    	Shooter.forward();
-    	Shooter.back();
-    	Shooter.carry();
-    
+
+    	Shooter.runLoop();
+    	try {
+			Thread.sleep(20);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     }
     
     /**
