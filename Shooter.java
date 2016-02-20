@@ -281,12 +281,6 @@ public class Shooter {
 				fireBall();
 			}
 		}
-		
-		
-		SmartDashboard.putString("DB/String 5", "State " + stateString(currentState));
-		SmartDashboard.putString("DB/String 4", "Pos " + getPosition());
-		SmartDashboard.putString("DB/String 6", "Broken " + breakBeam.get());
-		
 	}
 	
 	public static boolean isCollapsed(){
@@ -301,7 +295,7 @@ public class Shooter {
 		return getPosition() <= 90; 
 	}
 	
-	
+	//DO NOT USE. Saving for use in test program.
 	public static void load(){
 		boolean continueMethod = true;
 		boolean atNinety = false;
@@ -389,8 +383,6 @@ public class Shooter {
 		double diff = fwdPotMax - backPotMax;
 		double desiredPosition = (degrees*diff)/180 + backPotMax;
 		
-//		while(Math.abs(pot.getAnalogInRaw() - desiredPosition) > 5) {
-		
 		//if already at currentPosition, do nothing
 		if(Math.abs(pot.getAnalogInRaw() - desiredPosition) < 5){
 			return;
@@ -410,15 +402,8 @@ public class Shooter {
 		if(index > 19 || index < 0){
 			return;
 		}
-		
-		SmartDashboard.putString("DB/String 0", "Power: " + lookupTable[index]*direction);
-		SmartDashboard.putString("DB/String 1", "toDegrees: " + toDegrees );
+
 		pot.set(lookupTable[index]*direction);
-			
-//		}
-		
-		// Stop the motor
-//		pot.set(0);
 	}
 }
 
