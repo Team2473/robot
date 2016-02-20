@@ -138,7 +138,6 @@ public class Shooter {
 		
 		// NOTE: There should be a buffer around desiredPosition
 		while(pot.getAnalogInRaw() != desiredPosition) {
-		
 			// We will use direction as a multiplier, this will change the direction of setpot
 			if(pot.getAnalogInRaw() > desiredPosition) direction = -1;
 						
@@ -147,7 +146,6 @@ public class Shooter {
 			pot.set(lookupTable[index]*direction);
 			
 			// TODO: Prevent motor from going outside of safe zone
-			
 		}
 		
 		// Stop the motor
