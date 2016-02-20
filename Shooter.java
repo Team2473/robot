@@ -32,6 +32,47 @@ public class Shooter {
 		shootL.changeControlMode(CANTalon.TalonControlMode.PercentVbus);
 	}
 	
+	//Button breakdown
+	public static void spinIn(){
+		if(joystick.getRawButton(6)){
+			shootR.set(-0.2);
+			shootL.set(0.2); 
+		}
+	}
+	
+	public static void spinOut(){
+		if(joystick.getRawButton(7)){
+			shootR.set(0.2);
+			shootL.set(-0.2); 
+		}
+	}
+	
+	public static void stopSpin(){
+		if(joystick.getRawButton(3)){
+			shootR.set(0);
+			shootL.set(0);
+		}
+	}
+	
+	public static void forward(){
+		if(joystick.getRawButton(11)){
+			setPosition(180);
+		}
+	}
+	
+	public static void back(){
+		if(joystick.getRawButton(10)){
+			setPosition(0);
+		}
+	}
+	
+	public static void carry(){
+		if(joystick.getRawButton(2)){
+			setPosition(90);
+		}
+	}
+		
+	
 	// Basic power instructions
 	
 	public static void moveForward(){
@@ -73,30 +114,39 @@ public class Shooter {
 		}
 		backPotMax = pot.getAnalogInRaw();
 	}
+	
+	// Test method
+	public static void test(){
+		setPosition(90);
+		setPosition(0);
+	}
 
 	// Loading and Unloading
 	
 	public static void load(){
-		
 		SmartDashboard.putString("DB/String 4", "breakBeam.get: " + breakBeam.get());
 		
 		if(joystick.getRawButton(loadButton)) {
 			
 			// Move arm all the way forward
 			setPosition(180);
-			
-			// Start spinning shooter
-			shootR.set(-0.2);
-			shootL.set(0.2);
-			
+						
 			// Wait for beam to break
-			while(breakBeam.get()) { 			
+			while(breakBeam.get()) { 	
+				// Start spinning shooter
+				shootR.set(-0.2);
+				shootL.set(0.2); 
+				
 				// Failsafe: Button released without ball in place
 				if(!joystick.getRawButton(loadButton)) {
+					shootR.set(0);
+					shootL.set(0);
 					setPosition(0);
-					return; 
+					if(Math.abs(pot.getAnalogInRaw() - backPotMax) < 5){
+						break;
+					}
 				}
-			}
+			}						
 			
 			// Stop spinning shooters
 			shootR.set(0);
@@ -134,18 +184,25 @@ public class Shooter {
 	
 		int index = 0;
 		int direction = 1; 
-		double desiredPosition = (degrees*fwdPotMax)/180;
+		double diff = fwdPotMax - backPotMax;
+		double desiredPosition = (degrees*diff)/180 + backPotMax;
 		
-		// NOTE: There should be a buffer around desiredPosition
-		while(pot.getAnalogInRaw() != desiredPosition) {
+		while(Math.abs(pot.getAnalogInRaw() - desiredPosition) > 10) {
 			// We will use direction as a multiplier, this will change the direction of setpot
 			if(pot.getAnalogInRaw() > desiredPosition) direction = -1;
 						
 			// Determine ideal motor speed & set power to motor
-			index = degrees/lookupTable.length; 
+			double toDegrees = (pot.getAnalogInRaw() - backPotMax) * 180 / diff;
+			//9 is 180/20 (because 20 buckets)
+			index = (int) toDegrees/9;
+			
+			// Prevent motor from going outside safe zone
+			if(index > 19 || index < 0){
+				break;
+			}
+			
 			pot.set(lookupTable[index]*direction);
 			
-			// TODO: Prevent motor from going outside of safe zone
 		}
 		
 		// Stop the motor
