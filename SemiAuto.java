@@ -1,8 +1,5 @@
 package org.usfirst.frc.team2473.robot;
-import edu.wpi.first.wpilibj.CANTalon;
-import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.AnalogInput;
 
 public class SemiAuto {
 	private enum AutoState{
@@ -13,20 +10,29 @@ public class SemiAuto {
 		END
 	};
 	
+	//Current state
 	private static AutoState currentAuto = AutoState.START;
 	
-	//move arm up
-	public static boolean goUp(){
+	//Input
+	public static AnalogInput ultrasonic = new AnalogInput(0);                    //check
+	
+	//Variables
+	public static Motor motor = Motor.getInstance();
+	public static double encStart = 0;
+	public static double encEnd = 0;
+	
+	//Move arm down to 180
+	public static boolean goDown(){
 		if(currentAuto == AutoState.START){
-			currentAuto = AutoState.UP;
+			currentAuto = AutoState.DOWN;
 		}
 		return true;
 	}
 	
-	//move arm down to 180
-	public static boolean goDown(){
+	//Move arm up to carrying
+	public static boolean goUp(){
 		if(currentAuto == AutoState.CREST){
-			currentAuto = AutoState.DOWN;
+			currentAuto = AutoState.UP;
 		}
 		return true;
 	}
@@ -34,10 +40,12 @@ public class SemiAuto {
 	private static void updateAutoState(){
 		//get status of robot position
 		
-		//if wall detected:
-			goUp();
-		//if distanceTravelled:
+		if(wallDetected()){
 			goDown();
+		}
+		if(/*distance traveled*/){
+			goDown();
+		}	
 	}
 	
 	public static void autoLoop(){
@@ -45,32 +53,56 @@ public class SemiAuto {
 		updateAutoState();
 				
 		// Calculate outputs
-		if(currentAuto == AutoState.UP){
-			if(isUp()){
-				currentAuto = AutoState.CREST;
-			}
-			else{
-				Shooter.setPosition(120);
-			}
-		}
-		else if(currentAuto == AutoState.DOWN){
+		if(currentAuto == AutoState.DOWN){
 			if(isDown()){
-				currentAuto = AutoState.START;                // start is the same as end
+				currentAuto = AutoState.CREST;               						 // start is the same as end
 			}
 			else{
+				encStart = motor.getEncBR();
 				Shooter.setPosition(180);
 			}
 		}
+		else if(currentAuto == AutoState.UP){
+			if(isUp()){
+				currentAuto = AutoState.START;
+			}
+			else{
+				Shooter.setPosition(90);
+			}
+		}
+
 		else if(currentAuto == AutoState.START){
-			
+			if(wallDetected()){
+				currentAuto = AutoState.DOWN;
+			}
+			else{
+				//do nothing
+			}
+		}
+		else if(currentAuto == AutoState.CREST){
+			if(/*wheels have traveled some distance*/){
+				currentAuto = AutoState.UP;
+			}
+			else{
+				//do nothing
+			}
 		}
 	}
 	
 	public static boolean isUp(){
-		return Math.abs(Shooter.getPosition() - 120) < 5;
+		return Math.abs(Shooter.getPosition() - 90) < 5;
 	}
 	
 	public static boolean isDown(){
 		return Math.abs(Shooter.getPosition() - 180) < 5;
+	}
+	
+	public static boolean wallDetected(){
+		double vi = 5.0/512;
+		return ultrasonic.getVoltage()/vi < 10;                                        //CHANGE, ULTRASONIC VAL
+	}
+	
+	public static boolean hasTraveled(){
+		
 	}
 }
