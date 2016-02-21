@@ -6,9 +6,6 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.*;
@@ -26,39 +23,115 @@ import edu.wpi.first.wpilibj.Timer;
 
 //random change
 public class Vision {
-	static int session;
-    static Image frame;
-    static NIVision.Rect rect;
+	private static Vision vision = null;
+	
+	static int session1;
+	static int session2;
+	
+	static Image frame1;
+	static Image frame2;
+	
+	static NIVision.Rect rect;
+	
+	static boolean session1NotStarted = true;
+	static boolean session2NotStarted = true;
+	
+	static boolean reverse = false;
+	
+	public static Vision getInstance() {
+		if (vision == null) {
+			vision = new Vision();
+		}
+		return vision;
+	}
 
-    public static void visionInit() {
-        frame = NIVision.imaqCreateImage(NIVision.ImageType.IMAGE_RGB, 0);
+	public void visionInit() {
+		frame1 = NIVision.imaqCreateImage(NIVision.ImageType.IMAGE_RGB, 0);
 
-        // the camera name (ex "cam0") can be found through the roborio web interface
-        session = NIVision.IMAQdxOpenCamera("cam3",
-                NIVision.IMAQdxCameraControlMode.CameraControlModeController);
-        NIVision.IMAQdxConfigureGrab(session);
-        
-        //create rectangle
-//        rect = new NIVision.Rect(ypos, xpos, height, width); x, y top left
-        rect = new NIVision.Rect(50, 100, 100, 200);
-        
-        //start accquisition
-        NIVision.IMAQdxStartAcquisition(session);
-    }
+		frame2 = NIVision.imaqCreateImage(NIVision.ImageType.IMAGE_RGB, 0);
 
-    public static void updateDashboard() {
-        /**
-         * grab an image, draw the circle, and provide it for the camera server
-         * which will in turn send it to the dashboard.
-         */
+		session1 = NIVision.IMAQdxOpenCamera("cam0",
+				NIVision.IMAQdxCameraControlMode.CameraControlModeController);
 
-            NIVision.IMAQdxGrab(session, frame, 1);
-            
-            NIVision.imaqDrawShapeOnImage(frame, frame, rect,
-                    DrawMode.DRAW_VALUE, ShapeMode.SHAPE_RECT, 1.0f);
-            
+		session2 = NIVision.IMAQdxOpenCamera("cam1",
+				NIVision.IMAQdxCameraControlMode.CameraControlModeListener);
 
-            CameraServer.getInstance().setImage(frame);
-    }
+		// create rectangle
+		rect = new NIVision.Rect(50, 100, 100, 200);
+
+	}
+
+	public void updateDashboard() {
+		
+		if (Controller.getInstance().getJoy2Button(3)) {
+			reverse = true;
+		}
+		else {
+			reverse = false;
+		}
+		
+		if(!reverse){
+			SmartDashboard.putString("DB/String 6", "Session 1 running");
+			// sessions 2 & 3 is no longer started
+						session2NotStarted = true;
+
+						// configure if session not started
+						if (session1NotStarted) {
+							// End previous sessions
+							NIVision.IMAQdxUnconfigureAcquisition(session2);
+//							NIVision.IMAQdxUnconfigureAcquisition(session3);
+
+							// Configure Grab
+							NIVision.IMAQdxConfigureGrab(session1);
+
+							// start acquisition
+							NIVision.IMAQdxStartAcquisition(session1);
+
+							// session 1 is started
+							session1NotStarted = false;
+						}
+						
+						// grab image
+						NIVision.IMAQdxGrab(session1, frame1, 1);
+
+						// draw on image
+						NIVision.imaqDrawShapeOnImage(frame1, frame1, rect,
+								DrawMode.DRAW_VALUE, ShapeMode.SHAPE_RECT, 25.0f);
+
+						// send image to dashboard
+						CameraServer.getInstance().setImage(frame1);
+			
+		}else {
+			SmartDashboard.putString("DB/String 6", "Session 2 running");
+			// sessions 1 & 3 is no longer started
+			session1NotStarted = true;
+
+			// configure if session not started
+			if (session2NotStarted) {
+				// End previous sessions
+				NIVision.IMAQdxUnconfigureAcquisition(session1);
+//				NIVision.IMAQdxUnconfigureAcquisition(session3);
+
+				// Configure Grab
+				NIVision.IMAQdxConfigureGrab(session2);
+
+				// start acquisition
+				NIVision.IMAQdxStartAcquisition(session2);
+
+				// session 2 is started
+				session2NotStarted = false;
+			}
+
+			// grab image
+			NIVision.IMAQdxGrab(session2, frame2, 1);
+
+			// draw on image
+			NIVision.imaqDrawShapeOnImage(frame2, frame2, rect,
+					DrawMode.DRAW_VALUE, ShapeMode.SHAPE_RECT, 25.0f);
+
+			// send image to dashboard
+			CameraServer.getInstance().setImage(frame2);
+		}
+	}
 }
 
