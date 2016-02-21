@@ -18,15 +18,17 @@ public class Switches {
 	private static Switches switches = null;
 	
 	private Switches() {
-		// switch 1
+		// switch 1 (on =false)
 		ioSwitch1 = new DigitalInput(1);
+		//switch2(on =false)
 		ioSwitch2 = new DigitalInput(2);
+		//switch3(on =false)
 		ioSwitch3 = new DigitalInput(3);
-		// switch 2
+	    //dial2
 		ioSwitch4 = new DigitalInput(4);
 		ioSwitch5 = new DigitalInput(5);
-		ioSwitch6 = new DigitalInput(6);
-		// switch3
+		//ioSwitch6 = new DigitalInput(6);
+		// dial1
 		ioSwitch7 = new DigitalInput(7);
 		ioSwitch8 = new DigitalInput(8);
 	}
@@ -77,7 +79,7 @@ public class Switches {
 		return total;
 	}
 
-	public int getSwitch4Value() {
+	public int getDial2Value() {
 		int total = 0;
 		if (ioSwitch4.get()) {
 			total += Math.pow(2, 0);
@@ -97,7 +99,7 @@ public class Switches {
 		return total;
 	}
 
-	public int getSwitch5(int num) {
+	public int getDial1Value(int num) {
 		int total = 0;
 		if (ioSwitch7.get()) {
 			total += Math.pow(2, 0);
