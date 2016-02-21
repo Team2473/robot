@@ -237,6 +237,7 @@ public class Shooter {
 		else if(currentState == State.RAISED){
 			pot.set(0); //This is temporary, need to fine tune table values
 		}
+		//firing
 		else if(currentState == State.LOWERING){
 			if(isExtended()){
 				currentState = State.FIRING;
