@@ -69,51 +69,19 @@ public class Shooter {
 	
 	//Pot reading for positioning
 	public static void testPot(){
-		
-		
-	}
-	
-	//Button breakdown
-	public static void spinIn(){
-		if(joystick.getRawButton(6)){
-			shootR.set(-0.2);
-			shootL.set(0.2); 
-		}
-	}
-	
-	public static void spinOut(){
-		if(joystick.getRawButton(7)){
-			shootR.set(0.2);
-			shootL.set(-0.2); 
-		}
-	}
-	
-	public static void stopSpin(){
-		if(joystick.getRawButton(3)){
-			shootR.set(0);
-			shootL.set(0);
-		}
-	}
-	
-	public static void forward(){
-		if(joystick.getRawButton(11)){
-			setPosition(180);
-		}
-	}
-	
-	public static void back(){
-		if(joystick.getRawButton(10)){
-			setPosition(0);
-		}
-	}
-	
-	public static void carry(){
+		SmartDashboard.putString("DB/String 1", "" + pot.getAnalogInRaw());	
 		if(joystick.getRawButton(2)){
-			setPosition(90);
+			moveBackward();
+		}
+		else if(joystick.getRawButton(3)){
+			moveForward();
+		}
+		else{
+			stop();
 		}
 	}
-		
 	
+
 	// Basic power instructions
 	
 	public static void moveForward(){
