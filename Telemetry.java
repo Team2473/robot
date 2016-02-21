@@ -28,7 +28,7 @@ public class Telemetry {
 	public void updateUltrasonicValue() {
 		double rangeInInches = ultrasonic1.getVoltage() / vi;
 		
-		SmartDashboard.putString("DB/String 1", "Theoretical Value: " + rangeInInches);
-		SmartDashboard.putString("DB/String 2", "Voltage " + ultrasonic1.getVoltage());
+		SmartDashboard.putString("DB/String 1", "" + rangeInInches);
+		SmartDashboard.putString("DB/String 2", "" + ultrasonic1.getVoltage());
 	}
 }
