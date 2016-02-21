@@ -190,7 +190,7 @@ public class Shooter {
 			collapse();
 		}
 		//get status of fire button
-		if(joystick.getRawButton(6)){
+		if(joystick.getRawButton(2)){
 			fire();
 		}
 	}
