@@ -61,6 +61,7 @@ public class Robot extends IterativeRobot {
     		TeleOp.runPower();
     	}
     	TeleOp.runUtilities();
+    	Telemetry.getInstance().updateUltrasonicValue();
     }
     
     /**
