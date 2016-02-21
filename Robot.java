@@ -57,7 +57,10 @@ public class Robot extends IterativeRobot {
      * 
      */
     public void teleopPeriodic() {
+    	
+    	Shooter.autoLoop(); //only run if certain button is pressed
     	Shooter.runLoop();
+    	
     	Vision.getInstance().updateDashboard();
     	if(Vision.getInstance().reverse) {
     		TeleOp.runPowerReverse();
