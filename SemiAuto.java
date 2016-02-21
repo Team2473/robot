@@ -43,8 +43,8 @@ public class SemiAuto {
 		if(wallDetected()){
 			goDown();
 		}
-		if(/*distance traveled*/){
-			goDown();
+		if(hasTraveled()){
+			goUp();
 		}	
 	}
 	
@@ -53,7 +53,15 @@ public class SemiAuto {
 		updateAutoState();
 				
 		// Calculate outputs
-		if(currentAuto == AutoState.DOWN){
+		if(currentAuto == AutoState.START){
+			if(wallDetected()){
+				currentAuto = AutoState.DOWN;
+			}
+			else{
+				//do nothing
+			}
+		}
+		else if(currentAuto == AutoState.DOWN){
 			if(isDown()){
 				currentAuto = AutoState.CREST;               						 // start is the same as end
 			}
@@ -62,29 +70,22 @@ public class SemiAuto {
 				Shooter.setPosition(180);
 			}
 		}
+
+		else if(currentAuto == AutoState.CREST){
+			encEnd = motor.getEncBR();
+			if(hasTraveled()){
+				currentAuto = AutoState.UP;
+			}
+			else{
+				//do nothing
+			}
+		}
 		else if(currentAuto == AutoState.UP){
 			if(isUp()){
 				currentAuto = AutoState.START;
 			}
 			else{
 				Shooter.setPosition(90);
-			}
-		}
-
-		else if(currentAuto == AutoState.START){
-			if(wallDetected()){
-				currentAuto = AutoState.DOWN;
-			}
-			else{
-				//do nothing
-			}
-		}
-		else if(currentAuto == AutoState.CREST){
-			if(/*wheels have traveled some distance*/){
-				currentAuto = AutoState.UP;
-			}
-			else{
-				//do nothing
 			}
 		}
 	}
@@ -103,6 +104,6 @@ public class SemiAuto {
 	}
 	
 	public static boolean hasTraveled(){
-		
+		return encEnd - encStart == 100;											   //CHANGE, ENC TRAVELED
 	}
 }

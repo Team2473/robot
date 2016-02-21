@@ -49,8 +49,9 @@ public class Shooter {
 	public static int backPotMax = 420;
 	
 	// Joystick Mapping
-	public static int loadButton   = 4;
-	public static int unloadButton = 5;
+	public static int loadButton     = 4;
+	public static int unloadButton   = 5;
+	public static boolean abortShoot = false;
 	
 	// Input
 	public static DigitalInput breakBeam   = new DigitalInput(0); 
@@ -193,6 +194,12 @@ public class Shooter {
 		if(joystick.getRawButton(2)){
 			fire();
 		}
+		
+		//safety abort
+		if(joystick.getRawButton(3)){
+			if(currentState == State.LOWERING) abortShoot = true;
+		}
+		
 	}
 	
 	public static void runLoop(){
@@ -237,9 +244,9 @@ public class Shooter {
 		else if(currentState == State.RAISED){
 			pot.set(0); //This is temporary, need to fine tune table values
 		}
-		//firing
+		//firing, abort shoot
 		else if(currentState == State.LOWERING){
-			if(isExtended()){
+			if(isExtended() || abortShoot){ 
 				currentState = State.FIRING;
 			}
 			else{
@@ -252,6 +259,7 @@ public class Shooter {
 			}
 			else{
 				fireBall();
+				abortShoot = false;
 			}
 		}
 	}
