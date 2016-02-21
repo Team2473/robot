@@ -36,13 +36,13 @@ public class Switches {
 	}
 
 	public void printDigitalInputs() {
-		SmartDashboard.putString("DB/String 1", "" + ioSwitch1.get());
-		SmartDashboard.putString("DB/String 2", "" + ioSwitch2.get());
-		SmartDashboard.putString("DB/String 3", "" + ioSwitch3.get());
-		SmartDashboard.putString("DB/String 4", "" + ioSwitch4.get());
-		SmartDashboard.putString("DB/String 5", "" + ioSwitch5.get());
-		SmartDashboard.putString("DB/String 6", "" + ioSwitch6.get());
-		SmartDashboard.putString("DB/String 7", "" + ioSwitch7.get());
-		SmartDashboard.putString("DB/String 8", "" + ioSwitch8.get());
+		SmartDashboard.putString("DB/String 1", "Switch 1:" + ioSwitch1.get());
+		SmartDashboard.putString("DB/String 2", "Switch 2:" + ioSwitch2.get());
+		SmartDashboard.putString("DB/String 3", "Switch 3:" + ioSwitch3.get());
+		SmartDashboard.putString("DB/String 4", "Switch 4:" + ioSwitch4.get());
+		SmartDashboard.putString("DB/String 5", "Switch 5:" + ioSwitch5.get());
+		SmartDashboard.putString("DB/String 6", "Switch 6:" + ioSwitch6.get());
+		SmartDashboard.putString("DB/String 7", "Switch 7:" + ioSwitch7.get());
+		SmartDashboard.putString("DB/String 8", "Switch 8:" + ioSwitch8.get());
 	}
 }
