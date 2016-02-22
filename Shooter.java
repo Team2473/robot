@@ -58,7 +58,6 @@ public class Shooter {
 	public static CANTalon pot             = new CANTalon(6);
 	public static CANTalon shootR          = new CANTalon(9);
 	public static CANTalon shootL          = new CANTalon(10);
-	public static Joystick joystick        = new Joystick(0);
 		
 	// Initialization
 
@@ -72,10 +71,10 @@ public class Shooter {
 	//Pot reading for positioning
 	public static void testPot(){
 		SmartDashboard.putString("DB/String 1", "" + pot.getAnalogInRaw());	
-		if(joystick.getRawButton(2)){
+		if(Controller.getInstance().getJoy1Button(2)){
 			moveBackward();
 		}
-		else if(joystick.getRawButton(3)){
+		else if(Controller.getInstance().getJoy1Button(3)){
 			moveForward();
 		}
 		else{
@@ -184,19 +183,19 @@ public class Shooter {
 	
 	private static void updateControlState(){
 		//get status of extend button
-		if(joystick.getRawButton(5)){
+		if(Controller.getInstance().getJoy1Button(5)){
 			extend();
 		}
 		else{
 			collapse();
 		}
 		//get status of fire button
-		if(joystick.getRawAxis(2) == 1){
+		if(Controller.getInstance().getLeftTrigger() == 1){
 			fire();
 		}
 		
 		//safety abort
-		if(joystick.getRawButton(2)){
+		if(Controller.getInstance().getJoy1Button(2)){
 			if(currentState == State.LOWERING) abortShoot = true;
 		}
 		
@@ -284,7 +283,7 @@ public class Shooter {
 		boolean atNinety = false;
 		SmartDashboard.putString("DB/String 4", "breakBeam.get: " + breakBeam.get());
 		
-		if(joystick.getRawButton(loadButton)) {
+		if(Controller.getInstance().getJoy1Button(loadButton)) {
 			
 			if(!breakBeam.get()){
 				// Stop spinning shooters
@@ -313,7 +312,7 @@ public class Shooter {
 				shootL.set(0.2); 
 				
 				// Failsafe: Button released without ball in place
-				if(!joystick.getRawButton(loadButton) && !atNinety) {
+				if(!Controller.getInstance().getJoy1Button(loadButton) && !atNinety) {
 					shootR.set(0);
 					shootL.set(0);
 					setPosition(0);
@@ -330,7 +329,7 @@ public class Shooter {
 	
 	public static void unload() {
 		
-		if(joystick.getRawButton(unloadButton)) {
+		if(Controller.getInstance().getJoy1Button(unloadButton)) {
 			
 			// Move arm forward
 			setPosition(180);
