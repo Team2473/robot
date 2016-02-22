@@ -60,8 +60,7 @@ public class Shooter {
 	public static Joystick joystick        = new Joystick(0);
 		
 	// Initialization
-
-	public Shooter() {
+	public static void init() {
 		pot.enableBrakeMode(true);
 		pot.changeControlMode(CANTalon.TalonControlMode.PercentVbus);
 		shootR.changeControlMode(CANTalon.TalonControlMode.PercentVbus);
