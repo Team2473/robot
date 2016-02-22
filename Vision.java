@@ -25,18 +25,18 @@ import edu.wpi.first.wpilibj.Timer;
 public class Vision {
 	private static Vision vision = null;
 
-	static int session1;
-	static int session2;
+	int session1;
+	int session2;
 
-	static Image frame1;
-	static Image frame2;
+	Image frame1;
+	Image frame2;
 
-	static NIVision.Rect rect;
+	NIVision.Rect rect;
 
-	static boolean session1NotStarted = true;
-	static boolean session2NotStarted = true;
+	boolean session1NotStarted = true;
+	boolean session2NotStarted = true;
 
-	static boolean reverse = false;
+	boolean reverse = false;
 
 	public static Vision getInstance() {
 		if (vision == null) {
