@@ -62,7 +62,7 @@ public class Shooter {
 		
 	// Initialization
 
-	public Shooter() {
+	public static void init() {
 		pot.enableBrakeMode(true);
 		pot.changeControlMode(CANTalon.TalonControlMode.PercentVbus);
 		shootR.changeControlMode(CANTalon.TalonControlMode.PercentVbus);
