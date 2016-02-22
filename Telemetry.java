@@ -17,6 +17,9 @@ public class Telemetry {
 	//Gyro
 	private AnalogGyro gyro;
 
+	//breakbeam
+	private DigitalInput breakBeam;
+	
 	private static Telemetry telemetry = null;
 
 	//for calculating ultrasonic values
@@ -28,6 +31,8 @@ public class Telemetry {
 		
 		gyro = new AnalogGyro(4);
 		gyro.calibrate();
+		
+		breakBeam   = new DigitalInput(0);
 	}
 
 	public static Telemetry getInstance() {
@@ -69,5 +74,9 @@ public class Telemetry {
 	//Resets Gyro to 0 degrees
 	public void resetGyro () {
 		gyro.reset();
+	}
+	
+	public boolean getBreakBeam(){
+		return breakBeam.get();
 	}
 }
