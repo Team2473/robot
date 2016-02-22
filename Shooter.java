@@ -1,5 +1,405 @@
+
 package org.usfirst.frc.team2473.robot;
 
-public class Shooter {
+import edu.wpi.first.wpilibj.CANTalon;
+import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
+public class Shooter {
+	private enum State{
+		COLLAPSED,
+		EXTENDING,
+		EXTENDED,
+		COLLAPSING,
+		RAISING,
+		RAISED,
+		LOWERING,
+		FIRING
+	};
+	
+	private static String stateString(State state){
+		switch(state){
+		case COLLAPSED:
+			return "Collapsed";
+		case EXTENDING:
+			return "Extending";
+		case COLLAPSING:
+			return "Collapsing";
+		case EXTENDED:
+			return "Extended";
+		case RAISING:
+			return "Raising";
+		case RAISED:
+			return "Raised";
+		case LOWERING:
+			return "Lowering";
+		case FIRING:
+			return "Firing";
+		}
+		
+		return "Unknown";
+	}
+	
+	private static State currentState = State.COLLAPSED;
+	
+	// Constants
+	public static int fwdPotMax  = 505; 
+	public static int backPotMax = 420;
+	
+	// Joystick Mapping
+	public static int loadButton     = 4;
+	public static int unloadButton   = 5;
+	public static boolean abortShoot = false;
+	
+	// Input
+	public static DigitalInput breakBeam   = new DigitalInput(0); 
+	public static CANTalon pot             = new CANTalon(6);
+	public static CANTalon shootR          = new CANTalon(9);
+	public static CANTalon shootL          = new CANTalon(10);
+	public static Joystick joystick        = new Joystick(0);
+		
+	// Initialization
+
+	public Shooter() {
+		pot.enableBrakeMode(true);
+		pot.changeControlMode(CANTalon.TalonControlMode.PercentVbus);
+		shootR.changeControlMode(CANTalon.TalonControlMode.PercentVbus);
+		shootL.changeControlMode(CANTalon.TalonControlMode.PercentVbus);
+	}
+	
+	//Button breakdown
+	public static void spinIn(){
+		if(joystick.getRawButton(6)){
+			shootR.set(-0.2);
+			shootL.set(0.2); 
+		}
+	}
+	
+	public static void spinOut(){
+		if(joystick.getRawButton(7)){
+			shootR.set(0.2);
+			shootL.set(-0.2); 
+		}
+	}
+	
+	public static void stopSpin(){
+		if(joystick.getRawButton(3)){
+			shootR.set(0);
+			shootL.set(0);
+		}
+	}
+	
+	public static void forward(){
+		if(joystick.getRawButton(11)){
+			setPosition(180);
+		}
+	}
+	
+	public static void back(){
+		if(joystick.getRawButton(10)){
+			setPosition(0);
+		}
+	}
+	
+	public static void carry(){
+		if(joystick.getRawButton(2)){
+			setPosition(90);
+		}
+	}
+
+	// Basic power instructions
+	
+	public static void moveForward(){
+		pot.changeControlMode(CANTalon.TalonControlMode.PercentVbus);
+		pot.set(0.15);
+	}
+	
+	public static void moveBackward(){ //365 pot
+		pot.changeControlMode(CANTalon.TalonControlMode.PercentVbus);
+		pot.set(-0.15);
+	}
+	
+	public static void stop(){
+		pot.changeControlMode(CANTalon.TalonControlMode.PercentVbus);
+		pot.set(0);
+	}
+	
+	// Calibration: Finding max pot values
+	
+	public static void calibration(){
+		while(pot.isFwdLimitSwitchClosed()){ //when forward is not pressed
+			moveForward();
+		}
+		try {
+			Thread.sleep(1000); 														//CHANGE
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		fwdPotMax = pot.getAnalogInRaw();
+		while(pot.isRevLimitSwitchClosed()){ //when backward is not pressed
+			moveBackward();
+		}
+		try {
+			Thread.sleep(1000); 														//CHANGE
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		backPotMax = pot.getAnalogInRaw();
+	}
+	
+	// Test method
+	public static void test(){
+		setPosition(90);
+		setPosition(0);
+	}
+
+	// Loading and Unloading
+	
+	
+	
+	public static boolean fire(){
+		if(currentState == State.RAISED || currentState == State.RAISING){
+			currentState = State.LOWERING;
+		}
+		return true;
+	}
+
+	//Get to extend state
+	public static boolean extend(){
+		if(currentState == State.COLLAPSED || currentState == State.COLLAPSING){
+			currentState = State.EXTENDING;
+		}
+		return true;
+	}
+	
+	public static boolean collapse(){
+		if(currentState == State.EXTENDED || currentState == State.EXTENDING){
+			currentState = State.COLLAPSING;
+		}
+		return true;
+	}
+	
+	private static boolean hasBall(){
+		return !breakBeam.get();
+	}
+	
+	private static void intakeBall(){
+		shootR.set(-0.2);
+		shootL.set(0.2);
+	}
+	
+	private static void fireBall(){
+		shootR.set(0.6);
+		shootL.set(-0.6);
+		//Need to allow the ball to be fired
+		try {
+			Thread.sleep(500);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	private static void holdBall(){
+		shootR.set(0);
+		shootL.set(0);
+	}
+	
+	private static void updateControlState(){
+		//get status of extend button
+		if(joystick.getRawButton(5)){
+			extend();
+		}
+		else{
+			collapse();
+		}
+		//get status of fire button
+		if(joystick.getRawButton(6)){
+			fire();
+		}
+	}
+	
+	public static void runLoop(){
+		// Get transitions + calculate state change if needed
+		updateControlState();
+		
+		// Calculate outputs
+		if(currentState == State.COLLAPSING){
+			holdBall();
+			if(isCollapsed()){
+				currentState = State.COLLAPSED;
+			}
+			else{
+				setPosition(0);
+			}
+		}
+		else if(currentState == State.EXTENDING){
+			if(isExtended()){
+				currentState = State.EXTENDED;
+			}
+			else{
+				setPosition(180);
+			}
+		}
+		else if(currentState == State.EXTENDED){
+			if(hasBall()){
+				currentState = State.RAISING;
+			}
+			else{
+				intakeBall();
+			}
+		}
+		else if(currentState == State.RAISING){
+			if(isRaised()){
+				currentState = State.RAISED;
+			}
+			else{
+				holdBall();
+				setPosition(90);
+			}
+		}
+		else if(currentState == State.RAISED){
+			pot.set(0); //This is temporary, need to fine tune table values
+		}
+		else if(currentState == State.LOWERING){
+			if(isExtended()){
+				currentState = State.FIRING;
+			}
+			else{
+				setPosition(180);
+			}
+		}
+		else if(currentState == State.FIRING){
+			if(!hasBall()){
+				currentState = State.EXTENDED;
+			}
+			else{
+				fireBall();
+			}
+		}
+	}
+	
+	public static boolean isCollapsed(){
+		return (Math.abs(pot.getAnalogInRaw() - backPotMax) < 5);
+	}
+	
+	public static boolean isExtended(){
+		return Math.abs(pot.getAnalogInRaw() - fwdPotMax) < 5;
+	}
+	
+	public static boolean isRaised(){
+		return getPosition() <= 90; 
+	}
+	
+	//DO NOT USE. Saving for use in test program.
+	public static void load(){
+		boolean continueMethod = true;
+		boolean atNinety = false;
+		SmartDashboard.putString("DB/String 4", "breakBeam.get: " + breakBeam.get());
+		
+		if(joystick.getRawButton(loadButton)) {
+			
+			if(!breakBeam.get()){
+				// Stop spinning shooters
+				shootR.set(0);
+				shootL.set(0);
+				
+				// Move into ball holding position
+				if(continueMethod){
+					SmartDashboard.putString("DB/String 0", "got here");
+					setPosition(90);
+					shootR.set(0);
+					shootL.set(0);
+					atNinety = true;
+				}
+			}
+			// Move arm all the way forward
+			if(!atNinety){ //if it's not at 90
+				setPosition(180);
+			}
+						
+			// Wait for beam to break
+			while(breakBeam.get()) {
+				
+				// Start spinning shooter
+				shootR.set(-0.2);
+				shootL.set(0.2); 
+				
+				// Failsafe: Button released without ball in place
+				if(!joystick.getRawButton(loadButton) && !atNinety) {
+					shootR.set(0);
+					shootL.set(0);
+					setPosition(0);
+					continueMethod = false;
+					atNinety = false;
+					if(Math.abs(pot.getAnalogInRaw() - backPotMax) < 5){
+						continueMethod = false;
+						break;
+					}
+				}
+			}						
+		}
+	}
+	
+	public static void unload() {
+		
+		if(joystick.getRawButton(unloadButton)) {
+			
+			// Move arm forward
+			setPosition(180);
+			
+			// Waiting for ball to be unloaded
+			while(!breakBeam.get()){										
+				shootR.set(0.2);
+				shootL.set(-0.2);
+			}	
+			
+			// Reset arm
+			setPosition(0);
+		}
+	}	
+ 
+	// Motor Control 
+	// TODO: This should be using the motor class
+	
+	public static double[] lookupTable = {0.28, 0.26, 0.23, 0.22, 0.21, 0.20, 0.19, 0.18, 0.17, 0.17, 0.16, 0.15, 0.12, 0.08, 0.08, 0.08, 0.08, 0.06, 0.06, 0.02};  
+
+	public static double getPosition(){
+		double diff = fwdPotMax - backPotMax;
+		return (pot.getAnalogInRaw() - backPotMax) * 180 / diff;
+	}
+	
+	public static void setPosition(int degrees) {
+	
+		int index = 0;
+		int direction = 1; 
+		double diff = fwdPotMax - backPotMax;
+		double desiredPosition = (degrees*diff)/180 + backPotMax;
+		
+		//if already at currentPosition, do nothing
+		if(Math.abs(pot.getAnalogInRaw() - desiredPosition) < 5){
+			return;
+		}
+		// We will use direction as a multiplier, this will change the direction of setpot
+		if(pot.getAnalogInRaw() > desiredPosition) direction = -1;
+					
+		// Determine ideal motor speed & set power to motor
+		double toDegrees = (pot.getAnalogInRaw() - backPotMax) * 180 / diff;
+		//9 is 180/20 (because 20 buckets)
+		index = (int) toDegrees/9;
+		if(direction == -1){
+			index = Math.abs(index- 20);
+		}
+		
+		// Prevent motor from going outside safe zone
+		if(index > 19 || index < 0){
+			return;
+		}
+
+		pot.set(lookupTable[index]*direction);
+	}
 }
+
+
