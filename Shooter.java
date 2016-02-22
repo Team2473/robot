@@ -18,6 +18,7 @@ public class Shooter {
 		FIRING
 	};
 	
+	
 	private static String stateString(State state){
 		switch(state){
 		case COLLAPSED:
@@ -48,8 +49,9 @@ public class Shooter {
 	public static int backPotMax = 420;
 	
 	// Joystick Mapping
-	public static int loadButton   = 4;
-	public static int unloadButton = 5;
+	public static int loadButton     = 4;
+	public static int unloadButton   = 5;
+	public static boolean abortShoot = false;
 	
 	// Input
 	public static DigitalInput breakBeam   = new DigitalInput(0); 
@@ -130,10 +132,9 @@ public class Shooter {
 		setPosition(0);
 	}
 
+	
+	
 	// Loading and Unloading
-	
-	
-	
 	public static boolean fire(){
 		if(currentState == State.RAISED || currentState == State.RAISING){
 			currentState = State.LOWERING;
@@ -190,9 +191,15 @@ public class Shooter {
 			collapse();
 		}
 		//get status of fire button
-		if(joystick.getRawButton(2)){
+		if(joystick.getRawAxis(2) == 1){
 			fire();
 		}
+		
+		//safety abort
+		if(joystick.getRawButton(2)){
+			if(currentState == State.LOWERING) abortShoot = true;
+		}
+		
 	}
 	
 	public static void runLoop(){
@@ -237,9 +244,9 @@ public class Shooter {
 		else if(currentState == State.RAISED){
 			pot.set(0); //This is temporary, need to fine tune table values
 		}
-		//firing
+		//firing, abort shoot
 		else if(currentState == State.LOWERING){
-			if(isExtended()){
+			if(isExtended() || abortShoot){ 
 				currentState = State.FIRING;
 			}
 			else{
@@ -252,6 +259,7 @@ public class Shooter {
 			}
 			else{
 				fireBall();
+				abortShoot = false;
 			}
 		}
 	}
@@ -267,6 +275,8 @@ public class Shooter {
 	public static boolean isRaised(){
 		return getPosition() <= 90; 
 	}
+	
+		
 	
 	//DO NOT USE. Saving for use in test program.
 	public static void load(){
@@ -339,8 +349,6 @@ public class Shooter {
 	// Motor Control 
 	// TODO: This should be using the motor class
 	
-	
-	 
 	public static double[] lookupTable = {0.34, 0.32, 0.32, 0.30, 0.28, 0.26, 0.26, 0.26, 0.24, 0.24, 0.22, 0.22, 0.20, 0.19, 0.16, 0.14, 0.14, 0.12, 0.10, 0.02};  
 
 	public static double getPosition(){
