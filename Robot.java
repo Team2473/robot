@@ -51,16 +51,10 @@ public class Robot extends IterativeRobot {
     /**
      * This function is called periodically during operator control
      */
-    /*
-     * Note to Rucha: Uncomment calibration method and mapTable method to test.
-     * Ekta: ^^ mapTable doesn't exist anymore ^^
-     * 
-     */
+
     public void teleopPeriodic() {
-    	
-    	Shooter.autoLoop(); //only run if certain button is pressed
+
     	Shooter.runLoop();
-    	
     	Vision.getInstance().updateDashboard();
     	if(Vision.getInstance().reverse) {
     		TeleOp.runPowerReverse();

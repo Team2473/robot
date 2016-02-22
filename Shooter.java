@@ -191,12 +191,12 @@ public class Shooter {
 			collapse();
 		}
 		//get status of fire button
-		if(joystick.getRawButton(2)){
+		if(joystick.getRawAxis(2) == 1){
 			fire();
 		}
 		
 		//safety abort
-		if(joystick.getRawButton(3)){
+		if(joystick.getRawButton(2)){
 			if(currentState == State.LOWERING) abortShoot = true;
 		}
 		
