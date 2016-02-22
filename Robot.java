@@ -57,6 +57,17 @@ public class Robot extends IterativeRobot {
      * 
      */
     public void teleopPeriodic() {
+    	
+//    	Shooter.testPotentiometer();
+//    	Shooter.checkLS();
+//    	Shooter.joyControlled(); 
+    	
+//    	Shooter.load();
+//    	Shooter.setPosition(0);
+    	
+//    	Shooter.unload();
+//    	Shooter.test();
+
     	Shooter.runLoop();
     	Vision.getInstance().updateDashboard();
     	if(Vision.getInstance().reverse) {
@@ -65,6 +76,8 @@ public class Robot extends IterativeRobot {
     	else {
     		TeleOp.runPower();
     	}
+    	
+    	//Grappler
     	TeleOp.runUtilities();
     }
     
