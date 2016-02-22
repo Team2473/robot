@@ -54,7 +54,6 @@ public class Shooter {
 	public static boolean abortShoot = false;
 	
 	// Input
-	public static DigitalInput breakBeam   = new DigitalInput(0); 
 	public static CANTalon pot             = new CANTalon(6);
 	public static CANTalon shootR          = new CANTalon(9);
 	public static CANTalon shootL          = new CANTalon(10);
@@ -156,7 +155,7 @@ public class Shooter {
 	}
 	
 	private static boolean hasBall(){
-		return !breakBeam.get();
+		return !Telemetry.getInstance().getBreakBeam();
 	}
 	
 	private static void intakeBall(){
@@ -280,11 +279,11 @@ public class Shooter {
 	public static void load(){
 		boolean continueMethod = true;
 		boolean atNinety = false;
-		SmartDashboard.putString("DB/String 4", "breakBeam.get: " + breakBeam.get());
+		SmartDashboard.putString("DB/String 4", "breakBeam.get: " + Telemetry.getInstance().getBreakBeam());
 		
 		if(Controller.getInstance().getJoy1Button(loadButton)) {
 			
-			if(!breakBeam.get()){
+			if(!Telemetry.getInstance().getBreakBeam()){
 				// Stop spinning shooters
 				shootR.set(0);
 				shootL.set(0);
@@ -304,7 +303,7 @@ public class Shooter {
 			}
 						
 			// Wait for beam to break
-			while(breakBeam.get()) {
+			while(Telemetry.getInstance().getBreakBeam()) {
 				
 				// Start spinning shooter
 				shootR.set(-0.2);
@@ -334,7 +333,7 @@ public class Shooter {
 			setPosition(180);
 			
 			// Waiting for ball to be unloaded
-			while(!breakBeam.get()){										
+			while(!Telemetry.getInstance().getBreakBeam()){										
 				shootR.set(0.2);
 				shootL.set(-0.2);
 			}	
