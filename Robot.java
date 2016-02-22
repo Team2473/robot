@@ -45,11 +45,7 @@ public class Robot extends IterativeRobot {
      * This function is called once each time the robot enters tele-operated mode
      */
     public void teleopInit(){
-<<<<<<< HEAD
-
-=======
     	Shooter.calibration();
->>>>>>> master
     }
     
     /**
@@ -61,10 +57,6 @@ public class Robot extends IterativeRobot {
      * 
      */
     public void teleopPeriodic() {
-<<<<<<< HEAD
-    	Switches.getInstance().printDigitalInputs();
-=======
-    	
 //    	Shooter.testPotentiometer();
 //    	Shooter.checkLS();
 //    	Shooter.joyControlled(); 
@@ -86,7 +78,6 @@ public class Robot extends IterativeRobot {
     	
     	//Grappler
     	TeleOp.runUtilities();
->>>>>>> master
     }
     
     /**
