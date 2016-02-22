@@ -81,7 +81,6 @@ public class Shooter {
 			stop();
 		}
 	}
-	
 
 	// Basic power instructions
 	
@@ -140,7 +139,7 @@ public class Shooter {
 		}
 		return true;
 	}
-	
+
 	//Get to extend state
 	public static boolean extend(){
 		if(currentState == State.COLLAPSED || currentState == State.COLLAPSING){
@@ -347,7 +346,7 @@ public class Shooter {
  
 	// Motor Control 
 	// TODO: This should be using the motor class
-	//
+
 	public static double[] lookupTable = {0.34, 0.32, 0.32, 0.30, 0.28, 0.26, 0.26, 0.26, 0.24, 0.24, 0.22, 0.22, 0.20, 0.19, 0.16, 0.14, 0.14, 0.12, 0.10, 0.02};  
 
 	public static double getPosition(){
