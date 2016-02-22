@@ -1,6 +1,9 @@
 package org.usfirst.frc.team2473.robot;
 
 import edu.wpi.first.wpilibj.*;
+
+import edu.wpi.first.wpilibj.CANTalon.FeedbackDevice;
+
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -18,15 +21,18 @@ public class Robot extends IterativeRobot {
      * used for any initialization code.
      */
 	
+	
+	
     public void robotInit() {
-    	SmartDashboard.putString("DB/String 4", "test");
+    	Vision.getInstance().visionInit();
+
     }
     
     /**
      * This function is run once each time the robot enters autonomous mode
      */
     public void autonomousInit() {
-    	
+ 
     }
     
     /**
@@ -40,15 +46,41 @@ public class Robot extends IterativeRobot {
      * This function is called once each time the robot enters tele-operated mode
      */
     public void teleopInit(){
-
+    	Shooter.calibration();
     }
     
     /**
      * This function is called periodically during operator control
      */
+    /*
+     * Note to Rucha: Uncomment calibration method and mapTable method to test.
+     * Ekta: ^^ mapTable doesn't exist anymore ^^
+     * 
+     */
     public void teleopPeriodic() {
-    	SmartDashboard.putString("DB/String 4", "test");
-    	Shooter.testPotentiometer();
+    	
+//    	Shooter.testPotentiometer();
+//    	Shooter.checkLS();
+//    	Shooter.joyControlled(); 
+    	
+//    	Shooter.load();
+//    	Shooter.setPosition(0);
+    	
+//    	Shooter.unload();
+//    	Shooter.test();
+
+    	Shooter.runLoop();
+    	Vision.getInstance().updateDashboard();
+    	if(Vision.getInstance().reverse) {
+    		TeleOp.runPowerReverse();
+    	}
+    	else {
+    		TeleOp.runPower();
+    	}
+    	
+    	//Grappler
+    	TeleOp.runUtilities();
+
     }
     
     /**
