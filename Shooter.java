@@ -18,7 +18,10 @@ public class Shooter {
 		FIRING
 	};
 	
+<<<<<<< HEAD
 	
+=======
+>>>>>>> master
 	private static String stateString(State state){
 		switch(state){
 		case COLLAPSED:
@@ -49,9 +52,14 @@ public class Shooter {
 	public static int backPotMax = 420;
 	
 	// Joystick Mapping
+<<<<<<< HEAD
 	public static int loadButton     = 4;
 	public static int unloadButton   = 5;
 	public static boolean abortShoot = false;
+=======
+	public static int loadButton   = 4;
+	public static int unloadButton = 5;
+>>>>>>> master
 	
 	// Input
 	public static DigitalInput breakBeam   = new DigitalInput(0); 
@@ -69,6 +77,7 @@ public class Shooter {
 		shootL.changeControlMode(CANTalon.TalonControlMode.PercentVbus);
 	}
 	
+<<<<<<< HEAD
 	//Pot reading for positioning
 	public static void testPot(){
 		SmartDashboard.putString("DB/String 1", "" + pot.getAnalogInRaw());	
@@ -84,6 +93,49 @@ public class Shooter {
 	}
 	
 
+=======
+	//Button breakdown
+	public static void spinIn(){
+		if(joystick.getRawButton(6)){
+			shootR.set(-0.2);
+			shootL.set(0.2); 
+		}
+	}
+	
+	public static void spinOut(){
+		if(joystick.getRawButton(7)){
+			shootR.set(0.2);
+			shootL.set(-0.2); 
+		}
+	}
+	
+	public static void stopSpin(){
+		if(joystick.getRawButton(3)){
+			shootR.set(0);
+			shootL.set(0);
+		}
+	}
+	
+	public static void forward(){
+		if(joystick.getRawButton(11)){
+			setPosition(180);
+		}
+	}
+	
+	public static void back(){
+		if(joystick.getRawButton(10)){
+			setPosition(0);
+		}
+	}
+	
+	public static void carry(){
+		if(joystick.getRawButton(2)){
+			setPosition(90);
+		}
+	}
+		
+	
+>>>>>>> master
 	// Basic power instructions
 	
 	public static void moveForward(){
@@ -132,6 +184,7 @@ public class Shooter {
 		setPosition(0);
 	}
 
+<<<<<<< HEAD
 	
 	
 	// Loading and Unloading
@@ -142,6 +195,19 @@ public class Shooter {
 		return true;
 	}
 	
+=======
+	// Loading and Unloading
+	
+	
+	
+	public static boolean fire(){
+		if(currentState == State.RAISED || currentState == State.RAISING){
+			currentState = State.LOWERING;
+		}
+		return true;
+	}
+	
+>>>>>>> master
 	//Get to extend state
 	public static boolean extend(){
 		if(currentState == State.COLLAPSED || currentState == State.COLLAPSING){
@@ -173,6 +239,10 @@ public class Shooter {
 		try {
 			Thread.sleep(500);
 		} catch (InterruptedException e) {
+<<<<<<< HEAD
+=======
+			// TODO Auto-generated catch block
+>>>>>>> master
 			e.printStackTrace();
 		}
 	}
@@ -191,6 +261,7 @@ public class Shooter {
 			collapse();
 		}
 		//get status of fire button
+<<<<<<< HEAD
 		if(joystick.getRawAxis(2) == 1){
 			fire();
 		}
@@ -200,6 +271,11 @@ public class Shooter {
 			if(currentState == State.LOWERING) abortShoot = true;
 		}
 		
+=======
+		if(joystick.getRawButton(6)){
+			fire();
+		}
+>>>>>>> master
 	}
 	
 	public static void runLoop(){
@@ -244,9 +320,14 @@ public class Shooter {
 		else if(currentState == State.RAISED){
 			pot.set(0); //This is temporary, need to fine tune table values
 		}
+<<<<<<< HEAD
 		//firing, abort shoot
 		else if(currentState == State.LOWERING){
 			if(isExtended() || abortShoot){ 
+=======
+		else if(currentState == State.LOWERING){
+			if(isExtended()){
+>>>>>>> master
 				currentState = State.FIRING;
 			}
 			else{
@@ -259,7 +340,10 @@ public class Shooter {
 			}
 			else{
 				fireBall();
+<<<<<<< HEAD
 				abortShoot = false;
+=======
+>>>>>>> master
 			}
 		}
 	}
@@ -276,8 +360,11 @@ public class Shooter {
 		return getPosition() <= 90; 
 	}
 	
+<<<<<<< HEAD
 		
 	
+=======
+>>>>>>> master
 	//DO NOT USE. Saving for use in test program.
 	public static void load(){
 		boolean continueMethod = true;
@@ -349,7 +436,14 @@ public class Shooter {
 	// Motor Control 
 	// TODO: This should be using the motor class
 	
+<<<<<<< HEAD
 	public static double[] lookupTable = {0.34, 0.32, 0.32, 0.30, 0.28, 0.26, 0.26, 0.26, 0.24, 0.24, 0.22, 0.22, 0.20, 0.19, 0.16, 0.14, 0.14, 0.12, 0.10, 0.02};  
+=======
+	
+	
+	
+	public static double[] lookupTable = {0.28, 0.26, 0.23, 0.22, 0.21, 0.20, 0.19, 0.18, 0.17, 0.17, 0.16, 0.15, 0.12, 0.08, 0.08, 0.08, 0.08, 0.06, 0.06, 0.02};  
+>>>>>>> master
 
 	public static double getPosition(){
 		double diff = fwdPotMax - backPotMax;
