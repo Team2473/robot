@@ -1,5 +1,6 @@
 package org.usfirst.frc.team2473.robot;
 import edu.wpi.first.wpilibj.AnalogInput;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class SemiAuto {
 	private enum AutoState{
@@ -105,5 +106,13 @@ public class SemiAuto {
 	
 	public static boolean hasTraveled(){
 		return encEnd - encStart == 100;											   //CHANGE, ENC TRAVELED
+	}
+	
+	public static void encValues(){
+		SmartDashboard.putString("DB/String 0", "Enc: " + motor.getEncBR());
+	}
+	public static void testUS(){ //6 - 25
+		double vi = 5.0/512;
+		SmartDashboard.putString("DB/String 1", "US: " + ultrasonic.getVoltage()/vi);    
 	}
 }
