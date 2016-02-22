@@ -48,8 +48,9 @@ public class Shooter {
 	public static int backPotMax = 420;
 	
 	// Joystick Mapping
-	public static int loadButton   = 4;
-	public static int unloadButton = 5;
+	public static int loadButton     = 4;
+	public static int unloadButton   = 5;
+	public static boolean abortShoot = false;
 	
 	// Input
 	public static DigitalInput breakBeam   = new DigitalInput(0); 
@@ -106,8 +107,7 @@ public class Shooter {
 			setPosition(90);
 		}
 	}
-		
-	
+
 	// Basic power instructions
 	
 	public static void moveForward(){
@@ -166,7 +166,7 @@ public class Shooter {
 		}
 		return true;
 	}
-	
+
 	//Get to extend state
 	public static boolean extend(){
 		if(currentState == State.COLLAPSED || currentState == State.COLLAPSING){
@@ -198,7 +198,6 @@ public class Shooter {
 		try {
 			Thread.sleep(500);
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -364,9 +363,6 @@ public class Shooter {
  
 	// Motor Control 
 	// TODO: This should be using the motor class
-	
-	
-	
 	
 	public static double[] lookupTable = {0.28, 0.26, 0.23, 0.22, 0.21, 0.20, 0.19, 0.18, 0.17, 0.17, 0.16, 0.15, 0.12, 0.08, 0.08, 0.08, 0.08, 0.06, 0.06, 0.02};  
 

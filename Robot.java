@@ -57,7 +57,6 @@ public class Robot extends IterativeRobot {
      * 
      */
     public void teleopPeriodic() {
-    	
 //    	Shooter.testPotentiometer();
 //    	Shooter.checkLS();
 //    	Shooter.joyControlled(); 
