@@ -15,7 +15,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * directory.
  */
 
-public class Robot extends IterativeRobot {
+public class Robot extends IterativeRobot {	
 	/**
      * This function is run when the robot is first started up and should be
      * used for any initialization code.
@@ -23,6 +23,7 @@ public class Robot extends IterativeRobot {
 	
     public void robotInit() {
     	Vision.getInstance().visionInit();
+
     }
     
     /**
@@ -55,7 +56,6 @@ public class Robot extends IterativeRobot {
      * 
      */
     public void teleopPeriodic() {
-
     	Shooter.runLoop();
     	Vision.getInstance().updateDashboard();
     	if(Vision.getInstance().reverse) {
@@ -67,6 +67,7 @@ public class Robot extends IterativeRobot {
     	
     	//Grappler
     	TeleOp.runUtilities();
+
     }
     
     /**
