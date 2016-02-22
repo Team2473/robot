@@ -3,7 +3,6 @@ package org.usfirst.frc.team2473.robot;
 import edu.wpi.first.wpilibj.Joystick;
 
 public class Controller {
-
 	Joystick joy1;
 	Joystick joy2;
 
@@ -33,16 +32,24 @@ public class Controller {
 	public double getYL() {
 		return -joy1.getRawAxis(1);
 	}
+	
+	public double getYLNeg() {
+		return joy1.getRawAxis(1);
+	}
 
 	public double getYR() {
 		return -joy1.getRawAxis(5);
-
 	}
-
+	
+	public double getYRNeg() {
+		return joy1.getRawAxis(5);
+	}
+	
+	public boolean getJoy1Button(int b) {
+		return joy1.getRawButton(b);
+	}
 	// buttons joystick 2
-	public boolean getButton(int b) {
+	public boolean getJoy2Button(int b) {
 		return joy2.getRawButton(b);
 	}
-
-
 }
