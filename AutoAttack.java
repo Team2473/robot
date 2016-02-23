@@ -6,6 +6,7 @@ public class AutoAttack {
 	//directions for ninetyTurnWithGyro()
 	public final static int LEFT = 0;
 	public final static int RIGHT = 1;
+	public static boolean turn = true;
 
 	//constructor
 	public AutoAttack () {
@@ -33,115 +34,120 @@ public class AutoAttack {
 	 * 01234
 	 */
 	public static void run() {
-		//Starting on Left Side of Field
-		if(Switches.getInstance().getTripleSwitch() == 1) {
-			SmartDashboard.putString("DB/String 5", "Starting Side: LEFT");
-			
-			//Delay Time
-			try {
-				if(Switches.getInstance().getFourDial() == 0) {
-					SmartDashboard.putString("DB/String 6", "5 Second Delay");
-					Thread.sleep(5000);
-				}
-				else if (Switches.getInstance().getFourDial() == 1) {
-					SmartDashboard.putString("DB/String 6", "10 Second Delay");
-					Thread.sleep(10000);
-				}
-				else if (Switches.getInstance().getFourDial() == 2) {
-					SmartDashboard.putString("DB/String 6", "15 Second Delay");
-					Thread.sleep(15000);
-				}
-				else if (Switches.getInstance().getFourDial() == 3) {
-					SmartDashboard.putString("DB/String 6", "20 Second Delay");
-					Thread.sleep(20000);
-				}
-			}
-			catch (Exception e) {
-				//Do Nothing(for Thread.sleep())
-			}
-			
-			//Distance To travel dependent on defense position
-			if(Switches.getInstance().getEightDial() == 0) {
-				SmartDashboard.putString("DB/String 7", "Defense 0");
-				//Move
-			}
-			else if (Switches.getInstance().getEightDial() == 1) {
-				SmartDashboard.putString("DB/String 7", "Defense 1");
-				//Move
-			}
-			else if (Switches.getInstance().getEightDial() == 2) {
-				SmartDashboard.putString("DB/String 7", "Defense 2");
-				//Move
-			}
-			else if (Switches.getInstance().getEightDial() == 3) {
-				SmartDashboard.putString("DB/String 7", "Defense 3");
-				//Move
-			}
-			else if (Switches.getInstance().getEightDial() == 4) {
-				SmartDashboard.putString("DB/String 7", "Defense 4");
-				//Move
-			}
-			
-			//Turn Left
+		if (turn){
+			SmartDashboard.putString("DB/String 5", "Running gyroTurn");
 			ninetyTurnWithGyro(LEFT);
-			
-			//Move Past Defense
-			//Move
 		}
-		else if (Switches.getInstance().getTripleSwitch() == 2) {
-			SmartDashboard.putString("DB/String 5", "Starting Side: RIGHT");
-			
-			//Delay Time
-			try {
-				if(Switches.getInstance().getFourDial() == 0) {
-					SmartDashboard.putString("DB/String 6", "5 Second Delay");
-					Thread.sleep(5000);
-				}
-				else if (Switches.getInstance().getFourDial() == 1) {
-					SmartDashboard.putString("DB/String 6", "10 Second Delay");
-					Thread.sleep(10000);
-				}
-				else if (Switches.getInstance().getFourDial() == 2) {
-					SmartDashboard.putString("DB/String 6", "15 Second Delay");
-					Thread.sleep(15000);
-				}
-				else if (Switches.getInstance().getFourDial() == 3) {
-					SmartDashboard.putString("DB/String 6", "20 Second Delay");
-					Thread.sleep(20000);
-				}
-			}
-			catch (Exception e) {
-				//Do Nothing(for Thread.sleep())
-			}
-			
-			//Distance To travel dependent on defense position
-			if(Switches.getInstance().getEightDial() == 0) {
-				SmartDashboard.putString("DB/String 7", "Defense 0");
-				//Move
-			}
-			else if (Switches.getInstance().getEightDial() == 1) {
-				SmartDashboard.putString("DB/String 7", "Defense 1");
-				//Move
-			}
-			else if (Switches.getInstance().getEightDial() == 2) {
-				SmartDashboard.putString("DB/String 7", "Defense 2");
-				//Move
-			}
-			else if (Switches.getInstance().getEightDial() == 3) {
-				SmartDashboard.putString("DB/String 7", "Defense 3");
-				//Move
-			}
-			else if (Switches.getInstance().getEightDial() == 4) {
-				SmartDashboard.putString("DB/String 7", "Defense 4");
-				//Move
-			}
-			
-			//Turn Left
-			ninetyTurnWithGyro(LEFT);
-			
-			//Move Past Defense
-			//Move
-		}
+		turn = false;
+//		//Starting on Left Side of Field
+//		if(Switches.getInstance().getTripleSwitch() == 1) {
+//			SmartDashboard.putString("DB/String 5", "Starting Side: LEFT");
+//			
+//			//Delay Time
+//			try {
+//				if(Switches.getInstance().getFourDial() == 0) {
+//					SmartDashboard.putString("DB/String 6", "5 Second Delay");
+//					Thread.sleep(5000);
+//				}
+//				else if (Switches.getInstance().getFourDial() == 1) {
+//					SmartDashboard.putString("DB/String 6", "10 Second Delay");
+//					Thread.sleep(10000);
+//				}
+//				else if (Switches.getInstance().getFourDial() == 2) {
+//					SmartDashboard.putString("DB/String 6", "15 Second Delay");
+//					Thread.sleep(15000);
+//				}
+//				else if (Switches.getInstance().getFourDial() == 3) {
+//					SmartDashboard.putString("DB/String 6", "20 Second Delay");
+//					Thread.sleep(20000);
+//				}
+//			}
+//			catch (Exception e) {
+//				//Do Nothing(for Thread.sleep())
+//			}
+//			
+//			//Distance To travel dependent on defense position
+//			if(Switches.getInstance().getEightDial() == 0) {
+//				SmartDashboard.putString("DB/String 7", "Defense 0");
+//				//Move
+//			}
+//			else if (Switches.getInstance().getEightDial() == 1) {
+//				SmartDashboard.putString("DB/String 7", "Defense 1");
+//				//Move
+//			}
+//			else if (Switches.getInstance().getEightDial() == 2) {
+//				SmartDashboard.putString("DB/String 7", "Defense 2");
+//				//Move
+//			}
+//			else if (Switches.getInstance().getEightDial() == 3) {
+//				SmartDashboard.putString("DB/String 7", "Defense 3");
+//				//Move
+//			}
+//			else if (Switches.getInstance().getEightDial() == 4) {
+//				SmartDashboard.putString("DB/String 7", "Defense 4");
+//				//Move
+//			}
+//			
+//			//Turn Left
+//			ninetyTurnWithGyro(LEFT);
+//			
+//			//Move Past Defense
+//			//Move
+//		}
+//		else if (Switches.getInstance().getTripleSwitch() == 2) {
+//			SmartDashboard.putString("DB/String 5", "Starting Side: RIGHT");
+//			
+//			//Delay Time
+//			try {
+//				if(Switches.getInstance().getFourDial() == 0) {
+//					SmartDashboard.putString("DB/String 6", "5 Second Delay");
+//					Thread.sleep(5000);
+//				}
+//				else if (Switches.getInstance().getFourDial() == 1) {
+//					SmartDashboard.putString("DB/String 6", "10 Second Delay");
+//					Thread.sleep(10000);
+//				}
+//				else if (Switches.getInstance().getFourDial() == 2) {
+//					SmartDashboard.putString("DB/String 6", "15 Second Delay");
+//					Thread.sleep(15000);
+//				}
+//				else if (Switches.getInstance().getFourDial() == 3) {
+//					SmartDashboard.putString("DB/String 6", "20 Second Delay");
+//					Thread.sleep(20000);
+//				}
+//			}
+//			catch (Exception e) {
+//				//Do Nothing(for Thread.sleep())
+//			}
+//			
+//			//Distance To travel dependent on defense position
+//			if(Switches.getInstance().getEightDial() == 0) {
+//				SmartDashboard.putString("DB/String 7", "Defense 0");
+//				//Move
+//			}
+//			else if (Switches.getInstance().getEightDial() == 1) {
+//				SmartDashboard.putString("DB/String 7", "Defense 1");
+//				//Move
+//			}
+//			else if (Switches.getInstance().getEightDial() == 2) {
+//				SmartDashboard.putString("DB/String 7", "Defense 2");
+//				//Move
+//			}
+//			else if (Switches.getInstance().getEightDial() == 3) {
+//				SmartDashboard.putString("DB/String 7", "Defense 3");
+//				//Move
+//			}
+//			else if (Switches.getInstance().getEightDial() == 4) {
+//				SmartDashboard.putString("DB/String 7", "Defense 4");
+//				//Move
+//			}
+//			
+//			//Turn Left
+//			ninetyTurnWithGyro(LEFT);
+//			
+//			//Move Past Defense
+//			//Move
+//		}
 	}
 
 	//90 Degree turn with gyroscope
@@ -149,7 +155,15 @@ public class AutoAttack {
 	private static void ninetyTurnWithGyro(int direction) {
 		Telemetry.getInstance().resetGyro();
 		if (direction == LEFT) {
-			//finish
+			Motor.getInstance().setLeftSideMotorsMode(Motor.MODE_POWER);
+			Motor.getInstance().setRightSideMotorsMode(Motor.MODE_POWER);
+			while(Telemetry.getInstance().getGyro() > -90.0) {
+				SmartDashboard.putString("DB/String 6", "Turning");
+				Motor.getInstance().moveLeftSideMotors(-.4);
+				Motor.getInstance().moveRightSideMotors(.4);
+			}
+			Motor.getInstance().moveLeftSideMotors(0);
+			Motor.getInstance().moveRightSideMotors(0);
 		}
 		else if (direction == RIGHT) {
 			//finish
