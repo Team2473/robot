@@ -2,10 +2,12 @@ package org.usfirst.frc.team2473.robot;
 
 
 import edu.wpi.first.wpilibj.DigitalInput;
+
 import java.util.Arrays;
 
 import edu.wpi.first.wpilibj.AnalogGyro;
 import edu.wpi.first.wpilibj.AnalogInput;
+import edu.wpi.first.wpilibj.GyroBase;
 import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -23,10 +25,10 @@ public class Telemetry {
 	private double vi = 5.0 / 512; 
 
 	private Telemetry() {
-		ultrasonicLeft = new AnalogInput(0);
-		ultrasonicRight = new AnalogInput(1);
+		ultrasonicLeft = new AnalogInput(1);
+		ultrasonicRight = new AnalogInput(2);
 		
-		gyro = new AnalogGyro(4);
+		gyro = new AnalogGyro(0);
 		gyro.calibrate();
 	}
 

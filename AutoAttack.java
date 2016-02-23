@@ -77,7 +77,7 @@ public class AutoAttack {
 				SmartDashboard.putString("DB/String 7", "Defense 3");
 				//Move
 			}
-			else if (Switches.getInstance().getEightDial() == 3) {
+			else if (Switches.getInstance().getEightDial() == 4) {
 				SmartDashboard.putString("DB/String 7", "Defense 4");
 				//Move
 			}
@@ -131,7 +131,7 @@ public class AutoAttack {
 				SmartDashboard.putString("DB/String 7", "Defense 3");
 				//Move
 			}
-			else if (Switches.getInstance().getEightDial() == 3) {
+			else if (Switches.getInstance().getEightDial() == 4) {
 				SmartDashboard.putString("DB/String 7", "Defense 4");
 				//Move
 			}
