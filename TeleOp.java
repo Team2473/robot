@@ -35,9 +35,6 @@ public class TeleOp {
 		}else{
 			Motor.getInstance().moveRightSideMotors(0);
 		}
-		
-		SmartDashboard.putString("DB/String 6", "LY: " + leftY);
-		SmartDashboard.putString("DB/String 7", "RY: " + rightY);
 	}
 	
 	public static void runPowerReverse(){
@@ -65,9 +62,6 @@ public class TeleOp {
 		}else{
 			Motor.getInstance().moveRightSideMotors(0);
 		}
-		
-		SmartDashboard.putString("DB/String 6", "LY: " + leftY);
-		SmartDashboard.putString("DB/String 7", "RY: " + rightY);
 	}
 	
 	private static int leftEnc;

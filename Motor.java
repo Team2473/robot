@@ -94,8 +94,6 @@ public class Motor {
 			frontRight.set(value);
 			backRight.set(7);// frontRight integer id
 		}
-		SmartDashboard.putString("DB/String 2",
-				"FR: " + frontRight.getEncPosition());
 	}
 
 	public void setRightSideMotorsMode(CANTalon.TalonControlMode mode) {
@@ -120,9 +118,6 @@ public class Motor {
 			frontLeft.set(value);
 			backLeft.set(3);// frontLeft integer id
 		}
-
-		SmartDashboard.putString("DB/String 3",
-				"FL: " + frontLeft.getEncPosition());
 	}
 
 	public void setLeftSideMotorsMode(CANTalon.TalonControlMode mode) {
@@ -147,7 +142,6 @@ public class Motor {
 		}else{
 			arm.set(0);
 		}
-		SmartDashboard.putString("DB/String 6", "Arm: " + arm.getEncPosition());
 	}
 
 	//140 is one full rotation
@@ -159,7 +153,6 @@ public class Motor {
 			winch1.set(0);
 			winch2.set(0);
 		}
-		SmartDashboard.putString("DB/String 8", "Winch: " + winch1.getEncPosition());
 	}
 
 	public int getEncoder(CANTalon motor) {
