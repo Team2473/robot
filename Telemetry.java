@@ -25,7 +25,6 @@ public class Telemetry {
 	private double vi = 5.0 / 512; 
 
 	private Telemetry() {
-		ultrasonicLeft = new AnalogInput(2);
 		ultrasonicRight = new AnalogInput(1);
 		
 		gyro = new AnalogGyro(0);
