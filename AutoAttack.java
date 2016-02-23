@@ -34,11 +34,6 @@ public class AutoAttack {
 	 * 01234
 	 */
 	public static void run() {
-		if (turn){
-			SmartDashboard.putString("DB/String 5", "Running gyroTurn");
-			ninetyTurnWithGyro(LEFT);
-		}
-		turn = false;
 //		//Starting on Left Side of Field
 //		if(Switches.getInstance().getTripleSwitch() == 1) {
 //			SmartDashboard.putString("DB/String 5", "Starting Side: LEFT");

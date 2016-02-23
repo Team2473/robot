@@ -40,16 +40,9 @@ public class Telemetry {
 
 	//Just prints out values
 	public void updateUltrasonicValue() {
-		double rangeInInchesLeft = ultrasonicLeft.getVoltage() / vi;
 		double rangeInInchesRight = ultrasonicRight.getVoltage() / vi;
 
-		SmartDashboard.putString("DB/String 0", "L:" + rangeInInchesLeft);
 		SmartDashboard.putString("DB/String 1", "R:" + rangeInInchesRight);
-	}
-
-	//Returns range in in. for left ultrasonic sensor
-	public double getUltrasonicLeft() {
-		return (ultrasonicLeft.getVoltage() / vi);
 	}
 
 	//Returns range in in. for left ultrasonic sensor
