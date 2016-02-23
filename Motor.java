@@ -172,8 +172,22 @@ public class Motor {
 		backLeft.setPosition(0);
 		backRight.setPosition(0);
 	}
-
-
+	
+	//moves robot forward specified encoder Value using DIY PID
+	public void moveForwardEncoders(int encoderValue) {
+		//set motors to power mode
+		setLeftSideMotorsMode(Motor.MODE_POWER);
+		setRightSideMotorsMode(Motor.MODE_POWER);
+		
+		//zero encoders
+		
+		moveRightSideMotors(.3);
+		moveRightSideMotors(.3);
+		
+		while(getEncoder(a) < encoderValue || getEncoder(b) < encoderValue) {
+			if ()
+		}
+	}
 	// create additional move methods using the below format
 	/*
 	 * public void moveSAMPLE_MOTORMotors(ControlMode mode, int value) {
