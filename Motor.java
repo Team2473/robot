@@ -162,12 +162,12 @@ public class Motor {
 		SmartDashboard.putString("DB/String 8", "Winch: " + winch1.getEncPosition());
 	}
 
-	public int getEncoder(CANTalon motor) {
-		return motor.getEncPosition();
+	public double getEncoder(CANTalon motor) {
+		return motor.getPosition();
 	}
 	
-	public int getEncBR(){
-		return getEncoder(backRight);
+	public double getEncFL(){
+		return getEncoder(frontLeft);
 	}
 
 	public void resetDriveEncoders() {

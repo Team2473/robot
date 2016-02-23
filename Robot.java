@@ -44,7 +44,8 @@ public class Robot extends IterativeRobot {
      * This function is called once each time the robot enters tele-operated mode
      */
     public void teleopInit(){
-//    	Shooter.init();
+    	Shooter.calibration();
+    	Shooter.init();
     }
     
     /**
@@ -57,20 +58,20 @@ public class Robot extends IterativeRobot {
      */
     public void teleopPeriodic() {
     	
-    	SemiAuto.encValues();
-    	SemiAuto.testUS();
+//    	SemiAuto.autoLoop();
+//    	SemiAuto.encValues();
     	
-//    	Shooter.runLoop();
+    	Shooter.runLoop();
 //    	Vision.getInstance().updateDashboard();
 //    	if(Vision.getInstance().reverse) {
 //    		TeleOp.runPowerReverse();
 //    	}
 //    	else {
-//    		TeleOp.runPower();
+    		TeleOp.runPower();
 //    	}
-//    	
-//    	//Grappler
-//    	TeleOp.runUtilities();
+    	
+    	//Grappler
+    	TeleOp.runUtilities();
 
     }
     

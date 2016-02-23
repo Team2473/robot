@@ -15,7 +15,7 @@ public class SemiAuto {
 	private static AutoState currentAuto = AutoState.START;
 	
 	//Input
-	public static AnalogInput ultrasonic = new AnalogInput(0);                    //check
+//	public static AnalogInput ultrasonic = new AnalogInput(0); 
 	
 	//Variables
 	public static Motor motor = Motor.getInstance();
@@ -38,24 +38,29 @@ public class SemiAuto {
 		return true;
 	}
 		
-	private static void updateAutoState(){
-		//get status of robot position
-		
-		if(wallDetected()){
-			goDown();
-		}
-		if(hasTraveled()){
-			goUp();
-		}	
+//	private static void updateAutoState(){
+//		//get status of robot position
+//		
+//		if(wallDetected()){
+//			goDown();
+//		}
+//		if(hasTraveled()){
+//			goUp();
+//		}	
+//	}
+	
+	public static double getEnc(){
+		return motor.getEncFL();
 	}
 	
 	public static void autoLoop(){
-		// Get transitions + calculate state change if needed
-		updateAutoState();
 				
 		// Calculate outputs
+		//TODO: isDown() and isUp() should be used to restrict speed during drive
 		if(currentAuto == AutoState.START){
-			if(wallDetected()){
+			Shooter.setPosition(90);
+			encStart = getEnc();
+			if(getEnc() == -75){ 															//change to encoder value
 				currentAuto = AutoState.DOWN;
 			}
 			else{
@@ -63,18 +68,16 @@ public class SemiAuto {
 			}
 		}
 		else if(currentAuto == AutoState.DOWN){
-			if(isDown()){
-				currentAuto = AutoState.CREST;               						 // start is the same as end
+			if(isDown()){																	//change to encoder value
+				currentAuto = AutoState.CREST;
 			}
 			else{
-				encStart = motor.getEncBR();
 				Shooter.setPosition(180);
 			}
 		}
 
 		else if(currentAuto == AutoState.CREST){
-			encEnd = motor.getEncBR();
-			if(hasTraveled()){
+			if(getEnc() == -6000){																//encoder value
 				currentAuto = AutoState.UP;
 			}
 			else{
@@ -100,19 +103,17 @@ public class SemiAuto {
 	}
 	
 	public static boolean wallDetected(){
-		double vi = 5.0/512;
-		return ultrasonic.getVoltage()/vi < 10;                                        //CHANGE, ULTRASONIC VAL
+		return Telemetry.getInstance().getUltrasonicRight() > 6 && Telemetry.getInstance().getUltrasonicRight() < 26;                                        //CHANGE, ULTRASONIC VAL
 	}
 	
 	public static boolean hasTraveled(){
 		return encEnd - encStart == 100;											   //CHANGE, ENC TRAVELED
 	}
 	
-	public static void encValues(){
-		SmartDashboard.putString("DB/String 0", "Enc: " + motor.getEncBR());
+	public static void encValues(){ //-6000 = cleared bar
+		SmartDashboard.putString("DB/String 0", "Enc: " + motor.getEncFL());
 	}
 	public static void testUS(){ //6 - 25
-		double vi = 5.0/512;
-		SmartDashboard.putString("DB/String 1", "US: " + ultrasonic.getVoltage()/vi);    
+		SmartDashboard.putString("DB/String 1", "US: " + Telemetry.getInstance().getUltrasonicRight());    
 	}
 }
