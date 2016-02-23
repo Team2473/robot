@@ -148,20 +148,31 @@ public class AutoAttack {
 	//90 Degree turn with gyroscope
 	//for input, use constants LEFT and RIGHT defined at the top of this class
 	private static void ninetyTurnWithGyro(int direction) {
+		//first reset the gyro
 		Telemetry.getInstance().resetGyro();
+		
+		//set motors to power mode
+		Motor.getInstance().setLeftSideMotorsMode(Motor.MODE_POWER);
+		Motor.getInstance().setRightSideMotorsMode(Motor.MODE_POWER);
+		
+		//turning left
 		if (direction == LEFT) {
-			Motor.getInstance().setLeftSideMotorsMode(Motor.MODE_POWER);
-			Motor.getInstance().setRightSideMotorsMode(Motor.MODE_POWER);
 			while(Telemetry.getInstance().getGyro() > -90.0) {
-				SmartDashboard.putString("DB/String 6", "Turning");
+				//turn
 				Motor.getInstance().moveLeftSideMotors(-.4);
 				Motor.getInstance().moveRightSideMotors(.4);
 			}
 			Motor.getInstance().moveLeftSideMotors(0);
 			Motor.getInstance().moveRightSideMotors(0);
 		}
+		
+		//turning right
 		else if (direction == RIGHT) {
-			//finish
+			while(Telemetry.getInstance().getGyro() < 90.0) {
+				//turn
+				Motor.getInstance().moveLeftSideMotors(.4);
+				Motor.getInstance().moveRightSideMotors(-.4);
+			}
 		}
 	}
 }
