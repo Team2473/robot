@@ -69,7 +69,7 @@ public class Shooter {
 	
 	//Pot reading for positioning
 	public static void testPot(){
-		SmartDashboard.putString("DB/String 1", "" + pot.getAnalogInRaw());	
+		SmartDashboard.putString("DB/String 3", "" + pot.get());	
 		if(Controller.getInstance().getJoy1Button(2)){
 			moveBackward();
 		}
@@ -381,6 +381,12 @@ public class Shooter {
 		}
 
 		pot.set(lookupTable[index]*direction);
+	}
+	
+	public static void printValues(){
+		SmartDashboard.putString("DB/String 0", "fwd: " + pot.isFwdLimitSwitchClosed());
+		SmartDashboard.putString("DB/String 1", "back: " + pot.isRevLimitSwitchClosed());
+		SmartDashboard.putString("DB/String 2", "pot: " + pot.getAnalogInRaw());
 	}
 }
 
