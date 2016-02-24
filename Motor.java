@@ -198,7 +198,7 @@ public class Motor {
 				rightPower += (encoderDiff / k);
 			}
 			//update both sides with the new power values
-			moveRightSideMotors(leftPower);
+			moveRightSideMotors(leftPower); //THIS LOOKS WRONG. SHOULDN'T THIS BE LEFT? @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 			moveRightSideMotors(rightPower);
 		}
 	}
