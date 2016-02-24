@@ -94,8 +94,6 @@ public class Motor {
 			frontRight.set(value);
 			backRight.set(7);// frontRight integer id
 		}
-		SmartDashboard.putString("DB/String 2",
-				"FR: " + frontRight.getEncPosition());
 	}
 
 	public void setRightSideMotorsMode(CANTalon.TalonControlMode mode) {
@@ -120,9 +118,6 @@ public class Motor {
 			frontLeft.set(value);
 			backLeft.set(3);// frontLeft integer id
 		}
-
-		SmartDashboard.putString("DB/String 3",
-				"FL: " + frontLeft.getEncPosition());
 	}
 
 	public void setLeftSideMotorsMode(CANTalon.TalonControlMode mode) {
@@ -193,8 +188,8 @@ public class Motor {
 		moveRightSideMotors(rightPower);
 
 		//a is left, b is right
-		while(getEncoder(a) < encoderValue || getEncoder(b) < encoderValue) {
-			int encoderDiff = getEncoder(a) - getEncoder(b);
+		while(getEncoder(frontLeft) < encoderValue || getEncoder(frontRight) < encoderValue) {
+			int encoderDiff = getEncoder(frontLeft) - getEncoder(frontRight);
 			if (encoderDiff < 0) {
 				//changePower
 				leftPower += (Math.abs(encoderDiff) / k);
@@ -215,11 +210,11 @@ public class Motor {
 
 		//run forward at power
 		moveRightSideMotors(power);
-		moveRightSideMotors(power);
+		moveLeftSideMotors(power);
 		
 		//print left and right encoder values
-		SmartDashboard.putString("DB/String 0", "FL: " + getEncoder(a));
-		SmartDashboard.putString("DB/String 1", "FR: " + getEncoder(b));
+		SmartDashboard.putString("DB/String 0", "FL: " + getEncoder(frontLeft));
+		SmartDashboard.putString("DB/String 1", "FR: " + getEncoder(frontRight));
 	}
 	// create additional move methods using the below format
 	/*

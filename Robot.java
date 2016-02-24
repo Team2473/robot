@@ -36,8 +36,8 @@ public class Robot extends IterativeRobot {
      * This function is called periodically during autonomous
      */
     public void autonomousPeriodic() {
-    	SmartDashboard.putString("DB/String 4", "Running AutoAttack");
-    	AutoAttack.run();
+//    	SmartDashboard.putString("DB/String 4", "Running AutoAttack");
+//    	AutoAttack.run();
 //    	Telemetry.getInstance().updateGyroValue();
     }
     
@@ -66,11 +66,12 @@ public class Robot extends IterativeRobot {
     	
 //    	Shooter.unload();
 //    	Shooter.test();
-    	if(Vision.reverse){
-    		TeleOp.runPowerReverse();
-    	}else{
-    		TeleOp.runPower();
-    	}
+//    	if(Vision.reverse){
+//    		TeleOp.runPowerReverse();
+//    	}else{
+//    		TeleOp.runPower();
+//    	}
+    	Motor.getInstance().moveForwardPowerPrintEncoders(.3);
     	
     }
     
