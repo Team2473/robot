@@ -79,7 +79,7 @@ public class Motor {
 		winch1.ConfigRevLimitSwitchNormallyOpen(true);
 		winch1.setPosition(0);
 		winch1.enableControl();
-		
+
 		winch2.changeControlMode(MODE_POWER);
 		winch2.ConfigFwdLimitSwitchNormallyOpen(true);
 		winch2.ConfigRevLimitSwitchNormallyOpen(true);
@@ -172,21 +172,54 @@ public class Motor {
 		backLeft.setPosition(0);
 		backRight.setPosition(0);
 	}
-	
+
 	//moves robot forward specified encoder Value using DIY PID
 	public void moveForwardEncoders(int encoderValue) {
+		//scaling constant
+		int k = 1000;
+
 		//set motors to power mode
 		setLeftSideMotorsMode(Motor.MODE_POWER);
 		setRightSideMotorsMode(Motor.MODE_POWER);
-		
+
 		//zero encoders
-		
-		moveRightSideMotors(.3);
-		moveRightSideMotors(.3);
-		
+
+		//power to motors, constantly varies to keep both sides running at same speed
+		double leftPower = .3;
+		double rightPower = .3;
+
+		//set the motors to the same speed initially
+		moveRightSideMotors(leftPower);
+		moveRightSideMotors(rightPower);
+
+		//a is left, b is right
 		while(getEncoder(a) < encoderValue || getEncoder(b) < encoderValue) {
-			if ()
+			int encoderDiff = getEncoder(a) - getEncoder(b);
+			if (encoderDiff < 0) {
+				//changePower
+				leftPower += (Math.abs(encoderDiff) / k);
+			} else {
+				//changePower
+				rightPower += (encoderDiff / k);
+			}
+			//update both sides with the new power values
+			moveRightSideMotors(leftPower);
+			moveRightSideMotors(rightPower);
 		}
+	}
+
+	public void moveForwardPowerPrintEncoders(double power) {
+		//set motors to power mode
+		setLeftSideMotorsMode(Motor.MODE_POWER);
+		setRightSideMotorsMode(Motor.MODE_POWER);
+
+		//run forward at power
+		moveRightSideMotors(power);
+		moveRightSideMotors(power);
+		
+		//print left and right encoder values
+		SmartDashboard.putString("DB/String 0", "FL: " + getEncoder(a));
+		SmartDashboard.putString("DB/String 1", "FR: " + getEncoder(b));
 	}
 	// create additional move methods using the below format
 	/*

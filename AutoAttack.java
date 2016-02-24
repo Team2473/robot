@@ -6,7 +6,11 @@ public class AutoAttack {
 	//directions for ninetyTurnWithGyro()
 	public final static int LEFT = 0;
 	public final static int RIGHT = 1;
-	public static boolean turn = true;
+	
+	//Instances of other classes for use in this class
+	static Motor myMotor = Motor.getInstance();
+	static Switches mySwitches = Switches.getInstance();
+	static Telemetry myTelemetry = Telemetry.getInstance();
 
 	//constructor
 	public AutoAttack () {
@@ -35,24 +39,24 @@ public class AutoAttack {
 	 */
 	public static void run() {
 //		//Starting on Left Side of Field
-//		if(Switches.getInstance().getTripleSwitch() == 1) {
+//		if(mySwitches.getTripleSwitch() == 1) {
 //			SmartDashboard.putString("DB/String 5", "Starting Side: LEFT");
 //			
 //			//Delay Time
 //			try {
-//				if(Switches.getInstance().getFourDial() == 0) {
+//				if(mySwitches.getFourDial() == 0) {
 //					SmartDashboard.putString("DB/String 6", "5 Second Delay");
 //					Thread.sleep(5000);
 //				}
-//				else if (Switches.getInstance().getFourDial() == 1) {
+//				else if (mySwitches.getFourDial() == 1) {
 //					SmartDashboard.putString("DB/String 6", "10 Second Delay");
 //					Thread.sleep(10000);
 //				}
-//				else if (Switches.getInstance().getFourDial() == 2) {
+//				else if (mySwitches.getFourDial() == 2) {
 //					SmartDashboard.putString("DB/String 6", "15 Second Delay");
 //					Thread.sleep(15000);
 //				}
-//				else if (Switches.getInstance().getFourDial() == 3) {
+//				else if (mySwitches.getFourDial() == 3) {
 //					SmartDashboard.putString("DB/String 6", "20 Second Delay");
 //					Thread.sleep(20000);
 //				}
@@ -62,51 +66,51 @@ public class AutoAttack {
 //			}
 //			
 //			//Distance To travel dependent on defense position
-//			if(Switches.getInstance().getEightDial() == 0) {
+//			if(mySwitches.getEightDial() == 0) {
 //				SmartDashboard.putString("DB/String 7", "Defense 0");
-//				//Move
+//				myMotor.moveForwardEncoders();
 //			}
-//			else if (Switches.getInstance().getEightDial() == 1) {
+//			else if (mySwitches.getEightDial() == 1) {
 //				SmartDashboard.putString("DB/String 7", "Defense 1");
-//				//Move
+//				myMotor.moveForwardEncoders();
 //			}
-//			else if (Switches.getInstance().getEightDial() == 2) {
+//			else if (mySwitches.getEightDial() == 2) {
 //				SmartDashboard.putString("DB/String 7", "Defense 2");
-//				//Move
+//				myMotor.moveForwardEncoders();
 //			}
-//			else if (Switches.getInstance().getEightDial() == 3) {
+//			else if (mySwitches.getEightDial() == 3) {
 //				SmartDashboard.putString("DB/String 7", "Defense 3");
-//				//Move
+//				myMotor.moveForwardEncoders();
 //			}
-//			else if (Switches.getInstance().getEightDial() == 4) {
+//			else if (mySwitches.getEightDial() == 4) {
 //				SmartDashboard.putString("DB/String 7", "Defense 4");
-//				//Move
+//				myMotor.moveForwardEncoders();
 //			}
 //			
 //			//Turn Left
 //			ninetyTurnWithGyro(LEFT);
 //			
 //			//Move Past Defense
-//			//Move
+//			movePastDefense()
 //		}
-//		else if (Switches.getInstance().getTripleSwitch() == 2) {
+//		else if (mySwitches.getTripleSwitch() == 2) {
 //			SmartDashboard.putString("DB/String 5", "Starting Side: RIGHT");
 //			
 //			//Delay Time
 //			try {
-//				if(Switches.getInstance().getFourDial() == 0) {
+//				if(mySwitches.getFourDial() == 0) {
 //					SmartDashboard.putString("DB/String 6", "5 Second Delay");
 //					Thread.sleep(5000);
 //				}
-//				else if (Switches.getInstance().getFourDial() == 1) {
+//				else if (mySwitches.getFourDial() == 1) {
 //					SmartDashboard.putString("DB/String 6", "10 Second Delay");
 //					Thread.sleep(10000);
 //				}
-//				else if (Switches.getInstance().getFourDial() == 2) {
+//				else if (mySwitches.getFourDial() == 2) {
 //					SmartDashboard.putString("DB/String 6", "15 Second Delay");
 //					Thread.sleep(15000);
 //				}
-//				else if (Switches.getInstance().getFourDial() == 3) {
+//				else if (mySwitches.getFourDial() == 3) {
 //					SmartDashboard.putString("DB/String 6", "20 Second Delay");
 //					Thread.sleep(20000);
 //				}
@@ -116,32 +120,32 @@ public class AutoAttack {
 //			}
 //			
 //			//Distance To travel dependent on defense position
-//			if(Switches.getInstance().getEightDial() == 0) {
+//			if(mySwitches.getEightDial() == 0) {
 //				SmartDashboard.putString("DB/String 7", "Defense 0");
-//				//Move
+//				myMotor.moveForwardEncoders();
 //			}
-//			else if (Switches.getInstance().getEightDial() == 1) {
+//			else if (mySwitches.getEightDial() == 1) {
 //				SmartDashboard.putString("DB/String 7", "Defense 1");
-//				//Move
+//				myMotor.moveForwardEncoders();
 //			}
-//			else if (Switches.getInstance().getEightDial() == 2) {
+//			else if (mySwitches.getEightDial() == 2) {
 //				SmartDashboard.putString("DB/String 7", "Defense 2");
-//				//Move
+//				myMotor.moveForwardEncoders();
 //			}
-//			else if (Switches.getInstance().getEightDial() == 3) {
+//			else if (mySwitches.getEightDial() == 3) {
 //				SmartDashboard.putString("DB/String 7", "Defense 3");
-//				//Move
+//				myMotor.moveForwardEncoders();
 //			}
-//			else if (Switches.getInstance().getEightDial() == 4) {
+//			else if (mySwitches.getEightDial() == 4) {
 //				SmartDashboard.putString("DB/String 7", "Defense 4");
-//				//Move
+//				myMotor.moveForwardEncoders();
 //			}
 //			
 //			//Turn Left
 //			ninetyTurnWithGyro(LEFT);
 //			
 //			//Move Past Defense
-//			//Move
+//			movePastDefense()
 //		}
 	}
 
@@ -149,31 +153,35 @@ public class AutoAttack {
 	//for input, use constants LEFT and RIGHT defined at the top of this class
 	private static void ninetyTurnWithGyro(int direction) {
 		//first reset the gyro
-		Telemetry.getInstance().resetGyro();
+		myTelemetry.resetGyro();
 		
 		//set motors to power mode
-		Motor.getInstance().setLeftSideMotorsMode(Motor.MODE_POWER);
-		Motor.getInstance().setRightSideMotorsMode(Motor.MODE_POWER);
+		myMotor.setLeftSideMotorsMode(Motor.MODE_POWER);
+		myMotor.setRightSideMotorsMode(Motor.MODE_POWER);
 		
 		//turning left
 		if (direction == LEFT) {
-			while(Telemetry.getInstance().getGyro() > -90.0) {
+			while(myTelemetry.getGyro() > -90.0) {
 				//turn
-				Motor.getInstance().moveLeftSideMotors(-.4);
-				Motor.getInstance().moveRightSideMotors(.4);
+				myMotor.moveLeftSideMotors(-.4);
+				myMotor.moveRightSideMotors(.4);
 			}
-			Motor.getInstance().moveLeftSideMotors(0);
-			Motor.getInstance().moveRightSideMotors(0);
+			myMotor.moveLeftSideMotors(0);
+			myMotor.moveRightSideMotors(0);
 		}
 		
 		//turning right
 		else if (direction == RIGHT) {
-			while(Telemetry.getInstance().getGyro() < 90.0) {
+			while(myTelemetry.getGyro() < 90.0) {
 				//turn
-				Motor.getInstance().moveLeftSideMotors(.4);
-				Motor.getInstance().moveRightSideMotors(-.4);
+				myMotor.moveLeftSideMotors(.4);
+				myMotor.moveRightSideMotors(-.4);
 			}
 		}
+	}
+	
+	private static void movePastDefense() {
+		
 	}
 }
 
