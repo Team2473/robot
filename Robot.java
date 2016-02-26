@@ -44,7 +44,7 @@ public class Robot extends IterativeRobot {
      * This function is called once each time the robot enters tele-operated mode
      */
     public void teleopInit(){
-
+    	Shooter.getInstance().calibration();
     }
     
     /**
