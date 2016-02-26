@@ -22,7 +22,7 @@ public class Robot extends IterativeRobot {
      */
 	
     public void robotInit() {
-    	Vision.getInstance().visionInit();
+    	Vision.getInstance();
 
     }
     
@@ -58,7 +58,7 @@ public class Robot extends IterativeRobot {
     public void teleopPeriodic() {
     	Shooter.runLoop();
     	Vision.getInstance().updateDashboard();
-    	if(Vision.getInstance().reverse) {
+    	if(TeleOp.reverse) {
     		TeleOp.runPowerReverse();
     	}
     	else {
