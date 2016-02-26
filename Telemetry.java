@@ -19,12 +19,12 @@ public class Telemetry {
 
 	//breakbeam
 	private DigitalInput breakBeam;
-	
-	private static Telemetry telemetry = null;
 
 	//for calculating ultrasonic values
 	private double vi = 5.0 / 512; 
 
+	private static Telemetry telemetry = null;
+	
 	private Telemetry() {
 		ultrasonicLeft = new AnalogInput(0);
 		ultrasonicRight = new AnalogInput(1);

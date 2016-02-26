@@ -64,9 +64,10 @@ public class Robot extends IterativeRobot {
     	else {
     		TeleOp.runPower();
     	}
+    	TeleOp.runUtilities();
     	
     	//Grappler
-    	TeleOp.runUtilities();
+    	Grappler.getInstance().runScaleTower();
 
     }
     

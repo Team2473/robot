@@ -95,7 +95,7 @@ public class TeleOp {
 		
 	}
 	
-private static boolean waiting = false;
+	public static boolean waiting = false;
 	
 	public static void runUtilities(){
 		
@@ -103,75 +103,6 @@ private static boolean waiting = false;
 			maxSpeed = .5;
 		}else{
 			maxSpeed = .23;
-		}
-		
-		if(Controller.getInstance().getJoy2Button(1)){
-			if(currentMode != Motor.MODE_POWER){
-				currentMode = Motor.MODE_POWER;
-				
-				Motor.getInstance().setLeftSideMotorsMode(currentMode);
-				Motor.getInstance().setRightSideMotorsMode(currentMode);
-			}
-			Motor.getInstance().moveLeftSideMotors(.25);
-			Motor.getInstance().moveRightSideMotors(.25);
-			
-			try {
-				Thread.sleep(3000);
-			} catch (InterruptedException e) {}
-			
-			Motor.getInstance().moveLeftSideMotors(0);
-			Motor.getInstance().moveRightSideMotors(-0.1);
-			
-			
-			try {
-				Thread.sleep(1100);
-			} catch (InterruptedException e) {}
-			
-			Motor.getInstance().moveLeftSideMotors(0.09);
-			Motor.getInstance().moveRightSideMotors(0.09);
-			
-			try {
-				Thread.sleep(400);
-			} catch (InterruptedException e) {}
-			
-			for(int i = 0; i < 100; i++){
-				Motor.getInstance().moveGrapplerArmMotor(260);
-				try {
-					Thread.sleep(25);
-				} catch (InterruptedException e) {}
-			}
-			
-			Motor.getInstance().moveLeftSideMotors(.25);
-			Motor.getInstance().moveRightSideMotors(.25);
-			
-			try {
-				Thread.sleep(1000);
-			} catch (InterruptedException e) {}
-			
-			Motor.getInstance().moveLeftSideMotors(0.09);
-			Motor.getInstance().moveRightSideMotors(0.09);
-			
-			waiting = true;
-		}
-		
-		if(Controller.getInstance().getJoy2Button(2)){
-			for(int i = 0; i < 75; i++){
-				Motor.getInstance().moveGrapplerArmMotor(0);
-				if(i>20){
-					Motor.getInstance().moveWinchMotors(8000);
-				}
-				try {
-					Thread.sleep(25);
-				} catch (InterruptedException e) {}
-			}
-			
-			Motor.getInstance().moveLeftSideMotors(0);
-			Motor.getInstance().moveRightSideMotors(0);
-			
-			while(true){
-				Motor.getInstance().moveWinchMotors(8000);
-				Motor.getInstance().moveGrapplerArmMotor(-260);
-			}
 		}
 		
 		if(Controller.getInstance().getJoy1Button(2)){
