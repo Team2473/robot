@@ -1,6 +1,4 @@
 package org.usfirst.frc.team2473.robot;
-import edu.wpi.first.wpilibj.AnalogInput;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class SemiAuto {
 	private enum AutoState{
@@ -48,18 +46,14 @@ public class SemiAuto {
 //		}	
 //	}
 	
-	public static double getEnc(){
-		return Motor.getInstance().getEncFL();
-	}
-	
 	public static void autoLoop(){
 				
 		// Calculate outputs
 		//TODO: isDown() and isUp() should be used to restrict speed during drive
 		if(currentAuto == AutoState.START){
 			Shooter.getInstance().setPosition(90);
-			encStart = getEnc();
-			if(getEnc() == -75){ 															//change to encoder value
+			encStart = Motor.getInstance().getEncFL();
+			if(Motor.getInstance().getEncFL() == -75){ 															//change to encoder value
 				currentAuto = AutoState.DOWN;
 			}
 			else{
@@ -76,7 +70,7 @@ public class SemiAuto {
 		}
 
 		else if(currentAuto == AutoState.CREST){
-			if(getEnc() == -6000){																//encoder value
+			if(Motor.getInstance().getEncFL() == -6000){																//encoder value
 				currentAuto = AutoState.UP;
 			}
 			else{
