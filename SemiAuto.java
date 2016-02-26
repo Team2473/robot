@@ -1,5 +1,6 @@
 package org.usfirst.frc.team2473.robot;
 import edu.wpi.first.wpilibj.AnalogInput;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class SemiAuto {
 	private enum AutoState{
@@ -14,10 +15,9 @@ public class SemiAuto {
 	private static AutoState currentAuto = AutoState.START;
 	
 	//Input
-	public static AnalogInput ultrasonic = new AnalogInput(0);                    //check
+//	public static AnalogInput ultrasonic = new AnalogInput(0); 
 	
 	//Variables
-	public static Motor motor = Motor.getInstance();
 	public static double encStart = 0;
 	public static double encEnd = 0;
 	
@@ -37,24 +37,29 @@ public class SemiAuto {
 		return true;
 	}
 		
-	private static void updateAutoState(){
-		//get status of robot position
-		
-		if(wallDetected()){
-			goDown();
-		}
-		if(hasTraveled()){
-			goUp();
-		}	
+//	private static void updateAutoState(){
+//		//get status of robot position
+//		
+//		if(wallDetected()){
+//			goDown();
+//		}
+//		if(hasTraveled()){
+//			goUp();
+//		}	
+//	}
+	
+	public static double getEnc(){
+		return Motor.getInstance().getEncFL();
 	}
 	
 	public static void autoLoop(){
-		// Get transitions + calculate state change if needed
-		updateAutoState();
 				
 		// Calculate outputs
+		//TODO: isDown() and isUp() should be used to restrict speed during drive
 		if(currentAuto == AutoState.START){
-			if(wallDetected()){
+			Shooter.getInstance().setPosition(90);
+			encStart = getEnc();
+			if(getEnc() == -75){ 															//change to encoder value
 				currentAuto = AutoState.DOWN;
 			}
 			else{
@@ -62,18 +67,16 @@ public class SemiAuto {
 			}
 		}
 		else if(currentAuto == AutoState.DOWN){
-			if(isDown()){
-				currentAuto = AutoState.CREST;               						 // start is the same as end
+			if(isDown()){																	//change to encoder value
+				currentAuto = AutoState.CREST;
 			}
 			else{
-				encStart = motor.getEncBR();
-				Shooter.setPosition(180);
+				Shooter.getInstance().setPosition(180);
 			}
 		}
 
 		else if(currentAuto == AutoState.CREST){
-			encEnd = motor.getEncBR();
-			if(hasTraveled()){
+			if(getEnc() == -6000){																//encoder value
 				currentAuto = AutoState.UP;
 			}
 			else{
@@ -85,22 +88,21 @@ public class SemiAuto {
 				currentAuto = AutoState.START;
 			}
 			else{
-				Shooter.setPosition(90);
+				Shooter.getInstance().setPosition(90);
 			}
 		}
 	}
 	
 	public static boolean isUp(){
-		return Math.abs(Shooter.getPosition() - 90) < 5;
+		return Math.abs(Shooter.getInstance().getPosition() - 90) < 5;
 	}
 	
 	public static boolean isDown(){
-		return Math.abs(Shooter.getPosition() - 180) < 5;
+		return Math.abs(Shooter.getInstance().getPosition() - 180) < 5;
 	}
 	
 	public static boolean wallDetected(){
-		double vi = 5.0/512;
-		return ultrasonic.getVoltage()/vi < 10;                                        //CHANGE, ULTRASONIC VAL
+		return Telemetry.getInstance().getUltrasonicRight() > 6 && Telemetry.getInstance().getUltrasonicRight() < 26;                                        //CHANGE, ULTRASONIC VAL
 	}
 	
 	public static boolean hasTraveled(){
