@@ -1,8 +1,7 @@
 package org.usfirst.frc.team2473.robot;
 
-import edu.wpi.first.wpilibj.*;
+import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.CANTalon.FeedbackDevice;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Motor {
 	private CANTalon frontLeft;
@@ -43,9 +42,10 @@ public class Motor {
 		setUpWinches();
 		// add addition cantalons as they are added to robot
 	}
-    //Getting an instance of a motor
-	//No preconditions
-	//Returns a motor
+
+	// Getting an instance of a motor
+	// No preconditions
+	// Returns a motor
 	public static Motor getInstance() {
 		if (motor == null) {
 			motor = new Motor();
@@ -55,9 +55,9 @@ public class Motor {
 	}
 
 	// Should only run once for each cantalon
-	
-	//Sets up talon inputted in parameter
-	
+
+	// Sets up talon inputted in parameter
+
 	private void setUpDriveMotors(CANTalon tal) {
 		tal.changeControlMode(MODE_POSITION);
 		tal.setFeedbackDevice(FeedbackDevice.QuadEncoder);
@@ -65,7 +65,8 @@ public class Motor {
 		tal.setPosition(0);
 		tal.enableControl();
 	}
-    //Setting up the arm (Grappler)
+
+	// Setting up the arm (Grappler)
 	private void setUpArm() {
 		arm.changeControlMode(MODE_POWER);
 		arm.setFeedbackDevice(FeedbackDevice.QuadEncoder);
@@ -76,8 +77,8 @@ public class Motor {
 		moveGrapplerArmMotor(-260);
 		arm.setPosition(0);
 	}
-    
-	//Setting up the winch for pulling the robot up the tower
+
+	// Setting up the winch for pulling the robot up the tower
 	private void setUpWinches() {
 		winch1.changeControlMode(MODE_POWER);
 		winch1.setFeedbackDevice(FeedbackDevice.QuadEncoder);
@@ -85,15 +86,15 @@ public class Motor {
 		winch1.ConfigRevLimitSwitchNormallyOpen(true);
 		winch1.setPosition(0);
 		winch1.enableControl();
-		
+
 		winch2.changeControlMode(MODE_POWER);
 		winch2.ConfigFwdLimitSwitchNormallyOpen(true);
 		winch2.ConfigRevLimitSwitchNormallyOpen(true);
 		winch2.enableControl();
 	}
-	
-    //Moving both motors (for the wheels) of the right side of the robot
-	//Input a value for the right-side motors
+
+	// Moving both motors (for the wheels) of the right side of the robot
+	// Input a value for the right-side motors
 	public void moveRightSideMotors(double value) {
 		if (frontRight.getControlMode() == MODE_POWER) {
 			frontRight.set(value);
@@ -103,9 +104,10 @@ public class Motor {
 			backRight.set(7);// frontRight integer id
 		}
 	}
-   
-	//Determining whether to use position or power for determining the movement of the right side of the robot
-	//input a mode (either MODE_POWER or MODE_POSITION)
+
+	// Determining whether to use position or power for determining the movement
+	// of the right side of the robot
+	// input a mode (either MODE_POWER or MODE_POSITION)
 	public void setRightSideMotorsMode(CANTalon.TalonControlMode mode) {
 		if (mode == MODE_POWER) {
 			frontRight.changeControlMode(mode);
@@ -119,19 +121,23 @@ public class Motor {
 			backRight.changeControlMode(MODE_FOLLOWER);
 		}
 	}
-	  //Moving both motors (for the wheels) of the left side of the robot
-	//input a value for the motors attached to the wheels on the left side of the robot to move till
+
+	// Moving both motors (for the wheels) of the left side of the robot
+	// input a value for the motors attached to the wheels on the left side of
+	// the robot to move till
 	public void moveLeftSideMotors(double value) {
 		if (frontLeft.getControlMode() == MODE_POWER) {
-			frontLeft.set(-value*.95);
-			backLeft.set(-value*.95);
+			frontLeft.set(-value * .95);
+			backLeft.set(-value * .95);
 		} else if (frontLeft.getControlMode() == MODE_POSITION) {
 			frontLeft.set(value);
 			backLeft.set(3);// frontLeft integer id
 		}
 	}
-	//Determining whether to use position or power for determining the movement of the left side of the robot
-	//input a mode (either MODE_POWER or MODE_POSITION)
+
+	// Determining whether to use position or power for determining the movement
+	// of the left side of the robot
+	// input a mode (either MODE_POWER or MODE_POSITION)
 	public void setLeftSideMotorsMode(CANTalon.TalonControlMode mode) {
 		if (mode == MODE_POWER) {
 			frontLeft.changeControlMode(mode);
@@ -145,53 +151,56 @@ public class Motor {
 		}
 	}
 
-	//260 is pointing up, 0 is pointing level
-	//Moving the grappler arm
+	// 260 is pointing up, 0 is pointing level
+	// Moving the grappler arm
 	public void moveGrapplerArmMotor(double encValue) {
-		if(-arm.getPosition() - encValue < -20){
-			arm.set(.32);//test constant
-		}else if(-arm.getPosition() - encValue > 20){
-			arm.set(-.12);//test constant
-		}else{
+		if (-arm.getPosition() - encValue < -20) {
+			arm.set(.32);// test constant
+		} else if (-arm.getPosition() - encValue > 20) {
+			arm.set(-.12);// test constant
+		} else {
 			arm.set(0);
 		}
 	}
 
-	//140 is one full rotation
-	//Moving the winch motors to pull the robot up the tower
+	// 140 is one full rotation
+	// Moving the winch motors to pull the robot up the tower
 	public void moveWinchMotors(double encValue) {
-		if(-winch1.getPosition() < encValue){
-			winch1.set(-.3);//test constant
-			winch2.set(-.3); //test constant
-		}else{
+		if (-winch1.getPosition() < encValue) {
+			winch1.set(-.3);// test constant
+			winch2.set(-.3); // test constant
+		} else {
 			winch1.set(0);
 			winch2.set(0);
 		}
 	}
-    //Input a motor to get encoder positions from.  
-	//Returns encoder positions
+
+	// Input a motor to get encoder positions from.
+	// Returns encoder positions
 	private double getEncoder(CANTalon motor) {
 		return motor.getEncPosition();
 	}
-	//Get the encoder value (double) of the front right encoder
-	
-	public double getEncFR(){
+
+	// Get the encoder value (double) of the front right encoder
+
+	public double getEncFR() {
 		return getEncoder(frontRight);
 	}
-	//Get the encoder value (double) of the front left encoder
-	
-	public double getEncFL(){
+
+	// Get the encoder value (double) of the front left encoder
+
+	public double getEncFL() {
 		return getEncoder(frontLeft);
 
 	}
-    //Setting all of the encoders to 0
+
+	// Setting all of the encoders to 0
 	public void resetDriveEncoders() {
 		frontLeft.setPosition(0);
 		frontRight.setPosition(0);
 		backLeft.setPosition(0);
 		backRight.setPosition(0);
 	}
-
 
 	// create additional move methods using the below format
 	/*

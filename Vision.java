@@ -1,25 +1,12 @@
 package org.usfirst.frc.team2473.robot;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
-import java.net.ServerSocket;
-import java.net.Socket;
-
-import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj.*;
-import edu.wpi.first.wpilibj.livewindow.LiveWindow;
-
 import com.ni.vision.NIVision;
 import com.ni.vision.NIVision.DrawMode;
 import com.ni.vision.NIVision.Image;
-import com.ni.vision.NIVision.RGBValue;
 import com.ni.vision.NIVision.ShapeMode;
 
 import edu.wpi.first.wpilibj.CameraServer;
-import edu.wpi.first.wpilibj.SampleRobot;
-import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 //random change
 public class Vision {
@@ -43,7 +30,7 @@ public class Vision {
 		return vision;
 	}
 
-	private Vision(){
+	private Vision() {
 		frame1 = NIVision.imaqCreateImage(NIVision.ImageType.IMAGE_RGB, 0);
 
 		frame2 = NIVision.imaqCreateImage(NIVision.ImageType.IMAGE_RGB, 0);

@@ -46,9 +46,9 @@ public class Switches {
 		SmartDashboard.putString("DB/String 8", "Switch 8:" + dio8.get());
 	}
 
-	//returns number of switch on triple switch that is pressed
-	//-1 means no switch is pressed
-	//DIO: 1, 2, 3
+	// returns number of switch on triple switch that is pressed
+	// -1 means no switch is pressed
+	// DIO: 1, 2, 3
 	public int getTripleSwitch() {
 		if (dio1.get() == false)
 			return 1;
@@ -60,8 +60,8 @@ public class Switches {
 			return -1;
 	}
 
-	//returns dial setting on dial with 0-3
-	//DIO: 7, 8
+	// returns dial setting on dial with 0-3
+	// DIO: 7, 8
 	public int getFourDial() {
 		if (dio7.get() == true && dio8.get() == true)
 			return 0;
@@ -72,32 +72,39 @@ public class Switches {
 		else if (dio7.get() == false && dio8.get() == false)
 			return 3;
 
-		//this is just so that return is satisfied- it should never happen
+		// this is just so that return is satisfied- it should never happen
 		return -1;
 
 	}
 
-	//returns dial setting on dial with 0-7
-	//DIO: 4, 5, 6
+	// returns dial setting on dial with 0-7
+	// DIO: 4, 5, 6
 	public int getEightDial() {
 		if (dio4.get() == true && dio5.get() == true && dio6.get() == true)
 			return 0;
-		else if (dio4.get() == false && dio5.get() == true && dio6.get() == true)
+		else if (dio4.get() == false && dio5.get() == true
+				&& dio6.get() == true)
 			return 1;
-		else if (dio4.get() == true && dio5.get() == false && dio6.get() == true)
+		else if (dio4.get() == true && dio5.get() == false
+				&& dio6.get() == true)
 			return 2;
-		else if (dio4.get() == false && dio5.get() == false && dio6.get() == true)
+		else if (dio4.get() == false && dio5.get() == false
+				&& dio6.get() == true)
 			return 3;
-		else if (dio4.get() == true && dio5.get() == true && dio6.get() == false)
+		else if (dio4.get() == true && dio5.get() == true
+				&& dio6.get() == false)
 			return 4;
-		else if (dio4.get() == false && dio5.get() == true && dio6.get() == false)
+		else if (dio4.get() == false && dio5.get() == true
+				&& dio6.get() == false)
 			return 5;
-		else if (dio4.get() == true && dio5.get() == false && dio6.get() == false)
+		else if (dio4.get() == true && dio5.get() == false
+				&& dio6.get() == false)
 			return 6;
-		else if (dio4.get() == false && dio5.get() == false && dio6.get() == false)
+		else if (dio4.get() == false && dio5.get() == false
+				&& dio6.get() == false)
 			return 7;
-		
-		//this is just so that return is satisfied- it should never happen
+
+		// this is just so that return is satisfied- it should never happen
 		return -1;
 
 	}

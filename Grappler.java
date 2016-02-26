@@ -1,9 +1,5 @@
 package org.usfirst.frc.team2473.robot;
 
-import edu.wpi.first.wpilibj.AnalogGyro;
-import edu.wpi.first.wpilibj.AnalogInput;
-import edu.wpi.first.wpilibj.DigitalInput;
-
 public class Grappler {
 
 	private static Grappler grappler = null;
