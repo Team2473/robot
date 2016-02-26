@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Telemetry {
 	//Ultrasonic
-	private AnalogInput ultrasonicLeft; //Analog 0
+	//private AnalogInput ultrasonicLeft; 
 	private AnalogInput ultrasonicRight; //Analog 1
 	
 	//Gyro
@@ -26,10 +26,10 @@ public class Telemetry {
 	private static Telemetry telemetry = null;
 	
 	private Telemetry() {
-		ultrasonicLeft = new AnalogInput(0);
+		//ultrasonicLeft = new AnalogInput(0);
 		ultrasonicRight = new AnalogInput(1);
 		
-		gyro = new AnalogGyro(4);
+		gyro = new AnalogGyro(0);
 		gyro.calibrate();
 		
 		breakBeam   = new DigitalInput(0);
@@ -44,17 +44,17 @@ public class Telemetry {
 
 	//Just prints out values
 	public void updateUltrasonicValue() {
-		double rangeInInchesLeft = ultrasonicLeft.getVoltage() / vi;
+	//	double rangeInInchesLeft = ultrasonicLeft.getVoltage() / vi;
 		double rangeInInchesRight = ultrasonicRight.getVoltage() / vi;
 
-		SmartDashboard.putString("DB/String 0", "L:" + rangeInInchesLeft);
+	//	SmartDashboard.putString("DB/String 0", "L:" + rangeInInchesLeft);
 		SmartDashboard.putString("DB/String 1", "R:" + rangeInInchesRight);
 	}
 
 	//Returns range in in. for left ultrasonic sensor
-	public double getUltrasonicLeft() {
-		return (ultrasonicLeft.getVoltage() / vi);
-	}
+	//public double getUltrasonicLeft() {
+	//	return (ultrasonicLeft.getVoltage() / vi);
+	//}
 
 	//Returns range in in. for left ultrasonic sensor
 	public double getUltrasonicRight() {
