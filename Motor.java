@@ -155,12 +155,16 @@ public class Motor {
 		}
 	}
 
-	public int getEncoder(CANTalon motor) {
+	private int getEncoder(CANTalon motor) {
 		return motor.getEncPosition();
 	}
 	
-	public int getEncBR(){
-		return getEncoder(backRight);
+	public int getEncFR(){
+		return getEncoder(frontRight);
+	}
+	
+	public int getEncFL(){
+		return getEncoder(frontLeft);
 	}
 
 	public void resetDriveEncoders() {
