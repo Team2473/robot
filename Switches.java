@@ -26,14 +26,15 @@ public class Switches {
 		dio7 = new DigitalInput(7);
 		dio8 = new DigitalInput(8);
 	}
-
+    //Get an instance of a switch
+	//Returns a switch object
 	public static Switches getInstance() {
 		if (switches == null) {
 			switches = new Switches();
 		}
 		return switches;
 	}
-
+    //For testing: Prints out all of the switch values (boolean) to the dashboard
 	public void printDigitalInputs() {
 		SmartDashboard.putString("DB/String 1", "Switch 1:" + dio1.get());
 		SmartDashboard.putString("DB/String 2", "Switch 2:" + dio2.get());
