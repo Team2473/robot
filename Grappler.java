@@ -91,6 +91,7 @@ public class Grappler {
             //Stop running wheel motors
 			Motor.getInstance().moveLeftSideMotors(0);
 			Motor.getInstance().moveRightSideMotors(0);
+			//failsafe to ensure other methods do not run, as this is the last action in the game
 
 			while (true) {
 				Motor.getInstance().moveWinchMotors(8000);
