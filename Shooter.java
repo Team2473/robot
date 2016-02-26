@@ -19,7 +19,7 @@ public class Shooter {
 	};
 	
 	
-	private static String stateString(State state){
+	private String stateString(State state){
 		switch(state){
 		case COLLAPSED:
 			return "Collapsed";
@@ -42,33 +42,42 @@ public class Shooter {
 		return "Unknown";
 	}
 	
-	private static State currentState = State.COLLAPSED;
+	private State currentState = State.COLLAPSED;
 	
-	// Constants
-	public static int fwdPotMax  = 505; 
-	public static int backPotMax = 420;
-	
-	// Joystick Mapping
-	public static int loadButton     = 4;
-	public static int unloadButton   = 5;
-	public static boolean abortShoot = false;
-	
-	// Input
-	public static CANTalon pot             = new CANTalon(6);
-	public static CANTalon shootR          = new CANTalon(9);
-	public static CANTalon shootL          = new CANTalon(10);
-		
-	// Initialization
+	private static Shooter shooter = null;
 
-	public static void init() {
+	// Initialization
+	private Shooter() {
 		pot.enableBrakeMode(true);
-		pot.changeControlMode(CANTalon.TalonControlMode.PercentVbus);
-		shootR.changeControlMode(CANTalon.TalonControlMode.PercentVbus);
-		shootL.changeControlMode(CANTalon.TalonControlMode.PercentVbus);
+		pot.changeControlMode(Motor.MODE_POWER);
+		shootR.changeControlMode(Motor.MODE_POWER);
+		shootL.changeControlMode(Motor.MODE_POWER);
+	}
+
+	public static Shooter getInstance() {
+		if (shooter == null) {
+			shooter = new Shooter();
+		}
+		return shooter;
+
 	}
 	
+	// Constants
+	public int fwdPotMax  = 505; 
+	public int backPotMax = 420;
+	
+	// Joystick Mapping
+	public int loadButton     = 4;
+	public int unloadButton   = 5;
+	public boolean abortShoot = false;
+	
+	// Input
+	public CANTalon pot             = new CANTalon(6);
+	public CANTalon shootR          = new CANTalon(9);
+	public CANTalon shootL          = new CANTalon(10);
+	
 	//Pot reading for positioning
-	public static void testPot(){
+	public void testPot(){
 		SmartDashboard.putString("DB/String 1", "" + pot.getAnalogInRaw());	
 		if(Controller.getInstance().getJoy1Button(2)){
 			moveBackward();
@@ -83,24 +92,21 @@ public class Shooter {
 
 	// Basic power instructions
 	
-	public static void moveForward(){
-		pot.changeControlMode(CANTalon.TalonControlMode.PercentVbus);
+	public void moveForward(){
 		pot.set(0.15);
 	}
 	
-	public static void moveBackward(){ //365 pot
-		pot.changeControlMode(CANTalon.TalonControlMode.PercentVbus);
+	public void moveBackward(){ //365 pot
 		pot.set(-0.15);
 	}
 	
-	public static void stop(){
-		pot.changeControlMode(CANTalon.TalonControlMode.PercentVbus);
+	public void stop(){
 		pot.set(0);
 	}
 	
 	// Calibration: Finding max pot values
 	
-	public static void calibration(){
+	public void calibration(){
 		while(pot.isFwdLimitSwitchClosed()){ //when forward is not pressed
 			moveForward();
 		}
@@ -124,7 +130,7 @@ public class Shooter {
 	}
 	
 	// Test method
-	public static void test(){
+	public void test(){
 		setPosition(90);
 		setPosition(0);
 	}
@@ -132,7 +138,7 @@ public class Shooter {
 	
 	
 	// Loading and Unloading
-	public static boolean fire(){
+	public boolean fire(){
 		if(currentState == State.RAISED || currentState == State.RAISING){
 			currentState = State.LOWERING;
 		}
@@ -140,30 +146,30 @@ public class Shooter {
 	}
 
 	//Get to extend state
-	public static boolean extend(){
+	public boolean extend(){
 		if(currentState == State.COLLAPSED || currentState == State.COLLAPSING){
 			currentState = State.EXTENDING;
 		}
 		return true;
 	}
 	
-	public static boolean collapse(){
+	public boolean collapse(){
 		if(currentState == State.EXTENDED || currentState == State.EXTENDING){
 			currentState = State.COLLAPSING;
 		}
 		return true;
 	}
 	
-	private static boolean hasBall(){
+	private boolean hasBall(){
 		return !Telemetry.getInstance().getBreakBeam();
 	}
 	
-	private static void intakeBall(){
+	private void intakeBall(){
 		shootR.set(-0.2);
 		shootL.set(0.2);
 	}
 	
-	private static void fireBall(){
+	private void fireBall(){
 		shootR.set(0.6);
 		shootL.set(-0.6);
 		//Need to allow the ball to be fired
@@ -174,12 +180,12 @@ public class Shooter {
 		}
 	}
 	
-	private static void holdBall(){
+	private void holdBall(){
 		shootR.set(0);
 		shootL.set(0);
 	}
 	
-	private static void updateControlState(){
+	private void updateControlState(){
 		//get status of extend button
 		if(Controller.getInstance().getJoy1Button(5)){
 			extend();
@@ -199,7 +205,7 @@ public class Shooter {
 		
 	}
 	
-	public static void runLoop(){
+	public void runLoop(){
 		// Get transitions + calculate state change if needed
 		updateControlState();
 		
@@ -261,22 +267,22 @@ public class Shooter {
 		}
 	}
 	
-	public static boolean isCollapsed(){
+	public boolean isCollapsed(){
 		return (Math.abs(pot.getAnalogInRaw() - backPotMax) < 5);
 	}
 	
-	public static boolean isExtended(){
+	public boolean isExtended(){
 		return Math.abs(pot.getAnalogInRaw() - fwdPotMax) < 5;
 	}
 	
-	public static boolean isRaised(){
+	public boolean isRaised(){
 		return getPosition() <= 90; 
 	}
 	
 		
 	
 	//DO NOT USE. Saving for use in test program.
-	public static void load(){
+	public void load(){
 		boolean continueMethod = true;
 		boolean atNinety = false;
 		SmartDashboard.putString("DB/String 4", "breakBeam.get: " + Telemetry.getInstance().getBreakBeam());
@@ -325,7 +331,7 @@ public class Shooter {
 		}
 	}
 	
-	public static void unload() {
+	public void unload() {
 		
 		if(Controller.getInstance().getJoy1Button(unloadButton)) {
 			
@@ -346,14 +352,14 @@ public class Shooter {
 	// Motor Control 
 	// TODO: This should be using the motor class
 
-	public static double[] lookupTable = {0.34, 0.32, 0.32, 0.30, 0.28, 0.26, 0.26, 0.26, 0.24, 0.24, 0.22, 0.22, 0.20, 0.19, 0.16, 0.14, 0.14, 0.12, 0.10, 0.02};  
+	public double[] lookupTable = {0.34, 0.32, 0.32, 0.30, 0.28, 0.26, 0.26, 0.26, 0.24, 0.24, 0.22, 0.22, 0.20, 0.19, 0.16, 0.14, 0.14, 0.12, 0.10, 0.02};  
 
-	public static double getPosition(){
+	public double getPosition(){
 		double diff = fwdPotMax - backPotMax;
 		return (pot.getAnalogInRaw() - backPotMax) * 180 / diff;
 	}
 	
-	public static void setPosition(int degrees) {
+	public void setPosition(int degrees) {
 	
 		int index = 0;
 		int direction = 1; 
