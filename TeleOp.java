@@ -96,6 +96,7 @@ public class TeleOp {
 	}
 	
 	public static boolean waiting = false;
+	public static boolean reverse = false;
 	
 	public static void runUtilities(){
 		
@@ -109,5 +110,10 @@ public class TeleOp {
 			waiting = false;
 		}
 		
+		if (Controller.getInstance().getJoy2Button(3)) {
+			reverse = true;
+		} else {
+			reverse = false;
+		}
 	}
 }

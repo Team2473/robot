@@ -22,7 +22,7 @@ public class Robot extends IterativeRobot {
      */
 	
     public void robotInit() {
-    	Vision.getInstance().visionInit();
+    	Vision.getInstance();
 
     }
     
@@ -44,21 +44,16 @@ public class Robot extends IterativeRobot {
      * This function is called once each time the robot enters tele-operated mode
      */
     public void teleopInit(){
-    	Shooter.init();
+    	Shooter.getInstance().calibration();
     }
     
     /**
      * This function is called periodically during operator control
      */
-    /*
-     * Note to Rucha: Uncomment calibration method and mapTable method to test.
-     * Ekta: ^^ mapTable doesn't exist anymore ^^
-     * 
-     */
     public void teleopPeriodic() {
-    	Shooter.runLoop();
+    	Shooter.getInstance().runLoop();
     	Vision.getInstance().updateDashboard();
-    	if(Vision.getInstance().reverse) {
+    	if(TeleOp.reverse) {
     		TeleOp.runPowerReverse();
     	}
     	else {

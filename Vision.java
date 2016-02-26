@@ -36,8 +36,6 @@ public class Vision {
 	boolean session1NotStarted = true;
 	boolean session2NotStarted = true;
 
-	boolean reverse = false;
-
 	public static Vision getInstance() {
 		if (vision == null) {
 			vision = new Vision();
@@ -45,7 +43,7 @@ public class Vision {
 		return vision;
 	}
 
-	public void visionInit() {
+	private Vision(){
 		frame1 = NIVision.imaqCreateImage(NIVision.ImageType.IMAGE_RGB, 0);
 
 		frame2 = NIVision.imaqCreateImage(NIVision.ImageType.IMAGE_RGB, 0);
@@ -63,13 +61,7 @@ public class Vision {
 
 	public void updateDashboard() {
 
-		if (Controller.getInstance().getJoy2Button(3)) {
-			reverse = true;
-		} else {
-			reverse = false;
-		}
-
-		if (!reverse) {
+		if (!TeleOp.reverse) {
 			SmartDashboard.putString("DB/String 6", "Session 1 running");
 			// sessions 2 & 3 is no longer started
 			session2NotStarted = true;

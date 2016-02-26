@@ -168,16 +168,21 @@ public class Motor {
 			winch2.set(0);
 		}
 	}
-    //Getting the motor position of any motor
-	//returns encoder position for any motor(int)
-	public int getEncoder(CANTalon motor) {
+    //Input a motor to get encoder positions from.  
+	//Returns encoder positions
+	private double getEncoder(CANTalon motor) {
 		return motor.getEncPosition();
 	}
+	//Get the encoder value (double) of the front right encoder
 	
-	//Getting the value of the back right encoder
-	//Returns backRight encoder value
-	public int getEncBR(){
-		return getEncoder(backRight);
+	public double getEncFR(){
+		return getEncoder(frontRight);
+	}
+	//Get the encoder value (double) of the front left encoder
+	
+	public double getEncFL(){
+		return getEncoder(frontLeft);
+
 	}
     //Setting all of the encoders to 0
 	public void resetDriveEncoders() {
