@@ -94,10 +94,6 @@ public class Vision {
 						// grab image
 						NIVision.IMAQdxGrab(session1, frame1, 1);
 
-						// draw on image
-						NIVision.imaqDrawShapeOnImage(frame1, frame1, rect,
-								DrawMode.DRAW_VALUE, ShapeMode.SHAPE_RECT, 25.0f);
-
 						// send image to dashboard
 						CameraServer.getInstance().setImage(frame1);
 			
@@ -124,10 +120,6 @@ public class Vision {
 
 			// grab image
 			NIVision.IMAQdxGrab(session2, frame2, 1);
-
-			// draw on image
-			NIVision.imaqDrawShapeOnImage(frame2, frame2, rect,
-					DrawMode.DRAW_VALUE, ShapeMode.SHAPE_RECT, 25.0f);
 
 			// send image to dashboard
 			CameraServer.getInstance().setImage(frame2);
