@@ -18,8 +18,9 @@ public class Robot extends IterativeRobot {
 	 */
 
 	public void robotInit() {
-		Vision.getInstance();
-
+//		Vision.getInstance();
+//		Diagnostic d = new Diagnostic();
+//		d.testEverything();
 	}
 
 	/**
@@ -41,7 +42,7 @@ public class Robot extends IterativeRobot {
 	 * mode
 	 */
 	public void teleopInit() {
-		Shooter.getInstance().calibration();
+//		Shooter.getInstance().calibration();
 	}
 
 	/**
