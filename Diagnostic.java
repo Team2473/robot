@@ -33,18 +33,15 @@ public class Diagnostic {
     	 while(!Controller.getInstance().getJoy1Button(6)){}
     	 
     	 SmartDashboard.putString("DB/String 1", "Move left joystick up");
-    	 SmartDashboard.putString("DB/String 2", "Click green button");
     	 
-    	 while(!Controller.getInstance().getJoy1Button(1) && Controller.getInstance().getYL() < 0.5){}
+    	 while(Controller.getInstance().getYL() < 0.9){}
     	 
     	 SmartDashboard.putString("DB/String 1", "Move right joystick up");
-    	 SmartDashboard.putString("DB/String 2", "Click green button");
     	 
-    	 while(!Controller.getInstance().getJoy1Button(1) && Controller.getInstance().getYR() < 0.5){}
+    	 while(Controller.getInstance().getYR() < 0.9){}
     	 
     	 SmartDashboard.putString("DB/String 1", "Press left trigger");
-    	 SmartDashboard.putString("DB/String 2", " ");
-    	 while(Controller.getInstance().getLeftTrigger() < 0.95){}
+    	 while(Controller.getInstance().getLeftTrigger() < 0.9){}
     	 
     	 SmartDashboard.putString("DB/String 1", "Press arm button");
     	 while(!Controller.getInstance().getJoy2Button(1)){}
