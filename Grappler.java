@@ -1,9 +1,6 @@
 package org.usfirst.frc.team2473.robot;
 
-import edu.wpi.first.wpilibj.CANTalon;
 //import edu.wpi.first.wpilibj.CANTalon.ControlMode;
-import edu.wpi.first.wpilibj.CANTalon.FeedbackDevice;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Grappler {
 	

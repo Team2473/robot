@@ -49,18 +49,18 @@ public class Robot extends IterativeRobot {
 	 * This function is called periodically during operator control
 	 */
 	public void teleopPeriodic() {
-		Shooter.getInstance().runLoop();
-		Vision.getInstance().updateDashboard();
-		if (TeleOp.reverse) {
-			TeleOp.runPowerReverse();
-		} else {
-			TeleOp.runPower();
-		}
-		TeleOp.runUtilities();
-
-		// Grappler
-		Grappler.getInstance().runScaleTower();
-
+//		Shooter.getInstance().runLoop();
+//		Vision.getInstance().updateDashboard();
+//		if (TeleOp.reverse) {
+//			TeleOp.runPowerReverse();
+//		} else {
+//			TeleOp.runPower();
+//		}
+//		TeleOp.runUtilities();
+//
+//		// Grappler
+//		Grappler.getInstance().runScaleTower();
+		Motor.getInstance().testArm();
 	}
 
 	/**

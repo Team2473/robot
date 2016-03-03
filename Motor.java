@@ -1,6 +1,7 @@
 package org.usfirst.frc.team2473.robot;
 import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.CANTalon.FeedbackDevice;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Motor {
 	private CANTalon frontLeft;
@@ -79,7 +80,7 @@ public class Motor {
 		arm.ConfigRevLimitSwitchNormallyOpen(false);
 		arm.ConfigFwdLimitSwitchNormallyOpen(false);
 		arm.enableControl();
-		moveGrapplerArmMotor(-260);
+		//moveGrapplerArmMotor(-260);
 		arm.setPosition(0);
 	}
 
@@ -206,7 +207,18 @@ public class Motor {
 		backLeft.setPosition(0);
 		backRight.setPosition(0);
 	}
-
+	
+	
+	public void testArm(){
+		if(Controller.getInstance().getYL()>0.5){
+			arm.set(.4);
+		}else if(Controller.getInstance().getYL()<-0.5){
+			arm.set(-.4);
+		}else{
+			arm.set(0);
+		}
+		SmartDashboard.putString("DB/String 6", "Enc: " + arm.getPosition());
+	}
 
 	// create additional move methods using the below format
 	/*
