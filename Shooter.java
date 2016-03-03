@@ -62,6 +62,8 @@ public class Shooter {
 
 	public static void init() {
 		pot.enableBrakeMode(true);
+		pot.ConfigFwdLimitSwitchNormallyOpen(false);
+		pot.ConfigRevLimitSwitchNormallyOpen(false);
 		pot.changeControlMode(CANTalon.TalonControlMode.PercentVbus);
 		shootR.changeControlMode(CANTalon.TalonControlMode.PercentVbus);
 		shootL.changeControlMode(CANTalon.TalonControlMode.PercentVbus);
@@ -69,7 +71,7 @@ public class Shooter {
 	
 	//Pot reading for positioning
 	public static void testPot(){
-		SmartDashboard.putString("DB/String 3", "" + pot.get());	
+//		SmartDashboard.putString("DB/String 3", "" + pot.get());	
 		if(Controller.getInstance().getJoy1Button(2)){
 			moveBackward();
 		}
