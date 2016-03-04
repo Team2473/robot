@@ -6,7 +6,8 @@ public class Diagnostic {
     	 
      }
      public void testEverything(){
-    	 controllerWorking();
+    	 //controllerWorking();
+    	 switchesWorking();
     	 
     	 
     	 
@@ -60,14 +61,50 @@ public class Diagnostic {
      //Testing switches
      //Human interaction for testing switches:
      public boolean switchesWorking(){
-    	
+    	 SmartDashboard.putString("DB/String 1", "Turn fourDial to 0");
+    	 while(!(Switches.getInstance().getFourDial() == 0) ){}
     	 
+    	 SmartDashboard.putString("DB/String 1", "Turn eightDial to 0");
+    	 while(!(Switches.getInstance().getEightDial() == 0)){}
+    	 
+    	 SmartDashboard.putString("DB/String 1", "Turn all switches to true");
+     	 while(!(Switches.getInstance().getTripleSwitch() == -1)){}
+     	 
+     	 
+    	 
+    	 SmartDashboard.putString("DB/String 1", "Turn triple switch to 3");
+         while(!(Switches.getInstance().getTripleSwitch() == 3)){}
+         
+         SmartDashboard.putString("DB/String 1", "Turn triple switch to 2");
+         while(!(Switches.getInstance().getTripleSwitch() == 2)){}
+         
+         SmartDashboard.putString("DB/String 1", "Turn triple switch to 1");
+         while(!(Switches.getInstance().getTripleSwitch() == 1)){}
+         
+         SmartDashboard.putString("DB/String 1", "Turn fourDial to 3");
+         while(!(Switches.getInstance().getFourDial() == 3)){}
+         
+    	 SmartDashboard.putString("DB/String 1", "Turn fourDial to 2");
+         while(!(Switches.getInstance().getFourDial() == 2)){}
+         
+         SmartDashboard.putString("DB/String 1", "Turn fourDial to 1");
+         while(!(Switches.getInstance().getFourDial() == 1)){}
+       
+         
+         
+         
+    	 SmartDashboard.putString("DB/String 1", "Turn eightDial to 5");
+    	  while(!(Switches.getInstance().getEightDial() == 5)){}
+    	  
+    	  SmartDashboard.putString("DB/String 1", "Turn eightDial to 6");
+    	  while(!(Switches.getInstance().getEightDial() == 6)){}
     	 
     	 return true;
      }
      
      //testing rightside/leftside motors
      public boolean testMotors(){
+    	 
     	 return true;
      }
      //testing breakbeam
