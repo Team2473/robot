@@ -12,15 +12,13 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
  */
 
 public class Robot extends IterativeRobot {
+	int talonID = 4;
 	/**
 	 * This function is run when the robot is first started up and should be
 	 * used for any initialization code.
 	 */
 
 	public void robotInit() {
-//		Vision.getInstance();
-//		Diagnostic d = new Diagnostic();
-//		d.testEverything();
 	}
 
 	/**
@@ -42,25 +40,13 @@ public class Robot extends IterativeRobot {
 	 * mode
 	 */
 	public void teleopInit() {
-//		Shooter.getInstance().calibration();
 	}
 
 	/**
 	 * This function is called periodically during operator control
 	 */
 	public void teleopPeriodic() {
-		Shooter.getInstance().runLoop();
-		Vision.getInstance().updateDashboard();
-		if (TeleOp.reverse) {
-			TeleOp.runPowerReverse();
-		} else {
-			TeleOp.runPower();
-		}
-		TeleOp.runUtilities();
-
-		// Grappler
-		Grappler.getInstance().runScaleTower();
-
+		TalonTest.getInstance().testTalon(talonID);
 	}
 
 	/**
