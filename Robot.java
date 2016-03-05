@@ -12,7 +12,7 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
  */
 
 public class Robot extends IterativeRobot {
-	int talonID = 4;
+	int talonID = 6;
 	/**
 	 * This function is run when the robot is first started up and should be
 	 * used for any initialization code.

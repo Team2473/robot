@@ -28,6 +28,22 @@ public class TalonTest {
 	        }
 	        
 	        talon.set(joy.getY());
-//	        SmartDashboard.putString("DB/String 0", "ForwardLimitSwitch: " + talon.get);
+	        
+//	        if (talon.isFwdLimitSwitchClosed()) {
+//	        	SmartDashboard.putString("DB/String 0", "ForwardLimitSwitchClosed: ");
+//	        }
+//	        else {
+//	        	SmartDashboard.putString("DB/String 0", "ForwardLimitSwitchOpen: ");
+//	        }
+//	        
+//	        if (talon.isRevLimitSwitchClosed()) {
+//	        	SmartDashboard.putString("DB/String 1", "ReverseLimitSwitchClosed: ");
+//	        }
+//	        else {
+//	        	SmartDashboard.putString("DB/String 1", "ReverseLimitSwitchOpen: ");
+//	        }
+	        
+	        SmartDashboard.putString("DB/String 0", "" + talon.isFwdLimitSwitchClosed());
+	        SmartDashboard.putString("DB/String 1", "" + talon.isRevLimitSwitchClosed());
 	}
 }
