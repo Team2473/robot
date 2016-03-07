@@ -11,7 +11,7 @@ public class Motor {
 	private CANTalon backRight;
 
 	private CANTalon arm; // the motor to move the arm into position
-	private CANTalon winch1; // the motor to extend the arm
+	private CANTalon winch1; // the motor to extend the arm (ALEX 3/5/2016: both winches pull the robot up lol)
 	private CANTalon winch2; // the motor to pull the robot up
 
 	// add addition cantalons as they are added to robot
@@ -169,6 +169,20 @@ public class Motor {
 	public double getEncFL(){
 		return getEncoder(frontLeft);
 	}
+	
+	public double getEncBL(){
+		return getEncoder(backLeft);
+	}
+	
+	public double getEncBR(){
+		return getEncoder(backRight);
+	}
+	
+	// 3/5/2016: Alex testing
+	public double getEncWinch(){
+		return getEncoder(winch1);
+	}
+	//
 
 	public void resetDriveEncoders() {
 		frontLeft.setPosition(0);
