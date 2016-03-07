@@ -9,9 +9,9 @@ public class Diagnostic {
 	}
 
 	public void testEverything() {
-		controllerTest();
+		//controllerTest();
 		switchesTest();
-		driveTest();
+		//driveTest();
 
 	}
 
@@ -121,9 +121,9 @@ public class Diagnostic {
 		while (!(Switches.getInstance().getEightDial() == 1)) {
 		}
 
-		SmartDashboard.putString("DB/String 1", "Turn eightDial to 2");
-		while (!(Switches.getInstance().getEightDial() == 2)) {
-		}
+		//SmartDashboard.putString("DB/String 1", "Turn eightDial to 2");
+		//while (!(Switches.getInstance().getEightDial() == 2)) {
+		//}
 
 		SmartDashboard.putString("DB/String 1", "Turn eightDial to 3");
 		while (!(Switches.getInstance().getEightDial() == 3)) {
