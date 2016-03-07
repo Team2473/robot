@@ -9,7 +9,7 @@ public class Diagnostic {
 	}
 
 	public void testEverything() {
-		//controllerTest();
+		controllerTest();
 		switchesTest();
 		driveTest();
 
