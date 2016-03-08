@@ -12,6 +12,8 @@ import edu.wpi.first.wpilibj.livewindow.LiveWindow;
  */
 
 public class Robot extends IterativeRobot {
+	Shooter myShooter;
+	
 	/**
 	 * This function is run when the robot is first started up and should be
 	 * used for any initialization code.
@@ -19,6 +21,7 @@ public class Robot extends IterativeRobot {
 
 	public void robotInit() {
 		Vision.getInstance();
+		myShooter = Shooter.getInstance();
 	}
 
 	/**
@@ -40,7 +43,7 @@ public class Robot extends IterativeRobot {
 	 * mode
 	 */
 	public void teleopInit() {
-		Shooter.getInstance().calibration();
+		myShooter.calibration();
 //		Diagnostic d = new Diagnostic();
 //		d.testEverything();
 	}
@@ -49,14 +52,14 @@ public class Robot extends IterativeRobot {
 	 * This function is called periodically during operator control
 	 */
 	public void teleopPeriodic() {
-		Shooter.getInstance().runLoop();
-		Vision.getInstance().updateDashboard();
-		if (TeleOp.reverse) {
-			TeleOp.runPowerReverse();
-		} else {
-			TeleOp.runPower();
-		}
-		TeleOp.runUtilities();
+		myShooter.runLoop();
+//		Vision.getInstance().updateDashboard();
+//		if (TeleOp.reverse) {
+//			TeleOp.runPowerReverse();
+//		} else {
+//			TeleOp.runPower();
+//		}
+//		TeleOp.runUtilities();
 
 		// Grappler
 		Grappler.getInstance().runScaleTower();

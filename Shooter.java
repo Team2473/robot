@@ -7,6 +7,7 @@ public class Shooter {
 	private enum State {
 		COLLAPSED, EXTENDING, EXTENDED, COLLAPSING, RAISING, RAISED, LOWERING, FIRING
 	};
+	Telemetry myTelemetry;
 
 	private String stateString(State state) {
 		switch (state) {
@@ -37,6 +38,7 @@ public class Shooter {
 
 	// Initialization
 	private Shooter() {
+		myTelemetry = Telemetry.getInstance();
 		pot.enableBrakeMode(true);
 		pot.changeControlMode(Motor.MODE_POWER);
 		shootR.changeControlMode(Motor.MODE_POWER);
@@ -146,7 +148,7 @@ public class Shooter {
 	}
 
 	private boolean hasBall() {
-		return !Telemetry.getInstance().getBreakBeam();
+		return !myTelemetry.getBreakBeam();
 	}
 
 	private void intakeBall() {
@@ -209,9 +211,11 @@ public class Shooter {
 				setPosition(180);
 			}
 		} else if (currentState == State.EXTENDED) {
+			SmartDashboard.putString("DB/String 3", "State Extended");
 			if (hasBall()) {
 				currentState = State.RAISING;
 			} else {
+				SmartDashboard.putString("DB/String 8", "Spinning Wheels");
 				intakeBall();
 			}
 		} else if (currentState == State.RAISING) {
@@ -258,11 +262,11 @@ public class Shooter {
 		boolean continueMethod = true;
 		boolean atNinety = false;
 		SmartDashboard.putString("DB/String 4", "breakBeam.get: "
-				+ Telemetry.getInstance().getBreakBeam());
+				+ myTelemetry.getBreakBeam());
 
 		if (Controller.getInstance().getJoy1Button(loadButton)) {
 
-			if (!Telemetry.getInstance().getBreakBeam()) {
+			if (!myTelemetry.getBreakBeam()) {
 				// Stop spinning shooters
 				shootR.set(0);
 				shootL.set(0);
@@ -282,7 +286,7 @@ public class Shooter {
 			}
 
 			// Wait for beam to break
-			while (Telemetry.getInstance().getBreakBeam()) {
+			while (myTelemetry.getBreakBeam()) {
 
 				// Start spinning shooter
 				shootR.set(-0.2);
@@ -313,7 +317,7 @@ public class Shooter {
 			setPosition(180);
 
 			// Waiting for ball to be unloaded
-			while (!Telemetry.getInstance().getBreakBeam()) {
+			while (!myTelemetry.getBreakBeam()) {
 				shootR.set(0.2);
 				shootL.set(-0.2);
 			}
