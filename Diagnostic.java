@@ -160,19 +160,22 @@ public class Diagnostic {
 	// testing rightside/leftside motors
 	public boolean driveTest() {
 		SmartDashboard.putString("DB/String 1", "Testing drive motors");
-		try {
-			Thread.sleep(1000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		SmartDashboard.putString("DB/String 2", "Put robot on blocks and");
+		SmartDashboard.putString("DB/String 3", "press the green button");
+		while (!Controller.getInstance().getJoy1Button(1)) {
 		}
+		
+		SmartDashboard.putString("DB/String 2", "");
+		SmartDashboard.putString("DB/String 3", "");
 		
 		Motor.getInstance().setLeftSideMotorsMode(Motor.MODE_POWER);
 		Motor.getInstance().setRightSideMotorsMode(Motor.MODE_POWER);
+		
 		Motor.getInstance().resetDriveEncoders();
 		
-		Motor.getInstance().moveLeftSideMotors(.2);
-		Motor.getInstance().moveRightSideMotors(.2);
+		Motor.getInstance().frontLeft.set(.2);
+		Motor.getInstance().frontRight.set(.2);
+		
 		try {
 			Thread.sleep(500);
 		} catch (InterruptedException e) {
@@ -181,14 +184,41 @@ public class Diagnostic {
 		}
 		
 		if(!(Motor.getInstance().getEncFL() < -1.0)){
-			SmartDashboard.putString("DB/String 1", "Left motors or encoder is/are broken");
+			SmartDashboard.putString("DB/String 1", "Front left motor or");
+			SmartDashboard.putString("DB/String 2", "encoder is broken");
 			System.exit(0);
 		}
 		
 		if(!(Motor.getInstance().getEncFR() > 1.0)){
-			SmartDashboard.putString("DB/String 1", "Right motors or encoder is/are broken");
+			SmartDashboard.putString("DB/String 1", "Front right motor or");
+			SmartDashboard.putString("DB/String 2", "encoder is broken");
 			System.exit(0);
 		}
+		
+		Motor.getInstance().resetDriveEncoders();
+		
+		Motor.getInstance().backLeft.set(.2);
+		Motor.getInstance().backRight.set(.2);
+		
+		try {
+			Thread.sleep(500);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		if(!(Motor.getInstance().getEncFL() < -1.0)){
+			SmartDashboard.putString("DB/String 1", "Back left motor or");
+			SmartDashboard.putString("DB/String 2", "encoder is broken");
+			System.exit(0);
+		}
+		
+		if(!(Motor.getInstance().getEncFR() > 1.0)){
+			SmartDashboard.putString("DB/String 1", "Back right motor or");
+			SmartDashboard.putString("DB/String 2", "encoder is broken");
+			System.exit(0);
+		}
+		
 		
 		SmartDashboard.putString("DB/String 1", "Driver motors are working");
 		try {

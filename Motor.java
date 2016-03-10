@@ -4,10 +4,10 @@ import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.CANTalon.FeedbackDevice;
 
 public class Motor {
-	private CANTalon frontLeft;
-	private CANTalon frontRight;
-	private CANTalon backLeft;
-	private CANTalon backRight;
+	public CANTalon frontLeft;
+	public CANTalon frontRight;
+	public CANTalon backLeft;
+	public CANTalon backRight;
 
 	private CANTalon arm; // the motor to move the arm into position
 	private CANTalon winch1; // the motor to extend the arm
@@ -191,7 +191,6 @@ public class Motor {
 
 	public double getEncFL() {
 		return getEncoder(frontLeft);
-
 	}
 
 	// Setting all of the encoders to 0
@@ -201,7 +200,7 @@ public class Motor {
 		backLeft.setPosition(0);
 		backRight.setPosition(0);
 	}
-
+	
 	// create additional move methods using the below format
 	/*
 	 * public void moveSAMPLE_MOTORMotors(ControlMode mode, int value) {
