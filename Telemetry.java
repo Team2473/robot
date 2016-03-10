@@ -26,9 +26,9 @@ public class Telemetry {
 	private double vi = 5.0 / 512; 
 
 	private Telemetry() {
-		ultrasonicRight = new AnalogInput(1);
+		ultrasonicRight = new AnalogInput(0);
 		
-		gyro = new AnalogGyro(0);
+		gyro = new AnalogGyro(1);
 		gyro.calibrate();
 		
 		breakBeam   = new DigitalInput(0);

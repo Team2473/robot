@@ -49,18 +49,29 @@ public class SemiAuto {
 //		}	
 //	}
 	
+	
 	public static double getEnc(){
-		return motor.getEncFL();
+		SmartDashboard.putString("DB/String 0", "BL: " + motor.getEncBL());
+		SmartDashboard.putString("DB/String 1", "BR: " + motor.getEncBR());
+		SmartDashboard.putString("DB/String 4", "Ultras: " + Telemetry.getInstance().getUltrasonicRight());
+
+		return motor.getEncBR();
 	}
 	
 	public static void autoLoop(){
 				
 		// Calculate outputs
 		//TODO: isDown() and isUp() should be used to restrict speed during drive
+		
+		SmartDashboard.putString("DB/String 9", "State: " + currentAuto);
+		
+		//ADD A STATE: press button: put in ready state
+		//			   ultrasonic:   put in start state
+		
 		if(currentAuto == AutoState.START){
 			Shooter.setPosition(90);
 			encStart = getEnc();
-			if(getEnc() == -75){ 															//change to encoder value
+			if(getEnc() == 4606){ 															//change to encoder value
 				currentAuto = AutoState.DOWN;
 			}
 			else{
@@ -77,7 +88,7 @@ public class SemiAuto {
 		}
 
 		else if(currentAuto == AutoState.CREST){
-			if(getEnc() == -6000){																//encoder value
+			if(getEnc() == 6000){																//encoder value
 				currentAuto = AutoState.UP;
 			}
 			else{

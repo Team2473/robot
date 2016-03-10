@@ -47,6 +47,7 @@ public class Robot extends IterativeRobot {
 //    	Shooter.printValues();
     	Shooter.calibration();
     	Shooter.init();
+//    	Shooter.setPosition(180);
     }
     
     /**
@@ -61,18 +62,22 @@ public class Robot extends IterativeRobot {
 //    	SmartDashboard.putString("DB/String 0", "BR:" + Motor.getInstance().getEncBR());
 //    	SmartDashboard.putString("DB/String 1", "BL:" + Motor.getInstance().getEncBL());
 //    	SmartDashboard.putString("DB/String 6", "Winch:" + Motor.getInstance().getEncWinch());
-    	Shooter.runLoop();
-    	Shooter.printValues();
+//    	Shooter.runLoop();
+//    	Shooter.printValues();
 //    	Shooter.testPot();
-//    	TeleOp.runPosition();
+    	
+    	SemiAuto.autoLoop();
+    	
+//    	SemiAuto.getEnc();
+    	
 //    	Vision.getInstance().updateDashboard();
 //    	if(Vision.getInstance().reverse) {
 //    		TeleOp.runPowerReverse();
 //    	}
 //    	else {
-//    		TeleOp.runPower();
+    		TeleOp.runPower();
 //    	}
-//    	
+    	
     	//Grappler
 //    	TeleOp.runUtilities();
 
