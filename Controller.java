@@ -49,6 +49,10 @@ public class Controller {
 		return joy1.getRawAxis(2);
 	}
 	
+	public double getRightTrigger(){
+		return joy1.getRawAxis(3);
+	}
+	
 	public boolean getJoy1Button(int b) {
 		return joy1.getRawButton(b);
 	}
