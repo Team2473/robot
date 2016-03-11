@@ -37,7 +37,7 @@ public class Robot extends IterativeRobot {
      */
     public void autonomousPeriodic() {
 //    	SmartDashboard.putString("DB/String 4", "Running AutoAttack");
-//    	AutoAttack.run();
+    	AutoAttack.run();
 //    	Telemetry.getInstance().updateGyroValue();
     }
     
@@ -71,7 +71,7 @@ public class Robot extends IterativeRobot {
 //    	}else{
 //    		TeleOp.runPower();
 //    	}
-    	Motor.getInstance().moveForwardPowerPrintEncoders(.3);
+//    	Motor.getInstance().moveForwardPowerPrintEncoders(.3);
     	
     }
     

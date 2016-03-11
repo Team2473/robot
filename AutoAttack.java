@@ -39,115 +39,117 @@ public class AutoAttack {
 	 */
 	public static void run() {
 //		//Starting on Left Side of Field
-//		if(mySwitches.getTripleSwitch() == 1) {
-//			SmartDashboard.putString("DB/String 5", "Starting Side: LEFT");
-//			
-//			//Delay Time
-//			try {
-//				if(mySwitches.getFourDial() == 0) {
-//					SmartDashboard.putString("DB/String 6", "5 Second Delay");
+		if(mySwitches.getTripleSwitch() == 1) {
+			SmartDashboard.putString("DB/String 5", "Starting Side: LEFT");
+			
+			//Delay Time
+			try {
+				if(mySwitches.getFourDial() == 0) {
+					SmartDashboard.putString("DB/String 6", "5 Second Delay");
 //					Thread.sleep(5000);
-//				}
-//				else if (mySwitches.getFourDial() == 1) {
-//					SmartDashboard.putString("DB/String 6", "10 Second Delay");
+				}
+				else if (mySwitches.getFourDial() == 1) {
+					SmartDashboard.putString("DB/String 6", "10 Second Delay");
 //					Thread.sleep(10000);
-//				}
-//				else if (mySwitches.getFourDial() == 2) {
-//					SmartDashboard.putString("DB/String 6", "15 Second Delay");
+				}
+				else if (mySwitches.getFourDial() == 2) {
+					SmartDashboard.putString("DB/String 6", "15 Second Delay");
 //					Thread.sleep(15000);
-//				}
-//				else if (mySwitches.getFourDial() == 3) {
-//					SmartDashboard.putString("DB/String 6", "20 Second Delay");
+				}
+				else if (mySwitches.getFourDial() == 3) {
+					SmartDashboard.putString("DB/String 6", "20 Second Delay");
 //					Thread.sleep(20000);
-//				}
-//			}
-//			catch (Exception e) {
-//				//Do Nothing(for Thread.sleep())
-//			}
+				}
+			}
+			catch (Exception e) {
+				//Do Nothing(for Thread.sleep())
+			}
 //			
-//			//Distance To travel dependent on defense position
-//			if(mySwitches.getEightDial() == 0) {
-//				SmartDashboard.putString("DB/String 7", "Defense 0");
+			//Distance To travel dependent on defense position
+			if(mySwitches.getEightDial() == 0) {
+				SmartDashboard.putString("DB/String 7", "Defense 0");
 //				myMotor.moveForwardEncoders();
-//			}
-//			else if (mySwitches.getEightDial() == 1) {
-//				SmartDashboard.putString("DB/String 7", "Defense 1");
+			}
+			else if (mySwitches.getEightDial() == 1) {
+				SmartDashboard.putString("DB/String 7", "Defense 1");
 //				myMotor.moveForwardEncoders();
-//			}
-//			else if (mySwitches.getEightDial() == 2) {
-//				SmartDashboard.putString("DB/String 7", "Defense 2");
+			}
+			else if (mySwitches.getEightDial() == 2) {
+				SmartDashboard.putString("DB/String 7", "Defense 2");
 //				myMotor.moveForwardEncoders();
-//			}
-//			else if (mySwitches.getEightDial() == 3) {
-//				SmartDashboard.putString("DB/String 7", "Defense 3");
+			}
+			else if (mySwitches.getEightDial() == 3) {
+				SmartDashboard.putString("DB/String 7", "Defense 3");
 //				myMotor.moveForwardEncoders();
-//			}
-//			else if (mySwitches.getEightDial() == 4) {
-//				SmartDashboard.putString("DB/String 7", "Defense 4");
+			}
+			else if (mySwitches.getEightDial() == 4) {
+				SmartDashboard.putString("DB/String 7", "Defense 4");
 //				myMotor.moveForwardEncoders();
-//			}
+			}
 //			
 //			//Turn Left
 //			ninetyTurnWithGyro(LEFT);
 //			
 //			//Move Past Defense
 //			movePastDefense()
-//		}
-//		else if (mySwitches.getTripleSwitch() == 2) {
-//			SmartDashboard.putString("DB/String 5", "Starting Side: RIGHT");
-//			
-//			//Delay Time
-//			try {
-//				if(mySwitches.getFourDial() == 0) {
-//					SmartDashboard.putString("DB/String 6", "5 Second Delay");
+		}
+		else if (mySwitches.getTripleSwitch() == 2) {
+			SmartDashboard.putString("DB/String 5", "Starting Side: RIGHT");
+			
+			//Delay Time
+			try {
+				if(mySwitches.getFourDial() == 0) {
+					SmartDashboard.putString("DB/String 6", "5 Second Delay");
 //					Thread.sleep(5000);
-//				}
-//				else if (mySwitches.getFourDial() == 1) {
-//					SmartDashboard.putString("DB/String 6", "10 Second Delay");
+				}
+				else if (mySwitches.getFourDial() == 1) {
+					SmartDashboard.putString("DB/String 6", "10 Second Delay");
 //					Thread.sleep(10000);
-//				}
-//				else if (mySwitches.getFourDial() == 2) {
-//					SmartDashboard.putString("DB/String 6", "15 Second Delay");
+				}
+				else if (mySwitches.getFourDial() == 2) {
+					SmartDashboard.putString("DB/String 6", "15 Second Delay");
 //					Thread.sleep(15000);
-//				}
-//				else if (mySwitches.getFourDial() == 3) {
-//					SmartDashboard.putString("DB/String 6", "20 Second Delay");
+				}
+				else if (mySwitches.getFourDial() == 3) {
+					SmartDashboard.putString("DB/String 6", "20 Second Delay");
 //					Thread.sleep(20000);
-//				}
-//			}
-//			catch (Exception e) {
-//				//Do Nothing(for Thread.sleep())
-//			}
-//			
-//			//Distance To travel dependent on defense position
-//			if(mySwitches.getEightDial() == 0) {
-//				SmartDashboard.putString("DB/String 7", "Defense 0");
+				}
+			}
+			catch (Exception e) {
+				//Do Nothing(for Thread.sleep())
+			}
+			
+			//Distance To travel dependent on defense position
+			if(mySwitches.getEightDial() == 0) {
+				SmartDashboard.putString("DB/String 7", "Defense 0");
 //				myMotor.moveForwardEncoders();
-//			}
-//			else if (mySwitches.getEightDial() == 1) {
-//				SmartDashboard.putString("DB/String 7", "Defense 1");
+			}
+			else if (mySwitches.getEightDial() == 1) {
+				SmartDashboard.putString("DB/String 7", "Defense 1");
 //				myMotor.moveForwardEncoders();
-//			}
-//			else if (mySwitches.getEightDial() == 2) {
-//				SmartDashboard.putString("DB/String 7", "Defense 2");
+			}
+			else if (mySwitches.getEightDial() == 2) {
+				SmartDashboard.putString("DB/String 7", "Defense 2");
 //				myMotor.moveForwardEncoders();
-//			}
-//			else if (mySwitches.getEightDial() == 3) {
-//				SmartDashboard.putString("DB/String 7", "Defense 3");
+			}
+			else if (mySwitches.getEightDial() == 3) {
+				SmartDashboard.putString("DB/String 7", "Defense 3");
 //				myMotor.moveForwardEncoders();
-//			}
-//			else if (mySwitches.getEightDial() == 4) {
-//				SmartDashboard.putString("DB/String 7", "Defense 4");
+			}
+			else if (mySwitches.getEightDial() == 4) {
+				SmartDashboard.putString("DB/String 7", "Defense 4");
 //				myMotor.moveForwardEncoders();
-//			}
+			}
 //			
 //			//Turn Left
 //			ninetyTurnWithGyro(LEFT);
 //			
 //			//Move Past Defense
 //			movePastDefense()
-//		}
+		}
+		
 	}
+	
 
 	//90 Degree turn with gyroscope
 	//for input, use constants LEFT and RIGHT defined at the top of this class
