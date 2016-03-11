@@ -1,9 +1,10 @@
 package org.usfirst.frc.team2473.robot;
-import edu.wpi.first.wpilibj.AnalogInput;
+
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class SemiAuto {
 	private enum AutoState{
+		READY,
 		START,
 		UP,
 		CREST,
@@ -12,7 +13,7 @@ public class SemiAuto {
 	};
 	
 	//Current state
-	private static AutoState currentAuto = AutoState.START;
+	private static AutoState currentAuto;
 	
 	//Input
 //	public static AnalogInput ultrasonic = new AnalogInput(0); 
@@ -61,17 +62,28 @@ public class SemiAuto {
 	public static void autoLoop(){
 				
 		// Calculate outputs
-		//TODO: isDown() and isUp() should be used to restrict speed during drive
+		//TODO: isDown() and isUp() should be used to restrict speed during drive //you liar
 		
 		SmartDashboard.putString("DB/String 9", "State: " + currentAuto);
 		
 		//ADD A STATE: press button: put in ready state
 		//			   ultrasonic:   put in start state
 		
-		if(currentAuto == AutoState.START){
-			Shooter.setPosition(90);
+		if(Controller.getInstance().getRightTrigger() == 1){
+			currentAuto = AutoState.READY;
+		}		
+		else if(currentAuto == AutoState.READY){
+			if(wallDetected()){
+				currentAuto = AutoState.START;
+			}
+			else{
+				//do nothing
+			}
+		}
+		else if(currentAuto == AutoState.START){
+			Shooter.setPosition(90); //already up at start, why is this here?
 			encStart = getEnc();
-			if(getEnc() == 4606){ 															//change to encoder value
+			if(getEnc() - encStart == 4606){
 				currentAuto = AutoState.DOWN;
 			}
 			else{
@@ -88,7 +100,7 @@ public class SemiAuto {
 		}
 
 		else if(currentAuto == AutoState.CREST){
-			if(getEnc() == 6000){																//encoder value
+			if(getEnc() - encStart == 6000){																//encoder value
 				currentAuto = AutoState.UP;
 			}
 			else{
