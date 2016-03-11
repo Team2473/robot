@@ -5,10 +5,10 @@ import edu.wpi.first.wpilibj.CANTalon.FeedbackDevice;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Motor {
-	private CANTalon frontLeft;
-	private CANTalon frontRight;
-	private CANTalon backLeft;
-	private CANTalon backRight;
+	public CANTalon frontLeft;
+	public CANTalon frontRight;
+	public CANTalon backLeft;
+	public CANTalon backRight;
 
 	private CANTalon arm; // the motor to move the arm into position
 	private CANTalon winch1; // the motor to extend the arm (ALEX 3/5/2016: both winches pull the robot up lol)
@@ -114,8 +114,8 @@ public class Motor {
 
 	public void moveLeftSideMotors(double value) {
 		if (frontLeft.getControlMode() == MODE_POWER) {
-			frontLeft.set(-value*.95);
-			backLeft.set(-value*.95);
+			frontLeft.set(-value);
+			backLeft.set(-value);
 		} else if (frontLeft.getControlMode() == MODE_POSITION) {
 			frontLeft.set(value);
 			backLeft.set(3);// frontLeft integer id
@@ -164,10 +164,6 @@ public class Motor {
 
 	public double getEncoder(CANTalon motor) {
 		return motor.getPosition();
-	}
-	
-	public double getEncFL(){
-		return getEncoder(frontLeft);
 	}
 	
 	public double getEncBL(){

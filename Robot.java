@@ -22,7 +22,7 @@ public class Robot extends IterativeRobot {
      */
 	
     public void robotInit() {
-//    	Vision.getInstance().visionInit();
+    	Vision.getInstance().visionInit();
 
     }
     
@@ -62,24 +62,33 @@ public class Robot extends IterativeRobot {
 //    	SmartDashboard.putString("DB/String 0", "BR:" + Motor.getInstance().getEncBR());
 //    	SmartDashboard.putString("DB/String 1", "BL:" + Motor.getInstance().getEncBL());
 //    	SmartDashboard.putString("DB/String 6", "Winch:" + Motor.getInstance().getEncWinch());
-//    	Shooter.runLoop();
+    	Shooter.runLoop();
 //    	Shooter.printValues();
 //    	Shooter.testPot();
     	
-    	SemiAuto.autoLoop();
+//    	SemiAuto.autoLoop();
     	
 //    	SemiAuto.getEnc();
     	
-//    	Vision.getInstance().updateDashboard();
-//    	if(Vision.getInstance().reverse) {
-//    		TeleOp.runPowerReverse();
-//    	}
-//    	else {
+    	Vision.getInstance().updateDashboard();
+    	if(Vision.getInstance().reverse) {
+    		TeleOp.runPowerReverse();
+    	}
+    	else {
     		TeleOp.runPower();
-//    	}
+    	}
+    	
+    	SmartDashboard.putString("DB/String 0",
+				"FR Volt: " + Motor.getInstance().frontRight.getBusVoltage());
+    	SmartDashboard.putString("DB/String 1",
+				"FL Volt: " + Motor.getInstance().frontLeft.getBusVoltage());
+    	SmartDashboard.putString("DB/String 4",
+				"BR Volt: " + Motor.getInstance().backRight.getBusVoltage());
+    	SmartDashboard.putString("DB/String 8",
+				"BL Volt: " + Motor.getInstance().backLeft.getBusVoltage());
     	
     	//Grappler
-//    	TeleOp.runUtilities();
+    	TeleOp.runUtilities();
 
     }
     

@@ -134,7 +134,7 @@ public class SemiAuto {
 	}
 	
 	public static void encValues(){ //-6000 = cleared bar
-		SmartDashboard.putString("DB/String 0", "Enc: " + motor.getEncFL());
+		SmartDashboard.putString("DB/String 0", "Enc: " + motor.getEncBL());
 	}
 	public static void testUS(){ //6 - 25
 		SmartDashboard.putString("DB/String 1", "US: " + Telemetry.getInstance().getUltrasonicRight());    
