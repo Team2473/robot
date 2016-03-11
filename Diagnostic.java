@@ -9,9 +9,9 @@ public class Diagnostic {
 	}
 
 	public void testEverything() {
-		//controllerTest();
-		switchesTest();
-		//driveTest();
+		controllerTest();
+		//switchesTest();
+		driveTest();
 
 	}
 
@@ -121,9 +121,9 @@ public class Diagnostic {
 		while (!(Switches.getInstance().getEightDial() == 1)) {
 		}
 
-		//SmartDashboard.putString("DB/String 1", "Turn eightDial to 2");
-		//while (!(Switches.getInstance().getEightDial() == 2)) {
-		//}
+		SmartDashboard.putString("DB/String 1", "Turn eightDial to 2");
+		while (!(Switches.getInstance().getEightDial() == 2)) {
+		}
 
 		SmartDashboard.putString("DB/String 1", "Turn eightDial to 3");
 		while (!(Switches.getInstance().getEightDial() == 3)) {
@@ -183,6 +183,9 @@ public class Diagnostic {
 			e.printStackTrace();
 		}
 		
+		Motor.getInstance().frontLeft.set(0);
+		Motor.getInstance().frontRight.set(0);
+		
 		if(!(Motor.getInstance().getEncFL() < -1.0)){
 			SmartDashboard.putString("DB/String 1", "Front left motor or");
 			SmartDashboard.putString("DB/String 2", "encoder is broken");
@@ -194,6 +197,7 @@ public class Diagnostic {
 			SmartDashboard.putString("DB/String 2", "encoder is broken");
 			System.exit(0);
 		}
+		
 		
 		Motor.getInstance().resetDriveEncoders();
 		
@@ -219,6 +223,8 @@ public class Diagnostic {
 			System.exit(0);
 		}
 		
+		Motor.getInstance().backLeft.set(0);
+		Motor.getInstance().backRight.set(0);
 		
 		SmartDashboard.putString("DB/String 1", "Driver motors are working");
 		try {
