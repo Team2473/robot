@@ -8,7 +8,7 @@ public class Shooter {
 		COLLAPSED, EXTENDING, EXTENDED, COLLAPSING, RAISING, RAISED, LOWERING, FIRING
 	};
 	Telemetry myTelemetry;
-
+	
 	private String stateString(State state) {
 		switch (state) {
 		case COLLAPSED:
