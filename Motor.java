@@ -147,7 +147,7 @@ public class Motor {
 		}else{
 			arm.set(0);
 		}
-		SmartDashboard.putString("DB/String 6", "Arm: " + arm.getEncPosition());
+//		SmartDashboard.putString("DB/String 6", "Arm: " + arm.getEncPosition());
 	}
 
 	//140 is one full rotation

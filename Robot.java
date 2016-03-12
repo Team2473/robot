@@ -20,9 +20,10 @@ public class Robot extends IterativeRobot {
      * This function is run when the robot is first started up and should be
      * used for any initialization code.
      */
+	Shooter myShooter = new Shooter();
 	
     public void robotInit() {
-    	Vision.getInstance().visionInit();
+//    	Vision.getInstance().visionInit();
 
     }
     
@@ -45,9 +46,8 @@ public class Robot extends IterativeRobot {
      */
     public void teleopInit(){
 //    	Shooter.printValues();
-    	Shooter.calibration();
-    	Shooter.init();
-//    	Shooter.setPosition(180);
+    	myShooter.init();
+    	myShooter.calibration();
     }
     
     /**
@@ -62,21 +62,21 @@ public class Robot extends IterativeRobot {
 //    	SmartDashboard.putString("DB/String 0", "BR:" + Motor.getInstance().getEncBR());
 //    	SmartDashboard.putString("DB/String 1", "BL:" + Motor.getInstance().getEncBL());
 //    	SmartDashboard.putString("DB/String 6", "Winch:" + Motor.getInstance().getEncWinch());
-    	Shooter.runLoop();
+//    	Shooter.runLoop();
 //    	Shooter.printValues();
 //    	Shooter.testPot();
     	
-//    	SemiAuto.autoLoop();
+//    	SemiAuto.testUS();
+    	SemiAuto.autoLoop();
     	
-//    	SemiAuto.getEnc();
-    	
-    	Vision.getInstance().updateDashboard();
-    	if(Vision.getInstance().reverse) {
-    		TeleOp.runPowerReverse();
-    	}
-    	else {
+//    	Vision.getInstance().updateDashboard();
+//    	if(Vision.getInstance().reverse) {
+//    		TeleOp.runPowerReverse();
+//    	}
+//    	else {
     		TeleOp.runPower();
-    	}
+//    	}
+    		
 //    	TeleOp.testArm();
     	
 //    	SmartDashboard.putString("DB/String 0",
@@ -89,7 +89,7 @@ public class Robot extends IterativeRobot {
 //				"BL Volt: " + Motor.getInstance().backLeft.getOutputCurrent());
     	
     	//Grappler
-    	TeleOp.runUtilities();
+//    	TeleOp.runUtilities();
 
     }
     

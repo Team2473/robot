@@ -43,8 +43,8 @@ public class TeleOp {
 				Motor.getInstance().moveRightSideMotors(0);
 			}
 
-			SmartDashboard.putString("DB/String 6", "LY: " + leftY);
-			SmartDashboard.putString("DB/String 7", "RY: " + rightY);
+//			SmartDashboard.putString("DB/String 6", "LY: " + leftY);
+//			SmartDashboard.putString("DB/String 7", "RY: " + rightY);
 		} else {
 			SmartDashboard.putString("DB/String 0", "DRIVE MOTOR FAILURE");
 		}

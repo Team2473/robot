@@ -45,8 +45,8 @@ public class Shooter {
 	private static State currentState = State.COLLAPSED;
 	
 	// Constants
-	public static int fwdPotMax  = 505; 
-	public static int backPotMax = 420;
+	public static int fwdPotMax  = 559; //505;    DON'T GET RID OF THESE: 1ST CHASSIS VALS
+	public static int backPotMax = 465; //420;
 	
 	// Joystick Mapping
 	public static int loadButton     = 4;
@@ -91,12 +91,12 @@ public class Shooter {
 	
 	public static void moveForward(){
 		pot.changeControlMode(CANTalon.TalonControlMode.PercentVbus);
-		pot.set(0.15);
+		pot.set(0.25);
 	}
 	
 	public static void moveBackward(){ //365 pot
 		pot.changeControlMode(CANTalon.TalonControlMode.PercentVbus);
-		pot.set(-0.15);
+		pot.set(-0.25);
 	}
 	
 	public static void stop(){
@@ -363,6 +363,8 @@ public class Shooter {
 	}
 	
 	public static void setPosition(int degrees) {
+		
+		SmartDashboard.putString("DB/String 7", "Pot: " + pot.getAnalogInRaw());
 	
 		int index = 0;
 		int direction = 1; 
@@ -371,6 +373,7 @@ public class Shooter {
 		
 		//if already at currentPosition, do nothing
 		if(Math.abs(pot.getAnalogInRaw() - desiredPosition) < 5){
+			pot.set(0); //added back in
 			return;
 		}
 		// We will use direction as a multiplier, this will change the direction of setpot

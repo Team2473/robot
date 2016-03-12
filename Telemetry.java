@@ -11,8 +11,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Telemetry {
 	//Ultrasonic
-	private AnalogInput ultrasonicLeft; //Analog 0
-	private AnalogInput ultrasonicRight; //Analog 1
+	private AnalogInput ultrasonicLeft; 
+	private AnalogInput ultrasonicRight; 
 	
 	//Gyro
 	private AnalogGyro gyro;
