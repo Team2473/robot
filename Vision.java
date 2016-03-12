@@ -24,7 +24,7 @@ import edu.wpi.first.wpilibj.Timer;
 //random change
 public class Vision {
 	private static Vision vision = null;
-
+	private Controller cont = Controller.getInstance();
 	int session1;
 	int session2;
 
@@ -63,7 +63,7 @@ public class Vision {
 
 	public void updateDashboard() {
 
-		if (Controller.getInstance().getJoy2Button(3)) {
+		if (cont.getJoy2Button(3)) {
 			reverse = true;
 		} else {
 			reverse = false;

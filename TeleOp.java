@@ -9,12 +9,13 @@ public class TeleOp {
 	private static double deadZone = .02;
 	private static double maxSpeed = .23;
 	private static double currentThreshold = 1.5;
-
+	private static Controller cont = Controller.getInstance();
+	private static Motor mot = Motor.getInstance();
 	public static void runPower() {
-		if (Math.abs(Motor.getInstance().frontLeft.getOutputCurrent()
-				- Motor.getInstance().backLeft.getOutputCurrent()) < currentThreshold
-				&& Math.abs(Motor.getInstance().frontRight.getOutputCurrent()
-						- Motor.getInstance().backRight.getOutputCurrent()) < currentThreshold) {
+		if (Math.abs(mot.frontLeft.getOutputCurrent()
+				- mot.backLeft.getOutputCurrent()) < currentThreshold
+				&& Math.abs(mot.frontRight.getOutputCurrent()
+						- mot.backRight.getOutputCurrent()) < currentThreshold) {
 			if (waiting) {
 				return;
 			}
@@ -22,25 +23,25 @@ public class TeleOp {
 			if (currentMode != Motor.MODE_POWER) {
 				currentMode = Motor.MODE_POWER;
 
-				Motor.getInstance().setLeftSideMotorsMode(currentMode);
-				Motor.getInstance().setRightSideMotorsMode(currentMode);
+				mot.setLeftSideMotorsMode(currentMode);
+				mot.setRightSideMotorsMode(currentMode);
 			}
 
-			double leftY = Controller.getInstance().getYL() / Math.abs(Controller.getInstance().getYL())
-					* Math.sqrt(Math.abs(Controller.getInstance().getYL()));
-			double rightY = Controller.getInstance().getYR() / Math.abs(Controller.getInstance().getYR())
-					* Math.sqrt(Math.abs(Controller.getInstance().getYR()));
+			double leftY = cont.getYL() / Math.abs(cont.getYL())
+					* Math.sqrt(Math.abs(cont.getYL()));
+			double rightY = cont.getYR() / Math.abs(cont.getYR())
+					* Math.sqrt(Math.abs(cont.getYR()));
 
-			if (Math.abs(Controller.getInstance().getYL()) > deadZone) {
-				Motor.getInstance().moveLeftSideMotors(leftY * maxSpeed * 1.06);
+			if (Math.abs(cont.getYL()) > deadZone) {
+				mot.moveLeftSideMotors(leftY * maxSpeed * 1.06);
 			} else {
-				Motor.getInstance().moveLeftSideMotors(0);
+				mot.moveLeftSideMotors(0);
 			}
 
-			if (Math.abs(Controller.getInstance().getYR()) > deadZone) {
-				Motor.getInstance().moveRightSideMotors(rightY * maxSpeed);
+			if (Math.abs(cont.getYR()) > deadZone) {
+				mot.moveRightSideMotors(rightY * maxSpeed);
 			} else {
-				Motor.getInstance().moveRightSideMotors(0);
+				mot.moveRightSideMotors(0);
 			}
 
 			SmartDashboard.putString("DB/String 6", "LY: " + leftY);
@@ -51,35 +52,35 @@ public class TeleOp {
 	}
 
 	public static void runPowerReverse() {
-		if (Math.abs(Motor.getInstance().frontLeft.getOutputCurrent()
-				- Motor.getInstance().backLeft.getOutputCurrent()) < currentThreshold
-				&& Math.abs(Motor.getInstance().frontRight.getOutputCurrent()
-						- Motor.getInstance().backRight.getOutputCurrent()) < currentThreshold) {
+		if (Math.abs(mot.frontLeft.getOutputCurrent()
+				- mot.backLeft.getOutputCurrent()) < currentThreshold
+				&& Math.abs(mot.frontRight.getOutputCurrent()
+						- mot.backRight.getOutputCurrent()) < currentThreshold) {
 			if (waiting) {
 				return;
 			}
 			if (currentMode != Motor.MODE_POWER) {
 				currentMode = Motor.MODE_POWER;
 
-				Motor.getInstance().setLeftSideMotorsMode(currentMode);
-				Motor.getInstance().setRightSideMotorsMode(currentMode);
+				mot.setLeftSideMotorsMode(currentMode);
+				mot.setRightSideMotorsMode(currentMode);
 			}
 
-			double leftY = Controller.getInstance().getYRNeg() / Math.abs(Controller.getInstance().getYRNeg())
-					* Math.sqrt(Math.abs(Controller.getInstance().getYRNeg()));
-			double rightY = Controller.getInstance().getYLNeg() / Math.abs(Controller.getInstance().getYLNeg())
-					* Math.sqrt(Math.abs(Controller.getInstance().getYLNeg()));
+			double leftY = cont.getYRNeg() / Math.abs(cont.getYRNeg())
+					* Math.sqrt(Math.abs(cont.getYRNeg()));
+			double rightY = cont.getYLNeg() / Math.abs(cont.getYLNeg())
+					* Math.sqrt(Math.abs(cont.getYLNeg()));
 
-			if (Math.abs(Controller.getInstance().getYRNeg()) > deadZone) {
-				Motor.getInstance().moveLeftSideMotors(leftY * maxSpeed * 1.06);
+			if (Math.abs(cont.getYRNeg()) > deadZone) {
+				mot.moveLeftSideMotors(leftY * maxSpeed * 1.06);
 			} else {
-				Motor.getInstance().moveLeftSideMotors(0);
+				mot.moveLeftSideMotors(0);
 			}
 
-			if (Math.abs(Controller.getInstance().getYLNeg()) > deadZone) {
-				Motor.getInstance().moveRightSideMotors(rightY * maxSpeed);
+			if (Math.abs(cont.getYLNeg()) > deadZone) {
+				mot.moveRightSideMotors(rightY * maxSpeed);
 			} else {
-				Motor.getInstance().moveRightSideMotors(0);
+				mot.moveRightSideMotors(0);
 			}
 
 			SmartDashboard.putString("DB/String 6", "LY: " + leftY);
@@ -96,16 +97,16 @@ public class TeleOp {
 		if (currentMode != Motor.MODE_POSITION) {
 			currentMode = Motor.MODE_POSITION;
 
-			Motor.getInstance().setLeftSideMotorsMode(currentMode);
-			Motor.getInstance().setRightSideMotorsMode(currentMode);
+			mot.setLeftSideMotorsMode(currentMode);
+			mot.setRightSideMotorsMode(currentMode);
 
 			leftEnc = 0;
 			rightEnc = 0;
-			Motor.getInstance().resetDriveEncoders();
+			mot.resetDriveEncoders();
 		}
 
-		double leftY = Controller.getInstance().getYL();
-		double rightY = Controller.getInstance().getYR();
+		double leftY = cont.getYL();
+		double rightY = cont.getYR();
 
 		if (Math.abs(leftY) > deadZone) {
 			leftEnc += leftY * 75;
@@ -115,8 +116,8 @@ public class TeleOp {
 			rightEnc += rightY * 50;
 		}
 
-		Motor.getInstance().moveLeftSideMotors(leftEnc);
-		Motor.getInstance().moveRightSideMotors(rightEnc);
+		mot.moveLeftSideMotors(leftEnc);
+		mot.moveRightSideMotors(rightEnc);
 
 	}
 
@@ -124,37 +125,37 @@ public class TeleOp {
 
 	public static void runUtilities() {
 
-		if (Controller.getInstance().getJoy1Button(6)) {
+		if (cont.getJoy1Button(6)) {
 			maxSpeed = .5;
 		} else {
 			maxSpeed = .23;
 		}
 
-		if (Controller.getInstance().getJoy2Button(1)) {
+		if (cont.getJoy2Button(1)) {
 			if (currentMode != Motor.MODE_POWER) {
 				currentMode = Motor.MODE_POWER;
 
-				Motor.getInstance().setLeftSideMotorsMode(currentMode);
-				Motor.getInstance().setRightSideMotorsMode(currentMode);
+				mot.setLeftSideMotorsMode(currentMode);
+				mot.setRightSideMotorsMode(currentMode);
 			}
-			Motor.getInstance().moveLeftSideMotors(.25);
-			Motor.getInstance().moveRightSideMotors(.25);
+			mot.moveLeftSideMotors(.25);
+			mot.moveRightSideMotors(.25);
 
 			try {
 				Thread.sleep(3000);
 			} catch (InterruptedException e) {
 			}
 
-			Motor.getInstance().moveLeftSideMotors(0);
-			Motor.getInstance().moveRightSideMotors(-0.1);
+			mot.moveLeftSideMotors(0);
+			mot.moveRightSideMotors(-0.1);
 
 			try {
 				Thread.sleep(1100);
 			} catch (InterruptedException e) {
 			}
 
-			Motor.getInstance().moveLeftSideMotors(0.09);
-			Motor.getInstance().moveRightSideMotors(0.09);
+			mot.moveLeftSideMotors(0.09);
+			mot.moveRightSideMotors(0.09);
 
 			try {
 				Thread.sleep(400);
@@ -162,32 +163,32 @@ public class TeleOp {
 			}
 
 			for (int i = 0; i < 100; i++) {
-				Motor.getInstance().moveGrapplerArmMotor(260);
+				mot.moveGrapplerArmMotor(260);
 				try {
 					Thread.sleep(25);
 				} catch (InterruptedException e) {
 				}
 			}
 
-			Motor.getInstance().moveLeftSideMotors(.25);
-			Motor.getInstance().moveRightSideMotors(.25);
+			mot.moveLeftSideMotors(.25);
+			mot.moveRightSideMotors(.25);
 
 			try {
 				Thread.sleep(1000);
 			} catch (InterruptedException e) {
 			}
 
-			Motor.getInstance().moveLeftSideMotors(0.09);
-			Motor.getInstance().moveRightSideMotors(0.09);
+			mot.moveLeftSideMotors(0.09);
+			mot.moveRightSideMotors(0.09);
 
 			waiting = true;
 		}
 
-		if (Controller.getInstance().getJoy2Button(2)) {
+		if (cont.getJoy2Button(2)) {
 			for (int i = 0; i < 75; i++) {
-				Motor.getInstance().moveGrapplerArmMotor(0);
+				mot.moveGrapplerArmMotor(0);
 				if (i > 20) {
-					Motor.getInstance().moveWinchMotors(8000);
+					mot.moveWinchMotors(8000);
 				}
 				try {
 					Thread.sleep(25);
@@ -195,16 +196,16 @@ public class TeleOp {
 				}
 			}
 
-			Motor.getInstance().moveLeftSideMotors(0);
-			Motor.getInstance().moveRightSideMotors(0);
+			mot.moveLeftSideMotors(0);
+			mot.moveRightSideMotors(0);
 
 			while (true) {
-				Motor.getInstance().moveWinchMotors(8000);
-				Motor.getInstance().moveGrapplerArmMotor(-260);
+				mot.moveWinchMotors(8000);
+				mot.moveGrapplerArmMotor(-260);
 			}
 		}
 
-		if (Controller.getInstance().getJoy1Button(2)) {
+		if (cont.getJoy1Button(2)) {
 			waiting = false;
 		}
 
@@ -213,13 +214,13 @@ public class TeleOp {
 	// arm test values
 	// static int armEnc = 0;
 	// public static void testArm(){
-	// armEnc+=(Controller.getInstance().getRightTrigger())*10;
+	// armEnc+=(cont.getRightTrigger())*10;
 	//
-	// if (Controller.getInstance().getJoy1Button(1)) {
+	// if (cont.getJoy1Button(1)) {
 	// armEnc -= 5;
 	// }
-	// Motor.getInstance().moveGrapplerArmMotor(armEnc);
+	// mot.moveGrapplerArmMotor(armEnc);
 	// SmartDashboard.putString("DB/String 9", "armEnc: " +
-	// Motor.getInstance().getEncArm());
+	// mot.getEncArm());
 	// }
 }

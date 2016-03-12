@@ -59,9 +59,9 @@ public class Robot extends IterativeRobot {
      * 
      */
     public void teleopPeriodic() {
-//    	SmartDashboard.putString("DB/String 0", "BR:" + Motor.getInstance().getEncBR());
-//    	SmartDashboard.putString("DB/String 1", "BL:" + Motor.getInstance().getEncBL());
-//    	SmartDashboard.putString("DB/String 6", "Winch:" + Motor.getInstance().getEncWinch());
+//    	SmartDashboard.putString("DB/String 0", "BR:" + mot.getEncBR());
+//    	SmartDashboard.putString("DB/String 1", "BL:" + mot.getEncBL());
+//    	SmartDashboard.putString("DB/String 6", "Winch:" + mot.getEncWinch());
     	Shooter.runLoop();
 //    	Shooter.printValues();
 //    	Shooter.testPot();
@@ -80,13 +80,13 @@ public class Robot extends IterativeRobot {
 //    	TeleOp.testArm();
     	
 //    	SmartDashboard.putString("DB/String 0",
-//				"FR Volt: " + Motor.getInstance().frontRight.getOutputCurrent());
+//				"FR Volt: " + mot.frontRight.getOutputCurrent());
 //    	SmartDashboard.putString("DB/String 1",
-//				"FL Volt: " + Motor.getInstance().frontLeft.getOutputCurrent());
+//				"FL Volt: " + mot.frontLeft.getOutputCurrent());
 //    	SmartDashboard.putString("DB/String 4",
-//				"BR Volt: " + Motor.getInstance().backRight.getOutputCurrent());
+//				"BR Volt: " + mot.backRight.getOutputCurrent());
 //    	SmartDashboard.putString("DB/String 8",
-//				"BL Volt: " + Motor.getInstance().backLeft.getOutputCurrent());
+//				"BL Volt: " + mot.backLeft.getOutputCurrent());
     	
     	//Grappler
     	TeleOp.runUtilities();

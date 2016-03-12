@@ -20,6 +20,7 @@ public class SemiAuto {
 	
 	//Variables
 	public static Motor motor = Motor.getInstance();
+	public static Controller cont = Controller.getInstance();
 	public static double encStart = 0;
 	public static double encEnd = 0;
 	
@@ -69,7 +70,7 @@ public class SemiAuto {
 		//ADD A STATE: press button: put in ready state
 		//			   ultrasonic:   put in start state
 		
-		if(Controller.getInstance().getRightTrigger() == 1){
+		if(cont.getRightTrigger() == 1){
 			currentAuto = AutoState.READY;
 		}		
 		else if(currentAuto == AutoState.READY){
@@ -91,7 +92,7 @@ public class SemiAuto {
 			}
 		}
 		else if(currentAuto == AutoState.DOWN){
-			if(isDown()){																	//change to encoder value
+			if(isDown()){						//change to encoder value
 				currentAuto = AutoState.CREST;
 			}
 			else{
@@ -100,7 +101,7 @@ public class SemiAuto {
 		}
 
 		else if(currentAuto == AutoState.CREST){
-			if(getEnc() - encStart == 6000){																//encoder value
+			if(getEnc() - encStart == 6000){			//encoder value
 				currentAuto = AutoState.UP;
 			}
 			else{
@@ -130,7 +131,7 @@ public class SemiAuto {
 	}
 	
 	public static boolean hasTraveled(){
-		return encEnd - encStart == 100;											   //CHANGE, ENC TRAVELED
+		return encEnd - encStart == 100;				   //CHANGE, ENC TRAVELED
 	}
 	
 	public static void encValues(){ //-6000 = cleared bar
