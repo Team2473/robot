@@ -141,9 +141,9 @@ public class Motor {
 	//260 is pointing up, 0 is pointing level
 	public void moveGrapplerArmMotor(double encValue) {
 		if(-arm.getPosition() - encValue < -20){
-			arm.set(.32);//test constant
+			arm.set(.5);//test constant
 		}else if(-arm.getPosition() - encValue > 20){
-			arm.set(-.12);//test constant
+			arm.set(-.3);//test constant
 		}else{
 			arm.set(0);
 		}
@@ -177,6 +177,10 @@ public class Motor {
 	// 3/5/2016: Alex testing
 	public double getEncWinch(){
 		return getEncoder(winch1);
+	}
+	
+	public double getEncArm(){
+		return getEncoder(arm);
 	}
 	//
 

@@ -77,15 +77,16 @@ public class Robot extends IterativeRobot {
     	else {
     		TeleOp.runPower();
     	}
+//    	TeleOp.testArm();
     	
     	SmartDashboard.putString("DB/String 0",
-				"FR Volt: " + Motor.getInstance().frontRight.getBusVoltage());
+				"FR Volt: " + Motor.getInstance().frontRight.getOutputCurrent());
     	SmartDashboard.putString("DB/String 1",
-				"FL Volt: " + Motor.getInstance().frontLeft.getBusVoltage());
+				"FL Volt: " + Motor.getInstance().frontLeft.getOutputCurrent());
     	SmartDashboard.putString("DB/String 4",
-				"BR Volt: " + Motor.getInstance().backRight.getBusVoltage());
+				"BR Volt: " + Motor.getInstance().backRight.getOutputCurrent());
     	SmartDashboard.putString("DB/String 8",
-				"BL Volt: " + Motor.getInstance().backLeft.getBusVoltage());
+				"BL Volt: " + Motor.getInstance().backLeft.getOutputCurrent());
     	
     	//Grappler
     	TeleOp.runUtilities();

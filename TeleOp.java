@@ -185,4 +185,16 @@ private static boolean waiting = false;
 		}
 		
 	}
+	
+	//arm test values
+//	static int armEnc = 0;
+//	public static void testArm(){
+//		armEnc+=(Controller.getInstance().getRightTrigger())*10;
+//		
+//		if (Controller.getInstance().getJoy1Button(1)) {
+//			armEnc -= 5;
+//		}
+//		Motor.getInstance().moveGrapplerArmMotor(armEnc);
+//		SmartDashboard.putString("DB/String 9", "armEnc: " + Motor.getInstance().getEncArm());
+//	}
 }
