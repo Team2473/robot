@@ -64,7 +64,7 @@ public class Shooter {
 	// Initialization
 
 	public static void init() {
-//		pot.enableBrakeMode(true);
+		pot.enableBrakeMode(true);
 		pot.changeControlMode(CANTalon.TalonControlMode.PercentVbus);
 		shootR.changeControlMode(CANTalon.TalonControlMode.PercentVbus);
 		shootL.changeControlMode(CANTalon.TalonControlMode.PercentVbus);
@@ -209,62 +209,65 @@ public class Shooter {
 	
 	public static void runLoop(){
 		// Get transitions + calculate state change if needed
-		updateControlState();
-		
-		// Calculate outputs
-		if(currentState == State.COLLAPSING){
-			holdBall();
-			if(isCollapsed()){
-				currentState = State.COLLAPSED;
-			}
-			else{
-				setPosition(0);
-			}
-		}
-		else if(currentState == State.EXTENDING){
-			if(isExtended()){
-				currentState = State.EXTENDED;
-			}
-			else{
-				setPosition(180);
-			}
-		}
-		else if(currentState == State.EXTENDED){
-			if(hasBall()){
-				currentState = State.RAISING;
-			}
-			else{
-				intakeBall();
-			}
-		}
-		else if(currentState == State.RAISING){
-			if(isRaised()){
-				currentState = State.RAISED;
-			}
-			else{
+		if(SemiAuto.isOnRamp == false){
+			updateControlState();
+			
+			// Calculate outputs
+			if(currentState == State.COLLAPSING){
 				holdBall();
-				setPosition(90);
+				if(isCollapsed()){
+					currentState = State.COLLAPSED;
+				}
+				else{
+					setPosition(0);
+				}
 			}
-		}
-		else if(currentState == State.RAISED){
-			pot.set(0); //This is temporary, need to fine tune table values
-		}
-		//firing, abort shoot
-		else if(currentState == State.LOWERING){
-			if(isExtended() || abortShoot){ 
-				currentState = State.FIRING;
+			else if(currentState == State.EXTENDING){
+				if(isExtended()){
+					currentState = State.EXTENDED;
+				}
+				else{
+					setPosition(180);
+				}
 			}
-			else{
-				setPosition(180);
+			else if(currentState == State.EXTENDED){
+				if(hasBall()){
+					currentState = State.RAISING;
+				}
+				else{
+					intakeBall();
+				}
 			}
-		}
-		else if(currentState == State.FIRING){
-			if(!hasBall()){
-				currentState = State.EXTENDED;
+			//TODO: Figure out how to integrate with SemiAuto, run loop tries to reset to 90 while SemiAuto loop is running arm down
+			else if(currentState == State.RAISING){
+				if(isRaised()){
+					currentState = State.RAISED;
+				}
+				else{
+					holdBall();
+					setPosition(90);
+				}
 			}
-			else{
-				fireBall();
-				abortShoot = false;
+			else if(currentState == State.RAISED){
+				//pot.set(0); 
+			}
+			//firing, abort shoot
+			else if(currentState == State.LOWERING){
+				if(isExtended() || abortShoot){ 
+					currentState = State.FIRING;
+				}
+				else{
+					setPosition(180);
+				}
+			}
+			else if(currentState == State.FIRING){
+				if(!hasBall()){
+					currentState = State.EXTENDED;
+				}
+				else{
+					fireBall();
+					abortShoot = false;
+				}
 			}
 		}
 	}

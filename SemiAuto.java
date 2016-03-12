@@ -15,6 +15,8 @@ public class SemiAuto {
 	//Current state
 	private static AutoState currentAuto;
 	
+	public static boolean isOnRamp; 
+	
 	//Input
 //	public static AnalogInput ultrasonic = new AnalogInput(0); 
 	
@@ -69,6 +71,7 @@ public class SemiAuto {
 		
 		if(Controller.getInstance().getRightTrigger() == 1){
 			currentAuto = AutoState.READY;
+			//Shooter.setPosition(90);
 		}	
 		else if(currentAuto == AutoState.READY){
 			if(wallDetected()){
@@ -80,7 +83,8 @@ public class SemiAuto {
 			}
 		}
 		else if(currentAuto == AutoState.START){
-			if(getEnc() >= 4606 && getEnc() < 6000){
+			isOnRamp = true;
+			if(getEnc() >= 4200 && getEnc() < 6000){
 				currentAuto = AutoState.DOWN;
 			}
 			else{
@@ -97,7 +101,7 @@ public class SemiAuto {
 		}
 
 		else if(currentAuto == AutoState.CREST){
-			if(getEnc() >= 6000){                  //check this value
+			if(getEnc() >= 8000){                  //check this value (arbitrary rn)
 				currentAuto = AutoState.UP;
 			}
 			else{
@@ -105,8 +109,9 @@ public class SemiAuto {
 			}
 		}
 		else if(currentAuto == AutoState.UP){
+			isOnRamp = false;
 			if(isUp()){
-				//do nothing
+				//do nothing: should be done by now
 			}
 			else{
 				Shooter.setPosition(90);
