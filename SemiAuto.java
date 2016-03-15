@@ -101,7 +101,7 @@ public class SemiAuto {
 		}
 
 		else if(currentAuto == AutoState.CREST){
-			if(getEnc() >= 8000){                  //check this value (arbitrary rn)
+			if(getEnc() >= 8000){                  //check this value (needs tuning): Mavis thinks this is too early
 				currentAuto = AutoState.UP;
 			}
 			else{

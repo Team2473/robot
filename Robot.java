@@ -23,7 +23,7 @@ public class Robot extends IterativeRobot {
 	Shooter myShooter = new Shooter();
 	
     public void robotInit() {
-//    	Vision.getInstance().visionInit();
+    	Vision.getInstance().visionInit();
 
     }
     
@@ -62,20 +62,20 @@ public class Robot extends IterativeRobot {
 //    	SmartDashboard.putString("DB/String 0", "BR:" + Motor.getInstance().getEncBR());
 //    	SmartDashboard.putString("DB/String 1", "BL:" + Motor.getInstance().getEncBL());
 //    	SmartDashboard.putString("DB/String 6", "Winch:" + Motor.getInstance().getEncWinch());
-    	Shooter.runLoop();
+//    	Shooter.runLoop();
 //    	Shooter.printValues();
 //    	Shooter.testPot();
     	
 //    	SemiAuto.testUS();
-    	SemiAuto.autoLoop();
+//    	SemiAuto.autoLoop();
     	
-//    	Vision.getInstance().updateDashboard();
-//    	if(Vision.getInstance().reverse) {
-//    		TeleOp.runPowerReverse();
-//    	}
-//    	else {
+    	Vision.getInstance().updateDashboard();
+    	if(Vision.getInstance().reverse) {
+    		TeleOp.runPowerReverse();
+    	}
+    	else {
     		TeleOp.runPower();
-//    	}
+    	}
     		
 //    	TeleOp.testArm();
     	
@@ -89,7 +89,7 @@ public class Robot extends IterativeRobot {
 //				"BL Volt: " + Motor.getInstance().backLeft.getOutputCurrent());
     	
     	//Grappler
-//    	TeleOp.runUtilities();
+    	TeleOp.runUtilities();
 
     }
     
