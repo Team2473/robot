@@ -15,6 +15,8 @@ public class TeleOp {
 	private static double currentBR;
 	private static double currentFL;
 	private static double currentBL;
+	
+//	static Accelerometer accel = new BuiltInAccelerometer(Accelerometer.Range.k4G); 
 
 	public static void runPower() {
 //		double totalCurrent = 0;
@@ -23,22 +25,27 @@ public class TeleOp {
 //		}
 //		
 //		double motorCurrent = myPanel.getCurrent(0) +  myPanel.getCurrent(1) + myPanel.getCurrent(2) +myPanel.getCurrent(3);
-    	SmartDashboard.putString("DB/String 0",
+    	SmartDashboard.putString("DB/String 3",
 				"FR Volt: " + currentFR);
-    	SmartDashboard.putString("DB/String 1",
+    	SmartDashboard.putString("DB/String 4",
 				"BR Volt: " + currentBR);
-    	SmartDashboard.putString("DB/String 8",
+    	SmartDashboard.putString("DB/String 5",
 				"FL Volt: " + currentFL);
-    	SmartDashboard.putString("DB/String 9",
+    	SmartDashboard.putString("DB/String 6",
 				"BL Volt: " + currentBL);
     	
     	currentFR = myPanel.getCurrent(1);
     	currentBR = myPanel.getCurrent(0);
     	currentFL = myPanel.getCurrent(2);
     	currentBL = myPanel.getCurrent(3);
-    
-
-
+//    
+//    	double xVal = accel.getX();
+//    	double yVal = accel.getY();
+//    	double zVal = accel.getZ();
+//
+//    	SmartDashboard.putString("DB/String 0",	"X " + xVal);
+//    	SmartDashboard.putString("DB/String 1",	"Y " + yVal);
+//    	SmartDashboard.putString("DB/String 2",	"Z " + zVal);
     	
 		if (Controller.getInstance().getJoy1Button(6)) {
 			maxSpeed = .5;

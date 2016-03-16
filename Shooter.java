@@ -1,12 +1,20 @@
 
 package org.usfirst.frc.team2473.robot;
 
+import edu.wpi.first.wpilibj.BuiltInAccelerometer;
 import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.interfaces.Accelerometer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Shooter {
+	static double xVal;
+	static double yVal;
+	static double zVal;
+	static int newPos = 90;
+	
+	static Accelerometer accel = new BuiltInAccelerometer(Accelerometer.Range.k4G); 
 	private enum State{
 		COLLAPSED,
 		EXTENDING,
@@ -15,7 +23,8 @@ public class Shooter {
 		RAISING,
 		RAISED,
 		LOWERING,
-		FIRING
+		FIRING,
+		CROSSINGLOWBAR
 	};
 	
 	
@@ -37,6 +46,8 @@ public class Shooter {
 			return "Lowering";
 		case FIRING:
 			return "Firing";
+		case CROSSINGLOWBAR:
+			return "Crossing Low Bar";
 		}
 		
 		return "Unknown";
@@ -117,7 +128,7 @@ public class Shooter {
 			e.printStackTrace();
 		}
 		fwdPotMax = pot.getAnalogInRaw();
-		SmartDashboard.putString("DB/String 5", "fwdPotMax: " + fwdPotMax);
+//		SmartDashboard.putString("DB/String 5", "fwdPotMax: " + fwdPotMax);
 		while(pot.isRevLimitSwitchClosed()){ //when backward is not pressed
 			moveBackward();
 		}
@@ -162,13 +173,18 @@ public class Shooter {
 		return true;
 	}
 	
+	public static boolean crossingBar(){
+		currentState = State.CROSSINGLOWBAR;
+		return true;
+	}
+	
 	private static boolean hasBall(){
 		return !myTelemetry.getBreakBeam();
 	}
 	
 	private static void intakeBall(){
-		shootR.set(-0.2);
-		shootL.set(0.2);
+		shootR.set(-0.7);
+		shootL.set(0.7);
 	}
 	
 	private static void fireBall(){
@@ -205,9 +221,21 @@ public class Shooter {
 			if(currentState == State.LOWERING) abortShoot = true;
 		}
 		
+		if(Controller.getInstance().getJoy1Button(1)) {
+			crossingBar();
+		}
+		
 	}
 	
 	public static void runLoop(){
+		xVal = accel.getX();
+    	yVal = accel.getY();
+    	zVal = accel.getZ();
+
+    	SmartDashboard.putString("DB/String 0",	"X " + xVal);
+    	SmartDashboard.putString("DB/String 1",	"Y " + yVal);
+    	SmartDashboard.putString("DB/String 2",	"Z " + zVal);
+    	
 		// Get transitions + calculate state change if needed
 		if(SemiAuto.isOnRamp == false){
 			updateControlState();
@@ -268,6 +296,25 @@ public class Shooter {
 					fireBall();
 					abortShoot = false;
 				}
+			}
+			else if(currentState == State.CROSSINGLOWBAR) {
+				SmartDashboard.putString("DB/String 8",
+						"CrossingBarAgain");
+				if (Math.abs(yVal) > .05) {
+					if (yVal > 0)
+							newPos += (int)(60 * (yVal * yVal));
+					else
+						if ( newPos > 90)
+							newPos -= (int)(100 * (yVal * yVal));
+						else
+							currentState = State.RAISED;
+							newPos = 90;
+					SmartDashboard.putString("DB/String 8",
+							"RAISED");
+				}
+				SmartDashboard.putString("DB/String 9",
+						"NewPos" + newPos);
+				setPosition(newPos);
 			}
 		}
 	}

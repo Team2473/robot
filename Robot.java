@@ -62,7 +62,7 @@ public class Robot extends IterativeRobot {
 //    	SmartDashboard.putString("DB/String 0", "BR:" + Motor.getInstance().getEncBR());
 //    	SmartDashboard.putString("DB/String 1", "BL:" + Motor.getInstance().getEncBL());
 //    	SmartDashboard.putString("DB/String 6", "Winch:" + Motor.getInstance().getEncWinch());
-//    	Shooter.runLoop();
+    	Shooter.runLoop();
 //    	Shooter.printValues();
 //    	Shooter.testPot();
     	
