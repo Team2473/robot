@@ -1,6 +1,8 @@
 
 package org.usfirst.frc.team2473.robot;
 
+import java.util.Timer;
+
 import edu.wpi.first.wpilibj.BuiltInAccelerometer;
 import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.DigitalInput;
@@ -18,6 +20,8 @@ public class Shooter {
 	static boolean moving180 = false;
 	static int jumps = 0;
 	static boolean inAuto = false;
+	static long currentTime = 0;
+	static boolean startingCount = false;
 	
 	static Accelerometer accel = new BuiltInAccelerometer(Accelerometer.Range.k4G); 
 	private enum State{
@@ -29,7 +33,10 @@ public class Shooter {
 		RAISED,
 		LOWERING,
 		FIRING,
-		CROSSINGLOWBAR
+		STARTINGTOCROSSLOWBAR,
+		GOINGOVERFIRSTBUMP,
+		GOINGOVERSECONDBUMP,
+		DONECROSSING
 	};
 	
 	
@@ -51,8 +58,6 @@ public class Shooter {
 			return "Lowering";
 		case FIRING:
 			return "Firing";
-		case CROSSINGLOWBAR:
-			return "Crossing Low Bar";
 		}
 		
 		return "Unknown";
@@ -187,8 +192,8 @@ public class Shooter {
 		return true;
 	}
 	
-	public static boolean crossingBar(){
-		currentState = State.CROSSINGLOWBAR;
+	public static boolean startingToCross(){
+		currentState = State.STARTINGTOCROSSLOWBAR;
 		return true;
 	}
 	
@@ -236,7 +241,7 @@ public class Shooter {
 		}
 		
 		if(Controller.getInstance().getJoy1Button(1)) {
-			crossingBar();
+			startingToCross();
 		}
 		
 	}
@@ -259,15 +264,17 @@ public class Shooter {
 	
 	
 	public static void runLoop(){
+		SmartDashboard.putString("DB/String 9",
+				"" + myTelemetry.getUltrasonicRight());
 		currentCount++;
 		updateStalledState();
 		
 		//SmartDashboard.putString("DB/String 0",	"fwdPotMax " + fwdPotMax);
 		//SmartDashboard.putString("DB/String 1",	"currPot " + pot.getAnalogInRaw());
 		//SmartDashboard.putString("DB/String 7",	"backPotMax " + backPotMax);
-		SmartDashboard.putString("DB/String 8", "State: " + currentState);
-		SmartDashboard.putString("DB/String 9", "stalled: " + isStalled());
-		SmartDashboard.putString("DB/String 6", "currCount: " + currentCount);
+//		SmartDashboard.putString("DB/String 8", "State: " + currentState);
+//		SmartDashboard.putString("DB/String 9", "stalled: " + isStalled());
+//		SmartDashboard.putString("DB/String 6", "currCount: " + currentCount);
 		
 //		SmartDashboard.putString("DB/String 7",
 //				"" + jumps);
@@ -338,47 +345,89 @@ public class Shooter {
 					abortShoot = false;
 				}
 			}
-			else if(currentState == State.CROSSINGLOWBAR) {
+//			else if(currentState == State.CROSSINGLOWBAR) {
+//				//Tell Drive Code to stop
+//				inAuto = true;
+//				
+//				//Set Drive motors to move forward
+//				Motor.getInstance().moveLeftSideMotors(-0.2);
+//				Motor.getInstance().moveRightSideMotors(-0.2);
+//
+//				SmartDashboard.putString("DB/String 8",
+//						"CrossingBarAgain");
+//				
+//				//If the accel val is > threshold and the robot has not tipped yet
+//				if (Math.abs(yVal) > .05 && !tipped) {
+//					if ((yVal > 0))
+//						newPos += (int)(70 * (yVal * yVal));
+//						setPosition(newPos);
+//				}
+//				if (Math.abs(yVal) > .5) {
+//					jumps++;
+//				}
+//				
+//				//if you have tipped twice, you are coming down
+//				if (jumps == 2) {
+//					tipped = true;
+//				}
+//				
+//				//if you have tipped the second time, switch back to teleop and set arm to 90
+//				if (tipped) {
+//					setPosition(90);
+//					if (isRaised()) {
+//						Motor.getInstance().moveLeftSideMotors(0);
+//						Motor.getInstance().moveRightSideMotors(0);
+//						inAuto = false;
+//						currentState = State.RAISED;
+//					}
+//					SmartDashboard.putString("DB/String 9",
+//							"Setting Back to 90");
+//				} else {
+//				SmartDashboard.putString("DB/String 9",
+//						"NewPos" + newPos);
+//				}
+//			}
+			else if (currentState == State.STARTINGTOCROSSLOWBAR){
+				SmartDashboard.putString("DB/String 8",
+						"Starting to cross");
 				//Tell Drive Code to stop
 				inAuto = true;
-				
-				//Set Drive motors to move forward
+//				
+//				//Set Drive motors to move forward
 				Motor.getInstance().moveLeftSideMotors(-0.2);
 				Motor.getInstance().moveRightSideMotors(-0.2);
-
-				SmartDashboard.putString("DB/String 8",
-						"CrossingBarAgain");
 				
-				//If the accel val is > threshold and the robot has not tipped yet
-				if (Math.abs(yVal) > .05 && !tipped) {
+				//Move to next state
+				currentState = State.GOINGOVERFIRSTBUMP;
+			}
+			else if (currentState == State.GOINGOVERFIRSTBUMP){
+				SmartDashboard.putString("DB/String 8",
+						"Going over first bump");
+				//Move the arm down as you go up the ramp
+				if (Math.abs(yVal) > .05) {
 					if ((yVal > 0))
 						newPos += (int)(70 * (yVal * yVal));
 						setPosition(newPos);
 				}
-				if (Math.abs(yVal) > .5) {
-					jumps++;
+				
+				//check to see if you have crossed the bump
+				if(yVal < .1 && !startingCount && myTelemetry.getUltrasonicRight() < 27) {
+					startingCount = true;
+					currentTime = System.currentTimeMillis();
 				}
 				
-				//if you have tipped twice, you are coming down
-				if (jumps == 2) {
-					tipped = true;
-				}
-				
-				//if you have tipped the second time, switch back to teleop and set arm to 90
-				if (tipped) {
-					setPosition(90);
-					if (isRaised()) {
-						Motor.getInstance().moveLeftSideMotors(0);
-						Motor.getInstance().moveRightSideMotors(0);
-						inAuto = false;
-						currentState = State.RAISED;
+				if ((yVal < .1)) {
+					if ((System.currentTimeMillis() - currentTime) > 250){
+						currentState = State.GOINGOVERSECONDBUMP;
 					}
-					SmartDashboard.putString("DB/String 9",
-							"Setting Back to 90");
-				} else {
-				SmartDashboard.putString("DB/String 9",
-						"NewPos" + newPos);
 				}
+				else {
+					startingCount = false;
+				}
+			}
+			else if (currentState == State.GOINGOVERSECONDBUMP) {
+				SmartDashboard.putString("DB/String 8",
+						"Going over second bump");
 			}
 	}
 	
