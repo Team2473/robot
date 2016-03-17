@@ -73,6 +73,11 @@ public class Shooter {
 	public static CANTalon pot             = new CANTalon(6);
 	public static CANTalon shootR          = new CANTalon(9);
 	public static CANTalon shootL          = new CANTalon(10);
+	
+	// Run loop tracking
+	public static long currentCount = 0;
+	public static long lastChangedCount;
+	public static double prevPot;
 		
 	
 	static Telemetry myTelemetry = Telemetry.getInstance();
@@ -144,7 +149,8 @@ public class Shooter {
 			e.printStackTrace();
 		}
 		backPotMax = pot.getAnalogInRaw();
-		SmartDashboard.putString("DB/String 6", "backPotMax: " + backPotMax);
+		prevPot = backPotMax;
+		//SmartDashboard.putString("DB/String 6", "backPotMax: " + backPotMax);
 	}
 	
 	// Test method
@@ -159,6 +165,7 @@ public class Shooter {
 	public static boolean fire(){
 		if(currentState == State.RAISED || currentState == State.RAISING){
 			currentState = State.LOWERING;
+			resetStall();
 		}
 		return true;
 	}
@@ -167,6 +174,7 @@ public class Shooter {
 	public static boolean extend(){
 		if(currentState == State.COLLAPSED || currentState == State.COLLAPSING){
 			currentState = State.EXTENDING;
+			resetStall();
 		}
 		return true;
 	}
@@ -174,6 +182,7 @@ public class Shooter {
 	public static boolean collapse(){
 		if(currentState == State.EXTENDED || currentState == State.EXTENDING){
 			currentState = State.COLLAPSING;
+			resetStall();
 		}
 		return true;
 	}
@@ -232,17 +241,44 @@ public class Shooter {
 		
 	}
 	
+	private static void updateStalledState(){
+		int currentPot = pot.getAnalogInRaw();
+		if(Math.abs(currentPot - prevPot) > 2){
+			prevPot = currentPot;
+			lastChangedCount = currentCount;
+		}
+	}
+	
+	private static boolean isStalled(){
+		return (currentCount - lastChangedCount) > 23;
+	}
+	
+	private static void resetStall(){
+		lastChangedCount = currentCount;
+	}
+	
+	
 	public static void runLoop(){
-		SmartDashboard.putString("DB/String 7",
-				"" + jumps);
+		currentCount++;
+		updateStalledState();
+		
+		//SmartDashboard.putString("DB/String 0",	"fwdPotMax " + fwdPotMax);
+		//SmartDashboard.putString("DB/String 1",	"currPot " + pot.getAnalogInRaw());
+		//SmartDashboard.putString("DB/String 7",	"backPotMax " + backPotMax);
+		SmartDashboard.putString("DB/String 8", "State: " + currentState);
+		SmartDashboard.putString("DB/String 9", "stalled: " + isStalled());
+		SmartDashboard.putString("DB/String 6", "currCount: " + currentCount);
+		
+//		SmartDashboard.putString("DB/String 7",
+//				"" + jumps);
 //		SmartDashboard.putString("DB/String 7", "Pot: " + pot.getAnalogInRaw());
 		xVal = accel.getX();
     	yVal = accel.getY();
     	zVal = accel.getZ();
 
-    	SmartDashboard.putString("DB/String 0",	"X " + xVal);
-    	SmartDashboard.putString("DB/String 1",	"Y " + yVal);
-    	SmartDashboard.putString("DB/String 2",	"Z " + zVal);
+//    	SmartDashboard.putString("DB/String 0",	"X " + xVal);
+    	SmartDashboard.putString("DB/String 2",	"Y " + yVal);
+//    	SmartDashboard.putString("DB/String 2",	"Z " + zVal);
     	
 		// Get transitions + calculate state change if needed
 		if(SemiAuto.isOnRamp == false){
@@ -251,7 +287,7 @@ public class Shooter {
 			// Calculate outputs
 			if(currentState == State.COLLAPSING){
 				holdBall();
-				if(isCollapsed()){
+				if(isCollapsed() || isCollapsed()){
 					currentState = State.COLLAPSED;
 				}
 				else{
@@ -259,7 +295,7 @@ public class Shooter {
 				}
 			}
 			else if(currentState == State.EXTENDING){
-				if(isExtended()){
+				if(isExtended() || isStalled()){
 					currentState = State.EXTENDED;
 				}
 				else{
@@ -309,8 +345,8 @@ public class Shooter {
 				inAuto = true;
 				Motor.getInstance().moveLeftSideMotors(-0.2);
 				Motor.getInstance().moveRightSideMotors(-0.2);
-				SmartDashboard.putString("DB/String 8",
-						"CrossingBarAgain");
+//				SmartDashboard.putString("DB/String 8",
+//						"CrossingBarAgain");
 				if (Math.abs(yVal) > .05 && !tipped) {
 					if ((yVal > 0))
 						newPos += (int)(70 * (yVal * yVal));
