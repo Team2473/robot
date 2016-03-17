@@ -70,11 +70,13 @@ public class Robot extends IterativeRobot {
 //    	SemiAuto.autoLoop();
     	
     	Vision.getInstance().updateDashboard();
+    	if (!Shooter.inAuto){
     	if(Vision.getInstance().reverse) {
     		TeleOp.runPowerReverse();
     	}
     	else {
     		TeleOp.runPower();
+    	}
     	}
     		
 //    	TeleOp.testArm();

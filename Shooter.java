@@ -13,6 +13,11 @@ public class Shooter {
 	static double yVal;
 	static double zVal;
 	static int newPos = 90;
+	static boolean tipped = false;
+	static boolean moving90 = false;
+	static boolean moving180 = false;
+	static int jumps = 0;
+	static boolean inAuto = false;
 	
 	static Accelerometer accel = new BuiltInAccelerometer(Accelerometer.Range.k4G); 
 	private enum State{
@@ -228,6 +233,9 @@ public class Shooter {
 	}
 	
 	public static void runLoop(){
+		SmartDashboard.putString("DB/String 7",
+				"" + jumps);
+//		SmartDashboard.putString("DB/String 7", "Pot: " + pot.getAnalogInRaw());
 		xVal = accel.getX();
     	yVal = accel.getY();
     	zVal = accel.getZ();
@@ -298,23 +306,51 @@ public class Shooter {
 				}
 			}
 			else if(currentState == State.CROSSINGLOWBAR) {
+				inAuto = true;
+				Motor.getInstance().moveLeftSideMotors(-0.2);
+				Motor.getInstance().moveRightSideMotors(-0.2);
 				SmartDashboard.putString("DB/String 8",
 						"CrossingBarAgain");
-				if (Math.abs(yVal) > .05) {
-					if (yVal > 0)
-							newPos += (int)(60 * (yVal * yVal));
-					else
-						if ( newPos > 90)
-							newPos -= (int)(100 * (yVal * yVal));
-						else
-							currentState = State.RAISED;
-							newPos = 90;
-					SmartDashboard.putString("DB/String 8",
-							"RAISED");
+				if (Math.abs(yVal) > .05 && !tipped) {
+					if ((yVal > 0))
+						newPos += (int)(70 * (yVal * yVal));
+						setPosition(newPos);
 				}
+				if (Math.abs(yVal) > .5) {
+					jumps++;
+				}
+				if (jumps == 2) {
+					tipped = true;
+				}
+				if (tipped) {
+					setPosition(90);
+					if (isRaised()) {
+						Motor.getInstance().moveLeftSideMotors(0);
+						Motor.getInstance().moveRightSideMotors(0);
+						inAuto = false;
+						currentState = State.RAISED;
+					}
+					SmartDashboard.putString("DB/String 9",
+							"Setting Back to 90");
+//					setPosition(newPos);
+				} else {
 				SmartDashboard.putString("DB/String 9",
 						"NewPos" + newPos);
-				setPosition(newPos);
+				}
+//				if(Controller.getInstance().getJoy1Button(2)) {
+//					moving180 = true;
+//					SmartDashboard.putString("DB/String 8",
+//							"Moving to 180");
+//				}
+//				if(Controller.getInstance().getJoy1Button(3)) {
+//					moving90 = true;
+//					SmartDashboard.putString("DB/String 8",
+//							"Moving to 90");
+//				}
+//				if(moving90)
+//					setPosition(90);
+//				if(moving180)
+//					setPosition(180);
 			}
 		}
 	}
@@ -414,7 +450,7 @@ public class Shooter {
 	
 	public static void setPosition(int degrees) {
 		
-		SmartDashboard.putString("DB/String 7", "Pot: " + pot.getAnalogInRaw());
+//		SmartDashboard.putString("DB/String 7", "Pot: " + pot.getAnalogInRaw());
 	
 		int index = 0;
 		int direction = 1; 
