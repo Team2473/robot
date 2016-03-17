@@ -339,13 +339,17 @@ public class Shooter {
 				}
 			}
 			else if(currentState == State.CROSSINGLOWBAR) {
+				//Tell Drive Code to stop
 				inAuto = true;
+				
+				//Set Drive motors to move forward
 				Motor.getInstance().moveLeftSideMotors(-0.2);
 				Motor.getInstance().moveRightSideMotors(-0.2);
 
 				SmartDashboard.putString("DB/String 8",
 						"CrossingBarAgain");
-
+				
+				//If the accel val is > threshold and the robot has not tipped yet
 				if (Math.abs(yVal) > .05 && !tipped) {
 					if ((yVal > 0))
 						newPos += (int)(70 * (yVal * yVal));
@@ -354,9 +358,13 @@ public class Shooter {
 				if (Math.abs(yVal) > .5) {
 					jumps++;
 				}
+				
+				//if you have tipped twice, you are coming down
 				if (jumps == 2) {
 					tipped = true;
 				}
+				
+				//if you have tipped the second time, switch back to teleop and set arm to 90
 				if (tipped) {
 					setPosition(90);
 					if (isRaised()) {
@@ -367,25 +375,10 @@ public class Shooter {
 					}
 					SmartDashboard.putString("DB/String 9",
 							"Setting Back to 90");
-//					setPosition(newPos);
 				} else {
 				SmartDashboard.putString("DB/String 9",
 						"NewPos" + newPos);
 				}
-//				if(Controller.getInstance().getJoy1Button(2)) {
-//					moving180 = true;
-//					SmartDashboard.putString("DB/String 8",
-//							"Moving to 180");
-//				}
-//				if(Controller.getInstance().getJoy1Button(3)) {
-//					moving90 = true;
-//					SmartDashboard.putString("DB/String 8",
-//							"Moving to 90");
-//				}
-//				if(moving90)
-//					setPosition(90);
-//				if(moving180)
-//					setPosition(180);
 			}
 	}
 	
