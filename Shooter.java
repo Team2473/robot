@@ -278,10 +278,7 @@ public class Shooter {
 
 //    	SmartDashboard.putString("DB/String 0",	"X " + xVal);
     	SmartDashboard.putString("DB/String 2",	"Y " + yVal);
-//    	SmartDashboard.putString("DB/String 2",	"Z " + zVal);
-    	
-		// Get transitions + calculate state change if needed
-		if(SemiAuto.isOnRamp == false){
+//    	SmartDashboard.putString("DB/String 2",	"Z " + zVal); 
 			updateControlState();
 			
 			// Calculate outputs
@@ -345,8 +342,10 @@ public class Shooter {
 				inAuto = true;
 				Motor.getInstance().moveLeftSideMotors(-0.2);
 				Motor.getInstance().moveRightSideMotors(-0.2);
-//				SmartDashboard.putString("DB/String 8",
-//						"CrossingBarAgain");
+
+				SmartDashboard.putString("DB/String 8",
+						"CrossingBarAgain");
+
 				if (Math.abs(yVal) > .05 && !tipped) {
 					if ((yVal > 0))
 						newPos += (int)(70 * (yVal * yVal));
@@ -388,7 +387,6 @@ public class Shooter {
 //				if(moving180)
 //					setPosition(180);
 			}
-		}
 	}
 	
 	public static boolean isCollapsed(){

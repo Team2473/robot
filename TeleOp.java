@@ -9,63 +9,53 @@ public class TeleOp {
 	private static CANTalon.TalonControlMode currentMode = null;
 	private static double deadZone = .07;
 	private static double maxSpeed = .23;
-<<<<<<< HEAD
-	private static double currentThreshold = 1.5;
-	private static Controller cont = Controller.getInstance();
-	private static Motor mot = Motor.getInstance();
-	public static void runPower() {
-		if (Math.abs(mot.frontLeft.getOutputCurrent()
-				- mot.backLeft.getOutputCurrent()) < currentThreshold
-				&& Math.abs(mot.frontRight.getOutputCurrent()
-						- mot.backRight.getOutputCurrent()) < currentThreshold) {
-=======
 	private static double currentThreshold = 1;
 	private static PowerDistributionPanel myPanel = new PowerDistributionPanel();
 	private static double currentFR;
 	private static double currentBR;
 	private static double currentFL;
 	private static double currentBL;
-	
-//	static Accelerometer accel = new BuiltInAccelerometer(Accelerometer.Range.k4G); 
+
+	private static Controller cont = Controller.getInstance();
+	private static Motor mot = Motor.getInstance();
+
+	// static Accelerometer accel = new
+	// BuiltInAccelerometer(Accelerometer.Range.k4G);
 
 	public static void runPower() {
-//		double totalCurrent = 0;
-//		for (int i = 0; i < 15; i++){
-//			totalCurrent += myPanel.getCurrent(i);
-//		}
-//		
-//		double motorCurrent = myPanel.getCurrent(0) +  myPanel.getCurrent(1) + myPanel.getCurrent(2) +myPanel.getCurrent(3);
-    	SmartDashboard.putString("DB/String 3",
-				"FR Volt: " + currentFR);
-    	SmartDashboard.putString("DB/String 4",
-				"BR Volt: " + currentBR);
-    	SmartDashboard.putString("DB/String 5",
-				"FL Volt: " + currentFL);
-    	SmartDashboard.putString("DB/String 6",
-				"BL Volt: " + currentBL);
-    	
-    	currentFR = myPanel.getCurrent(1);
-    	currentBR = myPanel.getCurrent(0);
-    	currentFL = myPanel.getCurrent(2);
-    	currentBL = myPanel.getCurrent(3);
-//    
-//    	double xVal = accel.getX();
-//    	double yVal = accel.getY();
-//    	double zVal = accel.getZ();
-//
-//    	SmartDashboard.putString("DB/String 0",	"X " + xVal);
-//    	SmartDashboard.putString("DB/String 1",	"Y " + yVal);
-//    	SmartDashboard.putString("DB/String 2",	"Z " + zVal);
-    	
+		// double totalCurrent = 0;
+		// for (int i = 0; i < 15; i++){
+		// totalCurrent += myPanel.getCurrent(i);
+		// }
+		//
+		// double motorCurrent = myPanel.getCurrent(0) + myPanel.getCurrent(1) +
+		// myPanel.getCurrent(2) +myPanel.getCurrent(3);
+		SmartDashboard.putString("DB/String 3", "FR Volt: " + currentFR);
+		SmartDashboard.putString("DB/String 4", "BR Volt: " + currentBR);
+		SmartDashboard.putString("DB/String 5", "FL Volt: " + currentFL);
+		SmartDashboard.putString("DB/String 6", "BL Volt: " + currentBL);
+
+		currentFR = myPanel.getCurrent(1);
+		currentBR = myPanel.getCurrent(0);
+		currentFL = myPanel.getCurrent(2);
+		currentBL = myPanel.getCurrent(3);
+		//
+		// double xVal = accel.getX();
+		// double yVal = accel.getY();
+		// double zVal = accel.getZ();
+		//
+		// SmartDashboard.putString("DB/String 0", "X " + xVal);
+		// SmartDashboard.putString("DB/String 1", "Y " + yVal);
+		// SmartDashboard.putString("DB/String 2", "Z " + zVal);
+
 		if (Controller.getInstance().getJoy1Button(6)) {
 			maxSpeed = .5;
 		} else {
 			maxSpeed = .23;
 		}
-		
-		if ( currentFR < (2 * currentBR)
-				&& currentFL < (2 * currentBL) && currentBR < (2 * currentFR) && currentBL < (2 * currentFL)) {
->>>>>>> origin/Shooter
+
+		if (currentFR < (2 * currentBR) && currentFL < (2 * currentBL) && currentBR < (2 * currentFR)
+				&& currentBL < (2 * currentFL)) {
 			if (waiting) {
 				return;
 			}
@@ -77,18 +67,11 @@ public class TeleOp {
 				mot.setRightSideMotorsMode(currentMode);
 			}
 
-			double leftY = cont.getYL() / Math.abs(cont.getYL())
-					* Math.sqrt(Math.abs(cont.getYL()));
-			double rightY = cont.getYR() / Math.abs(cont.getYR())
-					* Math.sqrt(Math.abs(cont.getYR()));
+			double leftY = cont.getYL() / Math.abs(cont.getYL()) * Math.sqrt(Math.abs(cont.getYL()));
+			double rightY = cont.getYR() / Math.abs(cont.getYR()) * Math.sqrt(Math.abs(cont.getYR()));
 
-<<<<<<< HEAD
 			if (Math.abs(cont.getYL()) > deadZone) {
 				mot.moveLeftSideMotors(leftY * maxSpeed * 1.06);
-=======
-			if (Math.abs(Controller.getInstance().getYL()) > deadZone) {
-				Motor.getInstance().moveLeftSideMotors(leftY * maxSpeed * 1.05);
->>>>>>> origin/Shooter
 			} else {
 				mot.moveLeftSideMotors(0);
 			}
@@ -99,8 +82,8 @@ public class TeleOp {
 				mot.moveRightSideMotors(0);
 			}
 
-//			SmartDashboard.putString("DB/String 6", "LY: " + leftY);
-//			SmartDashboard.putString("DB/String 7", "RY: " + rightY);
+			// SmartDashboard.putString("DB/String 6", "LY: " + leftY);
+			// SmartDashboard.putString("DB/String 7", "RY: " + rightY);
 		} else {
 			SmartDashboard.putString("DB/String 0", "DRIVE MOTOR FAILURE");
 			Motor.getInstance().moveLeftSideMotors(0);
@@ -109,23 +92,24 @@ public class TeleOp {
 	}
 
 	public static void runPowerReverse() {
-<<<<<<< HEAD
-		if (Math.abs(mot.frontLeft.getOutputCurrent()
-				- mot.backLeft.getOutputCurrent()) < currentThreshold
-				&& Math.abs(mot.frontRight.getOutputCurrent()
-						- mot.backRight.getOutputCurrent()) < currentThreshold) {
-=======
+		SmartDashboard.putString("DB/String 3", "FR Volt: " + currentFR);
+		SmartDashboard.putString("DB/String 4", "BR Volt: " + currentBR);
+		SmartDashboard.putString("DB/String 5", "FL Volt: " + currentFL);
+		SmartDashboard.putString("DB/String 6", "BL Volt: " + currentBL);
+
+		currentFR = myPanel.getCurrent(1);
+		currentBR = myPanel.getCurrent(0);
+		currentFL = myPanel.getCurrent(2);
+		currentBL = myPanel.getCurrent(3);
+
 		if (Controller.getInstance().getJoy1Button(6)) {
 			maxSpeed = .5;
 		} else {
 			maxSpeed = .23;
 		}
-		
-		if (Math.abs(Motor.getInstance().frontLeft.getOutputCurrent()
-				- Motor.getInstance().backLeft.getOutputCurrent()) < currentThreshold
-				&& Math.abs(Motor.getInstance().frontRight.getOutputCurrent()
-						- Motor.getInstance().backRight.getOutputCurrent()) < currentThreshold) {
->>>>>>> origin/Shooter
+
+		if (currentFR < (2 * currentBR) && currentFL < (2 * currentBL) && currentBR < (2 * currentFR)
+				&& currentBL < (2 * currentFL)) {
 			if (waiting) {
 				return;
 			}
@@ -136,18 +120,12 @@ public class TeleOp {
 				mot.setRightSideMotorsMode(currentMode);
 			}
 
-			double leftY = cont.getYRNeg() / Math.abs(cont.getYRNeg())
-					* Math.sqrt(Math.abs(cont.getYRNeg()));
-			double rightY = cont.getYLNeg() / Math.abs(cont.getYLNeg())
-					* Math.sqrt(Math.abs(cont.getYLNeg()));
+			double leftY = cont.getYRNeg() / Math.abs(cont.getYRNeg()) * Math.sqrt(Math.abs(cont.getYRNeg()));
+			double rightY = cont.getYLNeg() / Math.abs(cont.getYLNeg()) * Math.sqrt(Math.abs(cont.getYLNeg()));
 
-<<<<<<< HEAD
 			if (Math.abs(cont.getYRNeg()) > deadZone) {
 				mot.moveLeftSideMotors(leftY * maxSpeed * 1.06);
-=======
-			if (Math.abs(Controller.getInstance().getYRNeg()) > deadZone) {
-				Motor.getInstance().moveLeftSideMotors(leftY * maxSpeed * 1.05);
->>>>>>> origin/Shooter
+
 			} else {
 				mot.moveLeftSideMotors(0);
 			}
@@ -158,8 +136,8 @@ public class TeleOp {
 				mot.moveRightSideMotors(0);
 			}
 
-//			SmartDashboard.putString("DB/String 6", "LY: " + leftY);
-//			SmartDashboard.putString("DB/String 7", "RY: " + rightY);
+			// SmartDashboard.putString("DB/String 6", "LY: " + leftY);
+			// SmartDashboard.putString("DB/String 7", "RY: " + rightY);
 		} else {
 			SmartDashboard.putString("DB/String 0", "DRIVE MOTOR FAILURE");
 			Motor.getInstance().moveLeftSideMotors(0);
@@ -201,18 +179,7 @@ public class TeleOp {
 	private static boolean waiting = false;
 
 	public static void runUtilities() {
-<<<<<<< HEAD
-
-		if (cont.getJoy1Button(6)) {
-			maxSpeed = .5;
-		} else {
-			maxSpeed = .23;
-		}
-
 		if (cont.getJoy2Button(1)) {
-=======
-		if (Controller.getInstance().getJoy2Button(1)) {
->>>>>>> origin/Shooter
 			if (currentMode != Motor.MODE_POWER) {
 				currentMode = Motor.MODE_POWER;
 
