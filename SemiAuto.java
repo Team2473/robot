@@ -15,6 +15,8 @@ public class SemiAuto {
 	//Current state
 	private static AutoState currentAuto;
 	
+	public static boolean isOnRamp; 
+	
 	//Input
 //	public static AnalogInput ultrasonic = new AnalogInput(0); 
 	
@@ -53,28 +55,28 @@ public class SemiAuto {
 	
 	
 	public static double getEnc(){
-		SmartDashboard.putString("DB/String 0", "BL: " + motor.getEncBL());
-		SmartDashboard.putString("DB/String 1", "BR: " + motor.getEncBR());
-		SmartDashboard.putString("DB/String 4", "Ultras: " + Telemetry.getInstance().getUltrasonicRight());
-
 		return motor.getEncBR();
 	}
+	
 	
 	public static void autoLoop(){
 				
 		// Calculate outputs
-		//TODO: isDown() and isUp() should be used to restrict speed during drive //you liar
+		//TODO: isDown() and isUp() should be used to restrict speed during drive //??
 		
+		
+		SmartDashboard.putString("DB/String 0", "BR: " + getEnc()); //motor.getEncBR()
+		SmartDashboard.putString("DB/String 1", "W: " + Telemetry.getInstance().getUltrasonicRight());
+		SmartDashboard.putString("DB/String 4", "ShootPos: " + Shooter.getPosition());
 		SmartDashboard.putString("DB/String 9", "State: " + currentAuto);
-		
-		//ADD A STATE: press button: put in ready state
-		//			   ultrasonic:   put in start state
 		
 		if(cont.getRightTrigger() == 1){
 			currentAuto = AutoState.READY;
-		}		
+			//Shooter.setPosition(90);
+		}	
 		else if(currentAuto == AutoState.READY){
 			if(wallDetected()){
+				Motor.getInstance().resetDriveEncoders(); // resetting encoders to 0
 				currentAuto = AutoState.START;
 			}
 			else{
@@ -82,9 +84,8 @@ public class SemiAuto {
 			}
 		}
 		else if(currentAuto == AutoState.START){
-			Shooter.setPosition(90); //already up at start, why is this here?
-			encStart = getEnc();
-			if(getEnc() - encStart == 4606){
+			isOnRamp = true;
+			if(getEnc() >= 4200 && getEnc() < 6000){
 				currentAuto = AutoState.DOWN;
 			}
 			else{
@@ -101,7 +102,11 @@ public class SemiAuto {
 		}
 
 		else if(currentAuto == AutoState.CREST){
+<<<<<<< HEAD
 			if(getEnc() - encStart == 6000){			//encoder value
+=======
+			if(getEnc() >= 8000){                  //check this value (needs tuning): Mavis thinks this is too early
+>>>>>>> origin/Shooter
 				currentAuto = AutoState.UP;
 			}
 			else{
@@ -109,8 +114,9 @@ public class SemiAuto {
 			}
 		}
 		else if(currentAuto == AutoState.UP){
+			isOnRamp = false;
 			if(isUp()){
-				currentAuto = AutoState.START;
+				//do nothing: should be done by now
 			}
 			else{
 				Shooter.setPosition(90);
@@ -119,15 +125,15 @@ public class SemiAuto {
 	}
 	
 	public static boolean isUp(){
-		return Math.abs(Shooter.getPosition() - 90) < 5;
+		return Math.abs(Shooter.getPosition() - 90) < 6.5;
 	}
 	
 	public static boolean isDown(){
-		return Math.abs(Shooter.getPosition() - 180) < 5;
+		return Math.abs(Shooter.getPosition() - 180) < 6.5;
 	}
 	
 	public static boolean wallDetected(){
-		return Telemetry.getInstance().getUltrasonicRight() > 6 && Telemetry.getInstance().getUltrasonicRight() < 26;                                        //CHANGE, ULTRASONIC VAL
+		return Telemetry.getInstance().getUltrasonicRight() > 7 && Telemetry.getInstance().getUltrasonicRight() < 22;
 	}
 	
 	public static boolean hasTraveled(){

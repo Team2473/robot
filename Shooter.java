@@ -1,12 +1,25 @@
 
 package org.usfirst.frc.team2473.robot;
 
+import edu.wpi.first.wpilibj.BuiltInAccelerometer;
 import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.interfaces.Accelerometer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Shooter {
+	static double xVal;
+	static double yVal;
+	static double zVal;
+	static int newPos = 90;
+	static boolean tipped = false;
+	static boolean moving90 = false;
+	static boolean moving180 = false;
+	static int jumps = 0;
+	static boolean inAuto = false;
+	
+	static Accelerometer accel = new BuiltInAccelerometer(Accelerometer.Range.k4G); 
 	private enum State{
 		COLLAPSED,
 		EXTENDING,
@@ -15,7 +28,8 @@ public class Shooter {
 		RAISING,
 		RAISED,
 		LOWERING,
-		FIRING
+		FIRING,
+		CROSSINGLOWBAR
 	};
 	
 	
@@ -37,6 +51,8 @@ public class Shooter {
 			return "Lowering";
 		case FIRING:
 			return "Firing";
+		case CROSSINGLOWBAR:
+			return "Crossing Low Bar";
 		}
 		
 		return "Unknown";
@@ -45,8 +61,8 @@ public class Shooter {
 	private static State currentState = State.COLLAPSED;
 	
 	// Constants
-	public static int fwdPotMax  = 505; 
-	public static int backPotMax = 420;
+	public static int fwdPotMax  = 559; //505;    DON'T GET RID OF THESE: 1ST CHASSIS VALS
+	public static int backPotMax = 465; //420;
 	
 	// Joystick Mapping
 	public static int loadButton     = 4;
@@ -64,7 +80,7 @@ public class Shooter {
 	// Initialization
 
 	public static void init() {
-//		pot.enableBrakeMode(true);
+		pot.enableBrakeMode(true);
 		pot.changeControlMode(CANTalon.TalonControlMode.PercentVbus);
 		shootR.changeControlMode(CANTalon.TalonControlMode.PercentVbus);
 		shootL.changeControlMode(CANTalon.TalonControlMode.PercentVbus);
@@ -91,12 +107,12 @@ public class Shooter {
 	
 	public static void moveForward(){
 		pot.changeControlMode(CANTalon.TalonControlMode.PercentVbus);
-		pot.set(0.15);
+		pot.set(0.25);
 	}
 	
 	public static void moveBackward(){ //365 pot
 		pot.changeControlMode(CANTalon.TalonControlMode.PercentVbus);
-		pot.set(-0.15);
+		pot.set(-0.25);
 	}
 	
 	public static void stop(){
@@ -117,7 +133,7 @@ public class Shooter {
 			e.printStackTrace();
 		}
 		fwdPotMax = pot.getAnalogInRaw();
-		SmartDashboard.putString("DB/String 5", "fwdPotMax: " + fwdPotMax);
+//		SmartDashboard.putString("DB/String 5", "fwdPotMax: " + fwdPotMax);
 		while(pot.isRevLimitSwitchClosed()){ //when backward is not pressed
 			moveBackward();
 		}
@@ -162,13 +178,18 @@ public class Shooter {
 		return true;
 	}
 	
+	public static boolean crossingBar(){
+		currentState = State.CROSSINGLOWBAR;
+		return true;
+	}
+	
 	private static boolean hasBall(){
 		return !myTelemetry.getBreakBeam();
 	}
 	
 	private static void intakeBall(){
-		shootR.set(-0.2);
-		shootL.set(0.2);
+		shootR.set(-0.7);
+		shootL.set(0.7);
 	}
 	
 	private static void fireBall(){
@@ -205,66 +226,131 @@ public class Shooter {
 			if(currentState == State.LOWERING) abortShoot = true;
 		}
 		
+		if(Controller.getInstance().getJoy1Button(1)) {
+			crossingBar();
+		}
+		
 	}
 	
 	public static void runLoop(){
+		SmartDashboard.putString("DB/String 7",
+				"" + jumps);
+//		SmartDashboard.putString("DB/String 7", "Pot: " + pot.getAnalogInRaw());
+		xVal = accel.getX();
+    	yVal = accel.getY();
+    	zVal = accel.getZ();
+
+    	SmartDashboard.putString("DB/String 0",	"X " + xVal);
+    	SmartDashboard.putString("DB/String 1",	"Y " + yVal);
+    	SmartDashboard.putString("DB/String 2",	"Z " + zVal);
+    	
 		// Get transitions + calculate state change if needed
-		updateControlState();
-		
-		// Calculate outputs
-		if(currentState == State.COLLAPSING){
-			holdBall();
-			if(isCollapsed()){
-				currentState = State.COLLAPSED;
-			}
-			else{
-				setPosition(0);
-			}
-		}
-		else if(currentState == State.EXTENDING){
-			if(isExtended()){
-				currentState = State.EXTENDED;
-			}
-			else{
-				setPosition(180);
-			}
-		}
-		else if(currentState == State.EXTENDED){
-			if(hasBall()){
-				currentState = State.RAISING;
-			}
-			else{
-				intakeBall();
-			}
-		}
-		else if(currentState == State.RAISING){
-			if(isRaised()){
-				currentState = State.RAISED;
-			}
-			else{
+		if(SemiAuto.isOnRamp == false){
+			updateControlState();
+			
+			// Calculate outputs
+			if(currentState == State.COLLAPSING){
 				holdBall();
-				setPosition(90);
+				if(isCollapsed()){
+					currentState = State.COLLAPSED;
+				}
+				else{
+					setPosition(0);
+				}
 			}
-		}
-		else if(currentState == State.RAISED){
-			pot.set(0); //This is temporary, need to fine tune table values
-		}
-		//firing, abort shoot
-		else if(currentState == State.LOWERING){
-			if(isExtended() || abortShoot){ 
-				currentState = State.FIRING;
+			else if(currentState == State.EXTENDING){
+				if(isExtended()){
+					currentState = State.EXTENDED;
+				}
+				else{
+					setPosition(180);
+				}
 			}
-			else{
-				setPosition(180);
+			else if(currentState == State.EXTENDED){
+				if(hasBall()){
+					currentState = State.RAISING;
+				}
+				else{
+					intakeBall();
+				}
 			}
-		}
-		else if(currentState == State.FIRING){
-			if(!hasBall()){
-				currentState = State.EXTENDED;
+			//TODO: Figure out how to integrate with SemiAuto, run loop tries to reset to 90 while SemiAuto loop is running arm down
+			else if(currentState == State.RAISING){
+				if(isRaised()){
+					currentState = State.RAISED;
+				}
+				else{
+					holdBall();
+					setPosition(90);
+				}
 			}
-			else{
-				fireBall();
-				abortShoot = false;
+			else if(currentState == State.RAISED){
+				//pot.set(0); 
+			}
+			//firing, abort shoot
+			else if(currentState == State.LOWERING){
+				if(isExtended() || abortShoot){ 
+					currentState = State.FIRING;
+				}
+				else{
+					setPosition(180);
+				}
+			}
+			else if(currentState == State.FIRING){
+				if(!hasBall()){
+					currentState = State.EXTENDED;
+				}
+				else{
+					fireBall();
+					abortShoot = false;
+				}
+			}
+			else if(currentState == State.CROSSINGLOWBAR) {
+				inAuto = true;
+				Motor.getInstance().moveLeftSideMotors(-0.2);
+				Motor.getInstance().moveRightSideMotors(-0.2);
+				SmartDashboard.putString("DB/String 8",
+						"CrossingBarAgain");
+				if (Math.abs(yVal) > .05 && !tipped) {
+					if ((yVal > 0))
+						newPos += (int)(70 * (yVal * yVal));
+						setPosition(newPos);
+				}
+				if (Math.abs(yVal) > .5) {
+					jumps++;
+				}
+				if (jumps == 2) {
+					tipped = true;
+				}
+				if (tipped) {
+					setPosition(90);
+					if (isRaised()) {
+						Motor.getInstance().moveLeftSideMotors(0);
+						Motor.getInstance().moveRightSideMotors(0);
+						inAuto = false;
+						currentState = State.RAISED;
+					}
+					SmartDashboard.putString("DB/String 9",
+							"Setting Back to 90");
+//					setPosition(newPos);
+				} else {
+				SmartDashboard.putString("DB/String 9",
+						"NewPos" + newPos);
+				}
+//				if(Controller.getInstance().getJoy1Button(2)) {
+//					moving180 = true;
+//					SmartDashboard.putString("DB/String 8",
+//							"Moving to 180");
+//				}
+//				if(Controller.getInstance().getJoy1Button(3)) {
+//					moving90 = true;
+//					SmartDashboard.putString("DB/String 8",
+//							"Moving to 90");
+//				}
+//				if(moving90)
+//					setPosition(90);
+//				if(moving180)
+//					setPosition(180);
 			}
 		}
 	}
@@ -363,6 +449,8 @@ public class Shooter {
 	}
 	
 	public static void setPosition(int degrees) {
+		
+//		SmartDashboard.putString("DB/String 7", "Pot: " + pot.getAnalogInRaw());
 	
 		int index = 0;
 		int direction = 1; 
@@ -371,6 +459,7 @@ public class Shooter {
 		
 		//if already at currentPosition, do nothing
 		if(Math.abs(pot.getAnalogInRaw() - desiredPosition) < 5){
+			pot.set(0); //added back in
 			return;
 		}
 		// We will use direction as a multiplier, this will change the direction of setpot

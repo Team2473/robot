@@ -20,6 +20,7 @@ public class Robot extends IterativeRobot {
      * This function is run when the robot is first started up and should be
      * used for any initialization code.
      */
+	Shooter myShooter = new Shooter();
 	
     public void robotInit() {
     	Vision.getInstance().visionInit();
@@ -45,9 +46,8 @@ public class Robot extends IterativeRobot {
      */
     public void teleopInit(){
 //    	Shooter.printValues();
-    	Shooter.calibration();
-    	Shooter.init();
-//    	Shooter.setPosition(180);
+    	myShooter.init();
+    	myShooter.calibration();
     }
     
     /**
@@ -66,17 +66,19 @@ public class Robot extends IterativeRobot {
 //    	Shooter.printValues();
 //    	Shooter.testPot();
     	
+//    	SemiAuto.testUS();
 //    	SemiAuto.autoLoop();
     	
-//    	SemiAuto.getEnc();
-    	
     	Vision.getInstance().updateDashboard();
+    	if (!Shooter.inAuto){
     	if(Vision.getInstance().reverse) {
     		TeleOp.runPowerReverse();
     	}
     	else {
     		TeleOp.runPower();
     	}
+    	}
+    		
 //    	TeleOp.testArm();
     	
 //    	SmartDashboard.putString("DB/String 0",

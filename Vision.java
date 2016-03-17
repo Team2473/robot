@@ -70,7 +70,7 @@ public class Vision {
 		}
 
 		if (!reverse) {
-			SmartDashboard.putString("DB/String 6", "Session 1 running");
+//			SmartDashboard.putString("DB/String 6", "Session 1 running");
 			// sessions 2 & 3 is no longer started
 			session2NotStarted = true;
 

@@ -94,8 +94,8 @@ public class Motor {
 			frontRight.set(value);
 			backRight.set(7);// frontRight integer id
 		}
-		SmartDashboard.putString("DB/String 2",
-				"FR: " + frontRight.getEncPosition());
+//		SmartDashboard.putString("DB/String 2",
+//				"FR: " + frontRight.getEncPosition());
 	}
 
 	public void setRightSideMotorsMode(CANTalon.TalonControlMode mode) {
@@ -120,9 +120,9 @@ public class Motor {
 			frontLeft.set(value);
 			backLeft.set(3);// frontLeft integer id
 		}
-
-		SmartDashboard.putString("DB/String 3",
-				"FL: " + frontLeft.getEncPosition());
+//
+//		SmartDashboard.putString("DB/String 3",
+//				"FL: " + frontLeft.getEncPosition());
 	}
 
 	public void setLeftSideMotorsMode(CANTalon.TalonControlMode mode) {
@@ -147,7 +147,7 @@ public class Motor {
 		}else{
 			arm.set(0);
 		}
-		SmartDashboard.putString("DB/String 6", "Arm: " + arm.getEncPosition());
+//		SmartDashboard.putString("DB/String 6", "Arm: " + arm.getEncPosition());
 	}
 
 	//140 is one full rotation
