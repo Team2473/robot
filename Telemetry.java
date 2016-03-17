@@ -24,6 +24,9 @@ public class Telemetry {
 
 	//for calculating ultrasonic values
 	private double vi = 5.0 / 512; 
+	
+	private double[] vals = new double[8];
+	private boolean firstTime = true;
 
 	private Telemetry() {
 		ultrasonicRight = new AnalogInput(0);
@@ -58,6 +61,19 @@ public class Telemetry {
 	//Returns range in in. for left ultrasonic sensor
 	public double getUltrasonicRight() {
 		return (ultrasonicRight.getVoltage() / vi);
+	}
+	
+	//Returns range in in. for left ultrasonic sensor
+	public double getAvgRight() {
+		if (firstTime) {
+			for (int i = 0; i < 8; i++) {
+				vals[i] = getUltrasonicRight();
+			}
+		}
+		else {
+			
+		}
+			
 	}
 	
 	//Prints out Gyro Angle
