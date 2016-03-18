@@ -254,33 +254,83 @@ public class Diagnostic {
 	// testing breakbeam
 	// Human interaction for testing breakbeam:
 	public boolean breakBreamTest() {
-
+		SmartDashboard.putString("DB/String 1", "Press green button to start BreakBeam test");
+		while (!Controller.getInstance().getJoy1Button(1)) {}
 		SmartDashboard.putString("DB/String 1", "Place hand in front ");
 		SmartDashboard.putString("DB/String 2", "of breakbeam");
+		while (Telemetry.getInstance().getBreakBeam()){}
+		SmartDashboard.putString("DB/String 1", "Now move hand out of breakbeam");
+		while (!Telemetry.getInstance().getBreakBeam()){}
+		
+		
+		SmartDashboard.putString("DB/String 1", "Breakbeam tests completed");
 
 		return true;
 	}
 
 	// testing grappler
 	public boolean grapplerTest() {
-
+		SmartDashboard.putString("DB/String 1", "Press green button to start grappler Test");
+		while (!Controller.getInstance().getJoy1Button(1)) {}
+		SmartDashboard.putString("DB/String 1", "The grappler arm is going to move pointing level");
+		Motor.getInstance().moveGrapplerArmMotor(0);
+		SmartDashboard.putString("DB/String 1", "Press green button if grappler arm is pointing level");
+		while (!Controller.getInstance().getJoy1Button(1)) {}
+		
+		Motor.getInstance().moveGrapplerArmMotor(259);
+		SmartDashboard.putString("DB/String 1", "Press green button if grappler arm is pointing up");
+		while (!Controller.getInstance().getJoy1Button(1)) {}
+		
+		SmartDashboard.putString("DB/String 1", "Grappler Test Finished");
+		
 		return true;
 	}
 
 	// testing gyroscope
 	// Human interaction for testing gryoscope:
-	public boolean gyroTest() {
+	//not used
+	/*public boolean gyroTest() {
 		return true;
-	}
+	}*/
 
 	// testing ultrasonic
 	public boolean ultrasonicTest() {
-
+		int rangeError = 3;
+		SmartDashboard.putString("DB/String 1", "Press green button to start ultrasonic test");
+		while (!Controller.getInstance().getJoy1Button(1)) {}
+		
+		SmartDashboard.putString("DB/String 1", "Move about 2 feet in front of right ultrasonic sensor");
+		while (Telemetry.getInstance().getUltrasonicRight() >= (24 - rangeError) && Telemetry.getInstance().getUltrasonicRight() <= (24 + rangeError)) {}
+		
+		SmartDashboard.putString("DB/String 1", "Move about 6 feet in front of right ultrasonic sensor");
+		while (Telemetry.getInstance().getUltrasonicRight() >= (72 - rangeError) && Telemetry.getInstance().getUltrasonicRight() <= (72 + rangeError)) {}
+		
+		
+		SmartDashboard.putString("DB/String 1", "Move about 12 feet in front of right ultrasonic sensor");
+		while (Telemetry.getInstance().getUltrasonicRight() >= (144 - rangeError) && Telemetry.getInstance().getUltrasonicRight() <= (144 + rangeError)) {}
+		
+		SmartDashboard.putString("DB/String 1", "Ultrasonic test finished");
 		return true;
 	}
 
 	// testing cameraFeed
 	public void cameraTest() {
-
+		SmartDashboard.putString("DB/String 1", "Press green button to start camera test");
+		while (!Controller.getInstance().getJoy1Button(1)) {}
+		
+		Vision.getInstance().updateDashboard();
+		SmartDashboard.putString("DB/String 1", "If camera feed showing, press button again");
+		while (!Controller.getInstance().getJoy1Button(1)) {}
+		
+		SmartDashboard.putString("DB/String 1", "Now the camera feed is going to reverse");
+		TeleOp.reverse = true;
+		Vision.getInstance().updateDashboard();
+		
+		SmartDashboard.putString("DB/String 1", "Camera Tests Done");
+		
+		
+		
+		
+		
 	}
 }
