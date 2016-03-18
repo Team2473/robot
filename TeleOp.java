@@ -71,7 +71,7 @@ public class TeleOp {
 			double rightY = cont.getYR() / Math.abs(cont.getYR()) * Math.sqrt(Math.abs(cont.getYR()));
 
 			if (Math.abs(cont.getYL()) > deadZone) {
-				mot.moveLeftSideMotors(leftY * maxSpeed * 1.06);
+				mot.moveLeftSideMotors(leftY * maxSpeed * 1.04);
 			} else {
 				mot.moveLeftSideMotors(0);
 			}
@@ -124,7 +124,7 @@ public class TeleOp {
 			double rightY = cont.getYLNeg() / Math.abs(cont.getYLNeg()) * Math.sqrt(Math.abs(cont.getYLNeg()));
 
 			if (Math.abs(cont.getYRNeg()) > deadZone) {
-				mot.moveLeftSideMotors(leftY * maxSpeed * 1.06);
+				mot.moveLeftSideMotors(leftY * maxSpeed * 1.04);
 
 			} else {
 				mot.moveLeftSideMotors(0);
