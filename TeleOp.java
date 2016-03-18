@@ -28,7 +28,7 @@ public class TeleOp {
 				* Math.sqrt(Math.abs(Controller.getInstance().getYR()));
 
 		if (Math.abs(Controller.getInstance().getYL()) > deadZone) {
-			Motor.getInstance().moveLeftSideMotors(leftY * maxSpeed * 1.06);
+			Motor.getInstance().moveLeftSideMotors(leftY * maxSpeed * 1.04);
 		} else {
 			Motor.getInstance().moveLeftSideMotors(0);
 		}
