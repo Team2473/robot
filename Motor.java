@@ -166,12 +166,12 @@ public class Motor {
 		return motor.getPosition();
 	}
 	
-	public double getEncBL(){
-		return getEncoder(backLeft);
+	public double getEncFL(){
+		return getEncoder(frontLeft);
 	}
 	
-	public double getEncBR(){
-		return getEncoder(backRight);
+	public double getEncFR(){
+		return getEncoder(frontRight);
 	}
 	
 	// 3/5/2016: Alex testing

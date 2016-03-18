@@ -64,17 +64,17 @@ public class Telemetry {
 	}
 	
 	//Returns range in in. for left ultrasonic sensor
-	public double getAvgRight() {
-		if (firstTime) {
-			for (int i = 0; i < 8; i++) {
-				vals[i] = getUltrasonicRight();
-			}
-		}
-		else {
-			
-		}
-			
-	}
+//	public double getAvgRight() {
+//		if (firstTime) {
+//			for (int i = 0; i < 8; i++) {
+//				vals[i] = getUltrasonicRight();
+//			}
+//		}
+//		else {
+//			
+//		}
+//			
+//	}
 	
 	//Prints out Gyro Angle
 	public void updateGyroValue () {
