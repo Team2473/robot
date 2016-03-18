@@ -265,7 +265,7 @@ public class Shooter {
 	
 	public static void runLoop(){
 		SmartDashboard.putString("DB/String 9",
-				"" + myTelemetry.getUltrasonicRight());
+				"" + myTelemetry.getAvgRight());
 		currentCount++;
 		updateStalledState();
 		
