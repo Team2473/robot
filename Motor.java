@@ -74,7 +74,7 @@ public class Motor {
 		arm.ConfigRevLimitSwitchNormallyOpen(false);
 		arm.ConfigFwdLimitSwitchNormallyOpen(false);
 		arm.enableControl();
-		moveGrapplerArmMotor(-260);
+		moveGrapplerArmMotor(-280);
 		arm.setPosition(0);
 	}
 
@@ -155,9 +155,9 @@ public class Motor {
 	// Moving the grappler arm
 	public void moveGrapplerArmMotor(double encValue) {
 		if (-arm.getPosition() - encValue < -20) {
-			arm.set(.32);// test constant
+			arm.set(.75);// test constant
 		} else if (-arm.getPosition() - encValue > 20) {
-			arm.set(-.12);// test constant
+			arm.set(-.24);// test constant
 		} else {
 			arm.set(0);
 		}

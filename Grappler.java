@@ -1,10 +1,13 @@
 package org.usfirst.frc.team2473.robot;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 public class Grappler {
 
 	private static Grappler grappler = null;
 
 	private Grappler() {
+		Motor.getInstance();
 	}
     //Gets a new instance of the grappler object (returns grappler object)
 	public static Grappler getInstance() {
@@ -24,22 +27,33 @@ public class Grappler {
 			Motor.getInstance().setLeftSideMotorsMode(Motor.MODE_POWER);
 			Motor.getInstance().setRightSideMotorsMode(Motor.MODE_POWER);
             //run at 25% of power
-			Motor.getInstance().moveLeftSideMotors(.25);
+			Motor.getInstance().moveLeftSideMotors(.27);
 			Motor.getInstance().moveRightSideMotors(.25);
 
 			try {
 				//Pause for 3 seconds
-				Thread.sleep(3000);
+				Thread.sleep(2500);
 			} catch (InterruptedException e) {
 			}
 
-			Motor.getInstance().moveLeftSideMotors(0);
-			//Accounting for the left side motors moving slightly faster than the right side motors
-			Motor.getInstance().moveRightSideMotors(-0.1);
-
+			Motor.getInstance().resetDriveEncoders();
+			Motor.getInstance().moveLeftSideMotors(-.1);
+			Motor.getInstance().moveRightSideMotors(-.1);
+			
+			while(Motor.getInstance().getEncFL() > -1000 && Motor.getInstance().getEncFR() < 1000){
+				if(Motor.getInstance().getEncFL() < -1000){
+					Motor.getInstance().moveLeftSideMotors(.09);
+				}
+				if(Motor.getInstance().getEncFR() > 1000){
+					Motor.getInstance().moveLeftSideMotors(.09);
+				}
+				SmartDashboard.putString("DB/String 0", "FL: " + Motor.getInstance().getEncFL());
+				SmartDashboard.putString("DB/String 1", "FR: " + Motor.getInstance().getEncFR());
+			}
+			
 			try {
-				//Pause for 1.1 seconds
-				Thread.sleep(1100);
+				//Pause for .2 seconds
+				Thread.sleep(200);
 			} catch (InterruptedException e) {
 			}
             //move slowly up the ramp
@@ -51,7 +65,7 @@ public class Grappler {
 				Thread.sleep(400);
 			} catch (InterruptedException e) {
 			}
-            //Slowing down the grappler (so it doesnt break)
+//            Slowing down the grappler (so it doesnt break)
 			for (int i = 0; i < 100; i++) {
 				Motor.getInstance().moveGrapplerArmMotor(260);
 				try {
@@ -60,10 +74,31 @@ public class Grappler {
 				} catch (InterruptedException e) {
 				}
 			}
+            
+			try {
+				//Pause for 0.4 seconds
+				Thread.sleep(400);
+			} catch (InterruptedException e) {
+			}
             //Move forward to catch the bar
-			Motor.getInstance().moveLeftSideMotors(.25);
+			
+			Motor.getInstance().resetDriveEncoders();
+			
+			Motor.getInstance().moveLeftSideMotors(.28);
 			Motor.getInstance().moveRightSideMotors(.25);
-
+			
+			while(Motor.getInstance().getEncFL() < 1200 && Motor.getInstance().getEncFR() > -1200){
+				if(Motor.getInstance().getEncFL() > 1200){
+					Motor.getInstance().moveLeftSideMotors(.09);
+				}
+				if(Motor.getInstance().getEncFR() < -1200){
+					Motor.getInstance().moveLeftSideMotors(.09);
+				}
+				SmartDashboard.putString("DB/String 0", "FL: " + Motor.getInstance().getEncFL());
+				SmartDashboard.putString("DB/String 1", "FR: " + Motor.getInstance().getEncFR());
+			}
+			
+			
 			try {
 				//Pause for 1 second
 				Thread.sleep(1000);
@@ -72,7 +107,7 @@ public class Grappler {
              
 			Motor.getInstance().moveLeftSideMotors(0.09);
 			Motor.getInstance().moveRightSideMotors(0.09);
-            //pause teleOP methods
+//            pause teleOP methods
 			TeleOp.waiting = true;
 		}
         //running the winch
