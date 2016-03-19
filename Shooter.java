@@ -279,9 +279,9 @@ public class Shooter {
 		//SmartDashboard.putString("DB/String 0",	"fwdPotMax " + fwdPotMax);
 		//SmartDashboard.putString("DB/String 1",	"currPot " + pot.getAnalogInRaw());
 		//SmartDashboard.putString("DB/String 7",	"backPotMax " + backPotMax);
-//		SmartDashboard.putString("DB/String 8", "State: " + currentState);
-//		SmartDashboard.putString("DB/String 9", "stalled: " + isStalled());
-//		SmartDashboard.putString("DB/String 6", "currCount: " + currentCount);
+		SmartDashboard.putString("DB/String 7", "State: " + currentState);
+		SmartDashboard.putString("DB/String 8", "stalled: " + isStalled());
+		SmartDashboard.putString("DB/String 9", "currCount: " + currentCount);
 		
 //		SmartDashboard.putString("DB/String 7",
 //				"" + jumps);
@@ -297,8 +297,8 @@ public class Shooter {
     	double roll = (Math.atan2(-fY, fZ)*180.0/Math.PI);
     	double pitch = (Math.atan2(fX, Math.sqrt(fY*fY + fZ*fZ))*180.0/Math.PI);
     	    	
-      	SmartDashboard.putString("DB/String 7",	"R:" + roll);
-    	SmartDashboard.putString("DB/String 8",	"P:" + pitch); 
+//      	SmartDashboard.putString("DB/String 7",	"R:" + roll);
+//    	SmartDashboard.putString("DB/String 8",	"P:" + pitch); 
 
     	SmartDashboard.putString("DB/String 0",	"" + stateString(currentState));
     	SmartDashboard.putString("DB/String 2",	"Y " + yVal);
