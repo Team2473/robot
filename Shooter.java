@@ -22,6 +22,7 @@ public class Shooter {
 	static boolean inAuto = false;
 	static long currentTime = 0;
 	static boolean startingCount = false;
+	static boolean goingDown = false;
 	
 	static Accelerometer accel = new BuiltInAccelerometer(Accelerometer.Range.k4G); 
 	private enum State{
@@ -74,6 +75,12 @@ public class Shooter {
 	public static int unloadButton   = 5;
 	public static boolean abortShoot = false;
 	
+	// Accelerometer
+	static double alpha = 0.5;
+	static double fX = 0;
+	static double fY = 0;
+	static double fZ = 0;
+		
 	// Input
 	public static CANTalon pot             = new CANTalon(6);
 	public static CANTalon shootR          = new CANTalon(9);
@@ -264,9 +271,9 @@ public class Shooter {
 	
 	
 	public static void runLoop(){
-		SmartDashboard.putString("DB/String 9",
-				"" + myTelemetry.getAvgRight());
-		currentCount++;
+//		SmartDashboard.putString("DB/String 9",
+//				"" + myTelemetry.getAvgRight());
+//		currentCount++;
 		updateStalledState();
 		
 		//SmartDashboard.putString("DB/String 0",	"fwdPotMax " + fwdPotMax);
@@ -282,8 +289,18 @@ public class Shooter {
 		xVal = accel.getX();
     	yVal = accel.getY();
     	zVal = accel.getZ();
+    	
+    	fX = xVal * alpha + (fX * (1-alpha)); 
+    	fY = yVal * alpha + (fY * (1-alpha)); 
+    	fZ = zVal * alpha + (fZ * (1-alpha)); 
 
-//    	SmartDashboard.putString("DB/String 0",	"X " + xVal);
+    	double roll = (Math.atan2(-fY, fZ)*180.0/Math.PI);
+    	double pitch = (Math.atan2(fX, Math.sqrt(fY*fY + fZ*fZ))*180.0/Math.PI);
+    	    	
+      	SmartDashboard.putString("DB/String 7",	"R:" + roll);
+    	SmartDashboard.putString("DB/String 8",	"P:" + pitch); 
+
+    	SmartDashboard.putString("DB/String 0",	"" + stateString(currentState));
     	SmartDashboard.putString("DB/String 2",	"Y " + yVal);
 //    	SmartDashboard.putString("DB/String 2",	"Z " + zVal); 
 			updateControlState();
@@ -390,53 +407,73 @@ public class Shooter {
 			else if (currentState == State.STARTINGTOCROSSLOWBAR){
 				SmartDashboard.putString("DB/String 8",
 						"Starting to cross");
-				//Tell Drive Code to stop
-				inAuto = true;
-//				
-//				//Set Drive motors to move forward
-				Motor.getInstance().moveLeftSideMotors(-0.2);
-				Motor.getInstance().moveRightSideMotors(-0.2);
-				
-				//Move to next state
-				currentState = State.GOINGOVERFIRSTBUMP;
-			}
-			else if (currentState == State.GOINGOVERFIRSTBUMP){
-				SmartDashboard.putString("DB/String 8",
-						"Going over first bump");
-				//Move the arm down as you go up the ramp
-				if (Math.abs(yVal) > .05) {
-					if ((yVal > 0))
-						newPos += (int)(70 * (yVal * yVal));
-						setPosition(newPos);
-				}
-				
-				//check to see if you have crossed the bump
-				if(yVal < .1 && !startingCount && myTelemetry.getUltrasonicRight() < 27) {
-					startingCount = true;
-					currentTime = System.currentTimeMillis();
-				}
-				
-				if ((yVal < .1)) {
-					if ((System.currentTimeMillis() - currentTime) > 250){
-						currentState = State.GOINGOVERSECONDBUMP;
+				if (Math.abs(roll) > 10) {
+					if (roll > 0) {
+						if (roll > 15) {
+							goingDown = true;
+						}
+					}
+					else {
+						newPos -= (roll / 2);
 					}
 				}
-				else {
-					startingCount = false;
+				if (goingDown) {
+					setPosition(90);
+					if(isRaised()) {
+						currentState = State.RAISED;
+					}
+				}else {
+					setPosition(newPos);
 				}
+				
+//				//Tell Drive Code to stop
+//				inAuto = true;
+////				
+////				//Set Drive motors to move forward
+//				Motor.getInstance().moveLeftSideMotors(-0.2);
+//				Motor.getInstance().moveRightSideMotors(-0.2);
+//				
+//				//Move to next state
+//				currentState = State.GOINGOVERFIRSTBUMP;
 			}
-			else if (currentState == State.GOINGOVERSECONDBUMP) {
-				SmartDashboard.putString("DB/String 8",
-						"Going over second bump");
-			}
+//			else if (currentState == State.GOINGOVERFIRSTBUMP){
+//				SmartDashboard.putString("DB/String 8",
+//						"Going over first bump");
+//				//Move the arm down as you go up the ramp
+//				if (Math.abs(yVal) > .05) {
+//					if ((yVal > 0))
+//						newPos += (int)(70 * (yVal * yVal));
+//						setPosition(newPos);
+//				}
+//				
+//				//check to see if you have crossed the bump
+//				if(yVal < .1 && !startingCount && myTelemetry.getAvgRight() < 27) {
+//					startingCount = true;
+//					currentTime = System.currentTimeMillis();
+//				}
+//				
+//				if ((yVal < .1)) {
+//					if ((System.currentTimeMillis() - currentTime) > 250){
+//						currentState = State.GOINGOVERSECONDBUMP;
+//					}
+//				}
+//				else {
+//					startingCount = false;
+//				}
+//			}
+//			else if (currentState == State.GOINGOVERSECONDBUMP) {
+//				SmartDashboard.putString("DB/String 8",
+//						"Going over second bump");
+//			}
 	}
 	
 	public static boolean isCollapsed(){
 		return (Math.abs(pot.getAnalogInRaw() - backPotMax) < 5);
 	}
 	
+	//this was changed
 	public static boolean isExtended(){
-		return Math.abs(pot.getAnalogInRaw() - fwdPotMax) < 5;
+		return Math.abs(pot.getAnalogInRaw() - fwdPotMax) < 10;
 	}
 	
 	public static boolean isRaised(){
