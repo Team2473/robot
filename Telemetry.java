@@ -14,7 +14,7 @@ public class Telemetry {
 	private AnalogGyro gyro;
 
 	// breakbeam
-	private static DigitalInput breakBeam;
+	private DigitalInput breakBeam;
 
 	// for calculating ultrasonic values
 	private double vi = 5.0 / 512;
@@ -30,7 +30,7 @@ public class Telemetry {
 
 		breakBeam = new DigitalInput(0);
 	}
-	
+
 	public static Telemetry getInstance() {
 		if (telemetry == null) {
 			telemetry = new Telemetry();
@@ -52,7 +52,7 @@ public class Telemetry {
 	// return (ultrasonicLeft.getVoltage() / vi);
 	// }
 
-	// Returns range in for right ultrasonic sensor
+	// Returns range in in. for left ultrasonic sensor
 	public double getUltrasonicRight() {
 		return (ultrasonicRight.getVoltage() / vi);
 	}
