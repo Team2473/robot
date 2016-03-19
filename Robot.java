@@ -69,7 +69,6 @@ public class Robot extends IterativeRobot {
 	 */
 	public void testPeriodic() {
 		LiveWindow.run();
-		Diagnostic d = new Diagnostic();
-		d.testEverything();
+		new Diagnostic().testEverything();
 	}
 }
