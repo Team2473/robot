@@ -315,18 +315,47 @@ public class Diagnostic {
 
 	// testing cameraFeed
 	public void cameraTest() {
-		SmartDashboard.putString("DB/String 1", "Press green button to start camera test");
+		SmartDashboard.putString("DB/String 1", "Press green button");
+		SmartDashboard.putString("DB/String 2", "to start camera test");
 		while (!Controller.getInstance().getJoy1Button(1)) {}
 		
 		Vision.getInstance().updateDashboard();
-		SmartDashboard.putString("DB/String 1", "If camera feed showing, press button again");
-		while (!Controller.getInstance().getJoy1Button(1)) {}
+		SmartDashboard.putString("DB/String 1", "Now the front camera");
+		SmartDashboard.putString("DB/String 2", "is going to show");
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
-		SmartDashboard.putString("DB/String 1", "Now the camera feed is going to reverse");
+		SmartDashboard.putString("DB/String 1", "Now the camera feed");
+		SmartDashboard.putString("DB/String 2", "is going to reverse");
 		TeleOp.reverse = true;
 		Vision.getInstance().updateDashboard();
 		
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		SmartDashboard.putString("DB/String 1", "Now the climbing");
+		SmartDashboard.putString("DB/String 2", "camera is showing");
+		TeleOp.reverse = false;
+		Vision.getInstance().climbing = true;
+		Vision.getInstance().updateDashboard();
+		
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		SmartDashboard.putString("DB/String 1", "Camera Tests Done");
+		SmartDashboard.putString("DB/String 2", "");
 		
 		
 		
