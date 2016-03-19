@@ -47,7 +47,7 @@ public class Robot extends IterativeRobot {
     public void teleopInit(){
 //    	Shooter.printValues();
     	myShooter.init();
-    	myShooter.calibration();
+    	//myShooter.calibration();
     }
     
     /**
@@ -69,15 +69,15 @@ public class Robot extends IterativeRobot {
 //    	SemiAuto.testUS();
 //    	SemiAuto.autoLoop();
     	
-    	Vision.getInstance().updateDashboard();
-    	if (!Shooter.inAuto){
-    	if(Vision.getInstance().reverse) {
-    		TeleOp.runPowerReverse();
-    	}
-    	else {
-    		TeleOp.runPower();
-    	}
-    	}
+//    	Vision.getInstance().updateDashboard();
+//    	if (!Shooter.inAuto){
+//    	if(Vision.getInstance().reverse) {
+//    		TeleOp.runPowerReverse();
+//    	}
+//    	else {
+//    		TeleOp.runPower();
+//    	}
+//    	}
     		
 //    	TeleOp.testArm();
     	
@@ -91,7 +91,7 @@ public class Robot extends IterativeRobot {
 //				"BL Volt: " + mot.backLeft.getOutputCurrent());
     	
     	//Grappler
-    	TeleOp.runUtilities();
+//    	TeleOp.runUtilities();
 
     }
     

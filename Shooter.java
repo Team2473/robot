@@ -105,7 +105,7 @@ public class Shooter {
 	
 	//Pot reading for positioning
 	public static void testPot(){
-		SmartDashboard.putString("DB/String 3", "" + pot.get());	
+		SmartDashboard.putString("DB/String 4", "" + pot.getAnalogInRaw());	
 		if(Controller.getInstance().getJoy1Button(2)){
 			moveBackward();
 		}
@@ -169,6 +169,15 @@ public class Shooter {
 	public static void test(){
 		setPosition(90);
 		setPosition(0);
+	}
+	
+	public static void updateLimits(){
+		if(!pot.isFwdLimitSwitchClosed()){
+			fwdPotMax = pot.getAnalogInRaw();
+		}
+		else if(!pot.isRevLimitSwitchClosed()){
+			backPotMax = pot.getAnalogInRaw();
+		}
 	}
 
 	
@@ -262,7 +271,7 @@ public class Shooter {
 	}
 	
 	private static boolean isStalled(){
-		return (currentCount - lastChangedCount) > 23;
+		return (currentCount - lastChangedCount) > 11;
 	}
 	
 	private static void resetStall(){
@@ -276,12 +285,12 @@ public class Shooter {
 //		currentCount++;
 		updateStalledState();
 		
-		//SmartDashboard.putString("DB/String 0",	"fwdPotMax " + fwdPotMax);
-		//SmartDashboard.putString("DB/String 1",	"currPot " + pot.getAnalogInRaw());
-		//SmartDashboard.putString("DB/String 7",	"backPotMax " + backPotMax);
-		SmartDashboard.putString("DB/String 7", "State: " + currentState);
-		SmartDashboard.putString("DB/String 8", "stalled: " + isStalled());
-		SmartDashboard.putString("DB/String 9", "currCount: " + currentCount);
+		SmartDashboard.putString("DB/String 0",	"fwdPotMax " + fwdPotMax);
+		SmartDashboard.putString("DB/String 1",	"currPot " + pot.getAnalogInRaw());
+		SmartDashboard.putString("DB/String 2",	"backPotMax " + backPotMax);
+//		SmartDashboard.putString("DB/String 7", "State: " + currentState);
+//		SmartDashboard.putString("DB/String 8", "stalled: " + isStalled());
+//		SmartDashboard.putString("DB/String 9", "currCount: " + currentCount);
 		
 //		SmartDashboard.putString("DB/String 7",
 //				"" + jumps);
@@ -300,10 +309,11 @@ public class Shooter {
 //      	SmartDashboard.putString("DB/String 7",	"R:" + roll);
 //    	SmartDashboard.putString("DB/String 8",	"P:" + pitch); 
 
-    	SmartDashboard.putString("DB/String 0",	"" + stateString(currentState));
-    	SmartDashboard.putString("DB/String 2",	"Y " + yVal);
+//    	SmartDashboard.putString("DB/String 0",	"" + stateString(currentState));
+//    	SmartDashboard.putString("DB/String 2",	"Y " + yVal);
 //    	SmartDashboard.putString("DB/String 2",	"Z " + zVal); 
 			updateControlState();
+			updateLimits();
 			
 			// Calculate outputs
 			if(currentState == State.COLLAPSING){
