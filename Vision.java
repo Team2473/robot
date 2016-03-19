@@ -58,7 +58,33 @@ public class Vision {
 			climbing = true;
 		}
 
-		if (!TeleOp.reverse) {
+		if (climbing) {
+			// sessions 1 & 2 is no longer started
+			session1NotStarted = true;
+			session2NotStarted = true;
+
+			// configure if session not started
+			if (session3NotStarted) {
+				// End previous sessions
+				NIVision.IMAQdxUnconfigureAcquisition(session1);
+				NIVision.IMAQdxUnconfigureAcquisition(session2);
+
+				// Configure Grab
+				NIVision.IMAQdxConfigureGrab(session3);
+
+				// start acquisition
+				NIVision.IMAQdxStartAcquisition(session3);
+
+				// session 1 is started
+				session3NotStarted = false;
+			}
+
+			// grab image
+			NIVision.IMAQdxGrab(session3, frame3, 1);
+
+			// send image to dashboard
+			CameraServer.getInstance().setImage(frame3);
+		} else if (!TeleOp.reverse) {
 			// sessions 2 & 3 is no longer started
 			session2NotStarted = true;
 			session3NotStarted = true;
@@ -88,33 +114,7 @@ public class Vision {
 			// send image to dashboard
 			CameraServer.getInstance().setImage(frame1);
 
-		} else if (climbing) {
-			// sessions 1 & 2 is no longer started
-			session1NotStarted = true;
-			session2NotStarted = true;
-
-			// configure if session not started
-			if (session3NotStarted) {
-				// End previous sessions
-				NIVision.IMAQdxUnconfigureAcquisition(session1);
-				NIVision.IMAQdxUnconfigureAcquisition(session2);
-
-				// Configure Grab
-				NIVision.IMAQdxConfigureGrab(session3);
-
-				// start acquisition
-				NIVision.IMAQdxStartAcquisition(session3);
-
-				// session 1 is started
-				session3NotStarted = false;
-			}
-
-			// grab image
-			NIVision.IMAQdxGrab(session3, frame3, 1);
-
-			// send image to dashboard
-			CameraServer.getInstance().setImage(frame3);
-		} else {
+		}else {
 			// sessions 1 & 3 is no longer started
 			session1NotStarted = true;
 			session3NotStarted = true;

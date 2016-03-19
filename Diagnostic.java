@@ -9,9 +9,13 @@ public class Diagnostic {
 	}
 
 	public void testEverything() {
-//		controllerTest();
-		//switchesTest();
-		driveTest();
+		// controllerTest();
+		// switchesTest();
+		// driveTest();
+//		cameraTest();
+//		ultrasonicTest();
+		grapplerTest();
+		
 		
 		System.exit(0);
 
@@ -75,7 +79,7 @@ public class Diagnostic {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		return true;
 
 	}
@@ -95,7 +99,8 @@ public class Diagnostic {
 		while (!(Switches.getInstance().getTripleSwitch() == -1)) {
 		}
 
-		SmartDashboard.putString("DB/String 1", "Turn the third triple switch on");
+		SmartDashboard.putString("DB/String 1",
+				"Turn the third triple switch on");
 		while (!(Switches.getInstance().getTripleSwitch() == 3)) {
 		}
 
@@ -103,7 +108,8 @@ public class Diagnostic {
 		while (!(Switches.getInstance().getTripleSwitch() == 2)) {
 		}
 
-		SmartDashboard.putString("DB/String 1", "Turn the first triple switch on");
+		SmartDashboard.putString("DB/String 1",
+				"Turn the first triple switch on");
 		while (!(Switches.getInstance().getTripleSwitch() == 1)) {
 		}
 
@@ -166,78 +172,78 @@ public class Diagnostic {
 		SmartDashboard.putString("DB/String 3", "press the green button");
 		while (!Controller.getInstance().getJoy1Button(1)) {
 		}
-		
+
 		SmartDashboard.putString("DB/String 2", "");
 		SmartDashboard.putString("DB/String 3", "");
-		
+
 		Motor.getInstance().setLeftSideMotorsMode(Motor.MODE_POWER);
 		Motor.getInstance().setRightSideMotorsMode(Motor.MODE_POWER);
-		
+
 		Motor.getInstance().resetDriveEncoders();
-		
+
 		Motor.getInstance().frontLeft.set(-.2);
 		Motor.getInstance().frontRight.set(.2);
-		
+
 		try {
 			Thread.sleep(500);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		Motor.getInstance().frontLeft.set(0);
 		Motor.getInstance().frontRight.set(0);
-		
-		if(!(Motor.getInstance().getEncFL() > 1.0)){
+
+		if (!(Motor.getInstance().getEncFL() > 1.0)) {
 			SmartDashboard.putString("DB/String 1", "Front left motor or");
 			SmartDashboard.putString("DB/String 2", "encoder is broken");
 			SmartDashboard.putString("DB/String 3", "");
 			System.exit(0);
 		}
-		
-		if(!(Motor.getInstance().getEncFR() < -1.0)){
+
+		if (!(Motor.getInstance().getEncFR() < -1.0)) {
 			SmartDashboard.putString("DB/String 1", "Front right motor or");
 			SmartDashboard.putString("DB/String 2", "encoder is broken");
 			SmartDashboard.putString("DB/String 3", "");
 			System.exit(0);
 		}
-		
+
 		try {
 			Thread.sleep(500);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		Motor.getInstance().resetDriveEncoders();
-		
+
 		Motor.getInstance().backLeft.set(-.2);
 		Motor.getInstance().backRight.set(.2);
-		
+
 		try {
 			Thread.sleep(500);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		if(!(Motor.getInstance().getEncFL() > 1.0)){
+
+		if (!(Motor.getInstance().getEncFL() > 1.0)) {
 			SmartDashboard.putString("DB/String 1", "Back left motor or");
 			SmartDashboard.putString("DB/String 2", "encoder is broken");
 			SmartDashboard.putString("DB/String 3", "");
 			System.exit(0);
 		}
-		
-		if(!(Motor.getInstance().getEncFR() < -1.0)){
+
+		if (!(Motor.getInstance().getEncFR() < -1.0)) {
 			SmartDashboard.putString("DB/String 1", "Back right motor or");
 			SmartDashboard.putString("DB/String 2", "encoder is broken");
 			SmartDashboard.putString("DB/String 3", "");
 			System.exit(0);
 		}
-		
+
 		Motor.getInstance().backLeft.set(0);
 		Motor.getInstance().backRight.set(0);
-		
+
 		SmartDashboard.putString("DB/String 1", "Driver motors are");
 		SmartDashboard.putString("DB/String 2", "working");
 		SmartDashboard.putString("DB/String 3", "");
@@ -247,22 +253,26 @@ public class Diagnostic {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		return true;
 	}
 
 	// testing breakbeam
 	// Human interaction for testing breakbeam:
 	public boolean breakBreamTest() {
-		SmartDashboard.putString("DB/String 1", "Press green button to start BreakBeam test");
-		while (!Controller.getInstance().getJoy1Button(1)) {}
+		SmartDashboard.putString("DB/String 1",
+				"Press green button to start BreakBeam test");
+		while (!Controller.getInstance().getJoy1Button(1)) {
+		}
 		SmartDashboard.putString("DB/String 1", "Place hand in front ");
 		SmartDashboard.putString("DB/String 2", "of breakbeam");
-		while (Telemetry.getInstance().getBreakBeam()){}
-		SmartDashboard.putString("DB/String 1", "Now move hand out of breakbeam");
-		while (!Telemetry.getInstance().getBreakBeam()){}
-		
-		
+		while (Telemetry.getInstance().getBreakBeam()) {
+		}
+		SmartDashboard.putString("DB/String 1",
+				"Now move hand out of breakbeam");
+		while (!Telemetry.getInstance().getBreakBeam()) {
+		}
+
 		SmartDashboard.putString("DB/String 1", "Breakbeam tests completed");
 
 		return true;
@@ -270,46 +280,85 @@ public class Diagnostic {
 
 	// testing grappler
 	public boolean grapplerTest() {
-		SmartDashboard.putString("DB/String 1", "Press green button to start grappler Test");
-		while (!Controller.getInstance().getJoy1Button(1)) {}
-		SmartDashboard.putString("DB/String 1", "The grappler arm is going to move pointing level");
-		Motor.getInstance().moveGrapplerArmMotor(0);
-		SmartDashboard.putString("DB/String 1", "Press green button if grappler arm is pointing level");
-		while (!Controller.getInstance().getJoy1Button(1)) {}
-		
-		Motor.getInstance().moveGrapplerArmMotor(259);
-		SmartDashboard.putString("DB/String 1", "Press green button if grappler arm is pointing up");
-		while (!Controller.getInstance().getJoy1Button(1)) {}
-		
+		SmartDashboard.putString("DB/String 1", "Press green button to");
+		SmartDashboard.putString("DB/String 2", "start grappler Test");
+		while (!Controller.getInstance().getJoy1Button(1)) {
+		}
+		SmartDashboard.putString("DB/String 1", "The grappler arm is");
+		SmartDashboard.putString("DB/String 2", "moving pointing level");
+		for (int i = 0; i < 200; i++) {
+			Motor.getInstance().moveGrapplerArmMotor(-290);
+			try {
+				// pausing for 15 ms
+				Thread.sleep(15);
+			} catch (InterruptedException e) {
+			}
+		}
+		Motor.getInstance().resetArmEncoders();
+		SmartDashboard.putString("DB/String 1", "The grappler arm is");
+		SmartDashboard.putString("DB/String 2", "moving pointing up");
+
+		for (int i = 0; i < 100; i++) {
+			Motor.getInstance().moveGrapplerArmMotor(250);
+			try {
+				// pausing for 15 ms
+				Thread.sleep(15);
+			} catch (InterruptedException e) {
+			}
+		}
+		SmartDashboard.putString("DB/String 1", "The grappler arm is");
+		SmartDashboard.putString("DB/String 2", "moving pointing level");
+		for (int i = 0; i < 200; i++) {
+			Motor.getInstance().moveGrapplerArmMotor(0);
+			try {
+				// pausing for 15 ms
+				Thread.sleep(15);
+			} catch (InterruptedException e) {
+			}
+		}
+
 		SmartDashboard.putString("DB/String 1", "Grappler Test Finished");
-		
+		SmartDashboard.putString("DB/String 2", "");
+
 		return true;
 	}
 
 	// testing gyroscope
 	// Human interaction for testing gryoscope:
-	//not used
-	/*public boolean gyroTest() {
-		return true;
-	}*/
+	// not used
+	/*
+	 * public boolean gyroTest() { return true; }
+	 */
 
 	// testing ultrasonic
 	public boolean ultrasonicTest() {
-		int rangeError = 3;
-		SmartDashboard.putString("DB/String 1", "Press green button to start ultrasonic test");
-		while (!Controller.getInstance().getJoy1Button(1)) {}
-		
-		SmartDashboard.putString("DB/String 1", "Move about 2 feet in front of right ultrasonic sensor");
-		while (Telemetry.getInstance().getUltrasonicRight() >= (24 - rangeError) && Telemetry.getInstance().getUltrasonicRight() <= (24 + rangeError)) {}
-		
-		SmartDashboard.putString("DB/String 1", "Move about 6 feet in front of right ultrasonic sensor");
-		while (Telemetry.getInstance().getUltrasonicRight() >= (72 - rangeError) && Telemetry.getInstance().getUltrasonicRight() <= (72 + rangeError)) {}
-		
-		
-		SmartDashboard.putString("DB/String 1", "Move about 12 feet in front of right ultrasonic sensor");
-		while (Telemetry.getInstance().getUltrasonicRight() >= (144 - rangeError) && Telemetry.getInstance().getUltrasonicRight() <= (144 + rangeError)) {}
-		
-		SmartDashboard.putString("DB/String 1", "Ultrasonic test finished");
+		int rangeError = 1;
+		SmartDashboard.putString("DB/String 1", "Press green button to");
+		SmartDashboard.putString("DB/String 2", "start ultrasonic test");
+		while (!Controller.getInstance().getJoy1Button(1)) {
+			Telemetry.getInstance().updateUltrasonicValue();
+		}
+
+		SmartDashboard.putString("DB/String 1", "Move 6 inches in front");
+		SmartDashboard.putString("DB/String 2", "of ultrasonic sensor");
+		while (Telemetry.getInstance().getAvgRight() <= (6 - rangeError)
+				|| Telemetry.getInstance().getAvgRight() >= (6 + rangeError)) {
+			Telemetry.getInstance().updateUltrasonicValue();
+		}
+
+		SmartDashboard.putString("DB/String 1", "Move 1 foot in front");
+		SmartDashboard.putString("DB/String 2", "of ultrasonic sensor");
+		while (Telemetry.getInstance().getAvgRight() <= (12 - rangeError)
+				|| Telemetry.getInstance().getAvgRight() >= (12 + rangeError)) {
+			Telemetry.getInstance().updateUltrasonicValue();
+		}
+
+		SmartDashboard.putString("DB/String 1", "U.S. test finished");
+		SmartDashboard.putString("DB/String 2", "");
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+		}
 		return true;
 	}
 
@@ -317,49 +366,46 @@ public class Diagnostic {
 	public void cameraTest() {
 		SmartDashboard.putString("DB/String 1", "Press green button");
 		SmartDashboard.putString("DB/String 2", "to start camera test");
-		while (!Controller.getInstance().getJoy1Button(1)) {}
-		
-		Vision.getInstance().updateDashboard();
+		while (!Controller.getInstance().getJoy1Button(1)) {
+		}
+
 		SmartDashboard.putString("DB/String 1", "Now the front camera");
 		SmartDashboard.putString("DB/String 2", "is going to show");
-		try {
-			Thread.sleep(1000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		for (int i = 0; i < 30; i++) {
+			Vision.getInstance().updateDashboard();
+			try {
+				Thread.sleep(20);
+			} catch (InterruptedException e) {
+			}
 		}
-		
+
 		SmartDashboard.putString("DB/String 1", "Now the camera feed");
 		SmartDashboard.putString("DB/String 2", "is going to reverse");
 		TeleOp.reverse = true;
-		Vision.getInstance().updateDashboard();
-		
-		try {
-			Thread.sleep(1000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+
+		for (int i = 0; i < 30; i++) {
+			Vision.getInstance().updateDashboard();
+			try {
+				Thread.sleep(20);
+			} catch (InterruptedException e) {
+			}
 		}
-		
+
 		SmartDashboard.putString("DB/String 1", "Now the climbing");
 		SmartDashboard.putString("DB/String 2", "camera is showing");
 		TeleOp.reverse = false;
 		Vision.getInstance().climbing = true;
-		Vision.getInstance().updateDashboard();
-		
-		try {
-			Thread.sleep(1000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+
+		for (int i = 0; i < 30; i++) {
+			Vision.getInstance().updateDashboard();
+			try {
+				Thread.sleep(20);
+			} catch (InterruptedException e) {
+			}
 		}
-		
+
 		SmartDashboard.putString("DB/String 1", "Camera Tests Done");
 		SmartDashboard.putString("DB/String 2", "");
-		
-		
-		
-		
-		
+
 	}
 }

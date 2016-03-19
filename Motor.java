@@ -201,6 +201,10 @@ public class Motor {
 		backRight.setPosition(0);
 	}
 	
+	public void resetArmEncoders(){
+		arm.setPosition(0);
+	}
+	
 	// create additional move methods using the below format
 	/*
 	 * public void moveSAMPLE_MOTORMotors(ControlMode mode, int value) {
