@@ -278,6 +278,13 @@ public class Shooter {
 		lastChangedCount = currentCount;
 	}
 	
+	private static boolean checkStallCurr(){
+		if(pot.getOutputCurrent() >= 5){
+			return true;
+		}
+		return false;
+	}
+	
 	
 	public static void runLoop(){
 //		SmartDashboard.putString("DB/String 9",
@@ -288,6 +295,8 @@ public class Shooter {
 		SmartDashboard.putString("DB/String 0",	"fwdPotMax " + fwdPotMax);
 		SmartDashboard.putString("DB/String 1",	"currPot " + pot.getAnalogInRaw());
 		SmartDashboard.putString("DB/String 2",	"backPotMax " + backPotMax);
+		SmartDashboard.putString("DB/String 3",	"current: " + pot.getOutputCurrent());
+		SmartDashboard.putString("DB/String 4",	"stallCurrent: " + checkStallCurr());
 //		SmartDashboard.putString("DB/String 7", "State: " + currentState);
 //		SmartDashboard.putString("DB/String 8", "stalled: " + isStalled());
 //		SmartDashboard.putString("DB/String 9", "currCount: " + currentCount);
