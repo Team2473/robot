@@ -131,7 +131,8 @@ public class Grappler {
 
 			while (true) {
 				Motor.getInstance().moveWinchMotors(8000);
-//				Motor.getInstance().moveGrapplerArmMotor(-260);
+				//(19 March: the grappler arm needs to only come down half / quarter way, instead of running all the way to limit switch)
+				Motor.getInstance().moveGrapplerArmMotor(-260);
 			}
 		}
 	}
