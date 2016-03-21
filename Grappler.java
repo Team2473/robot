@@ -131,7 +131,7 @@ public class Grappler {
 
 			while (true) {
 				Motor.getInstance().moveWinchMotors(8000);
-				Motor.getInstance().moveGrapplerArmMotor(-260);
+//				Motor.getInstance().moveGrapplerArmMotor(-260);
 			}
 		}
 	}
