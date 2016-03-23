@@ -21,7 +21,7 @@ import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.SampleRobot;
 import edu.wpi.first.wpilibj.Timer;
 
-//random change
+//random change made
 public class Vision {
 	private static Vision vision = null;
 	private Controller cont = Controller.getInstance();
