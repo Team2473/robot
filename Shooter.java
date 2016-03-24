@@ -98,9 +98,7 @@ public class Shooter {
 	// Initialization
 
 	public static void init() {
-	
-		Logger.log("Test");
-		
+				
 		pot.enableBrakeMode(true);
 		pot.changeControlMode(CANTalon.TalonControlMode.PercentVbus);
 		shootR.changeControlMode(CANTalon.TalonControlMode.PercentVbus);
@@ -241,6 +239,11 @@ public class Shooter {
 	}
 	
 	private static void updateControlState(){
+		
+		if(stalled){
+			return; //not updating controller state while stalled
+		}
+		
 		//get status of extend button
 		if(Controller.getInstance().getJoy1Button(5)){
 			extend();
@@ -281,7 +284,7 @@ public class Shooter {
 	}
 	
 	private static boolean checkStallCurr(){ //USE THIS ONE
-		if(Controller.getInstance().getJoy1Button(6) || pot.getOutputCurrent() >= 5){
+		if(Controller.getInstance().getJoy1Button(4) || pot.getOutputCurrent() >= 5){
 			return true;
 		}
 		return false;
@@ -290,9 +293,16 @@ public class Shooter {
 	
 	public static void runLoop(){
 		
-		if(checkStallCurr()){
-			SmartDashboard.putString("DB/String 7",	"Stalled: " + checkStallCurr());
+		
+		if(!stalled && checkStallCurr()){
+			
+			Logger.getInstance().logInfo("Stalled");
 			stalled = true;
+			if(extending){collapsed};
+			else if(lowering){raising};
+			else if// everything here, see whiteboard pic
+			//reminder to log everything (debug)
+		
 		}
 		
 //		SmartDashboard.putString("DB/String 9", "" + myTelemetry.getAvgRight());
@@ -336,14 +346,19 @@ public class Shooter {
 				holdBall();
 				if(isCollapsed() || isCollapsed()){
 					currentState = State.COLLAPSED;
+					stalled = false;
 				}
 				else{
 					setPosition(0);
 				}
 			}
 			else if(currentState == State.EXTENDING){
-				if(isExtended()){ //took out  || isStalled()
+				if(stalled){
+					currentState = State.COLLAPSING;
+				}
+				else if(isExtended()){ //took out  || isStalled()
 					currentState = State.EXTENDED;
+					stalled = false;
 				}
 				else{
 					setPosition(180);
@@ -361,6 +376,7 @@ public class Shooter {
 			else if(currentState == State.RAISING){
 				if(isRaised()){
 					currentState = State.RAISED;
+					stalled = false;
 				}
 				else{
 					holdBall();
@@ -384,6 +400,7 @@ public class Shooter {
 			else if(currentState == State.FIRING){
 				if(!hasBall()){
 					currentState = State.EXTENDED;
+					stalled = false;
 				}
 				else{
 					fireBall();
@@ -434,7 +451,7 @@ public class Shooter {
 //			}
 			else if (currentState == State.STARTINGTOCROSSLOWBAR){
 				crossingBar = true;
-		    	Logger.log("Roll(" + roll + ")");
+		    	Logger.getInstance().logDebug("Roll(" + roll + ")");
 				SmartDashboard.putString("DB/String 8",
 						"Starting to cross");
 				if (Math.abs(roll) > 10) {

@@ -1,9 +1,9 @@
 package org.usfirst.frc.team2473.robot;
 
+import org.usfirst.frc.team2473.robot.Logger.LogLevel;
+
 import edu.wpi.first.wpilibj.*;
-
 import edu.wpi.first.wpilibj.CANTalon.FeedbackDevice;
-
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -23,6 +23,8 @@ public class Robot extends IterativeRobot {
 	Shooter myShooter = new Shooter();
 	
     public void robotInit() {
+    	//Setting log level to debug
+    	Logger.getInstance().logLevel = LogLevel.Debug;
     	Vision.getInstance().visionInit();
 
     }
@@ -62,21 +64,23 @@ public class Robot extends IterativeRobot {
 //    	SmartDashboard.putString("DB/String 0", "BR:" + mot.getEncBR());
 //    	SmartDashboard.putString("DB/String 1", "BL:" + mot.getEncBL());
 //    	SmartDashboard.putString("DB/String 6", "Winch:" + mot.getEncWinch());
+    	
     	Shooter.runLoop();
+    	
 //    	Shooter.printValues();
 //    	Shooter.testPot();
     	
 //    	SemiAuto.testUS();
 //    	SemiAuto.autoLoop();
     	
-    	Vision.getInstance().updateDashboard();
+//    	Vision.getInstance().updateDashboard();
 //    	if (!Shooter.inAuto){
-    	if(Vision.getInstance().reverse) {
-    		TeleOp.runPowerReverse();
-    	}
-    	else {
-    		TeleOp.runPower();
-    	}
+//    	if(Vision.getInstance().reverse) {
+//    		TeleOp.runPowerReverse();
+//    	}
+//    	else {
+//    		TeleOp.runPower();
+//    	}
 //    	}
     		
 //    	TeleOp.testArm();
