@@ -75,6 +75,7 @@ public class Shooter {
 	public static int loadButton     = 4;
 	public static int unloadButton   = 5;
 	public static boolean abortShoot = false;
+	public static boolean stalled = false;
 	
 	// Accelerometer
 	static double alpha = 0.5;
@@ -280,7 +281,7 @@ public class Shooter {
 	}
 	
 	private static boolean checkStallCurr(){ //USE THIS ONE
-		if(pot.getOutputCurrent() >= 5){
+		if(Controller.getInstance().getJoy1Button(6) || pot.getOutputCurrent() >= 5){
 			return true;
 		}
 		return false;
@@ -290,7 +291,8 @@ public class Shooter {
 	public static void runLoop(){
 		
 		if(checkStallCurr()){
-			
+			SmartDashboard.putString("DB/String 7",	"Stalled: " + checkStallCurr());
+			stalled = true;
 		}
 		
 //		SmartDashboard.putString("DB/String 9", "" + myTelemetry.getAvgRight());
