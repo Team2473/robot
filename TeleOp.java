@@ -51,9 +51,12 @@ public class TeleOp {
 		if (Controller.getInstance().getJoy1Button(6)) {
 			maxSpeed = .5;
 		} else {
-			maxSpeed = .23;
+			if(Shooter.crossingBar) {
+				maxSpeed = .2;
+			}else {
+				maxSpeed = .23;
+			}
 		}
-
 		if (currentFR < (2 * currentBR) && currentFL < (2 * currentBL) && currentBR < (2 * currentFR)
 				&& currentBL < (2 * currentFL)) {
 			if (waiting) {
@@ -105,7 +108,11 @@ public class TeleOp {
 		if (Controller.getInstance().getJoy1Button(6)) {
 			maxSpeed = .5;
 		} else {
-			maxSpeed = .23;
+			if(Shooter.crossingBar) {
+				maxSpeed = .2;
+			}else {
+				maxSpeed = .23;
+			}
 		}
 
 		if (currentFR < (2 * currentBR) && currentFL < (2 * currentBL) && currentBR < (2 * currentFR)

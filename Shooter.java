@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.interfaces.Accelerometer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
+
 public class Shooter {
 	static double xVal;
 	static double yVal;
@@ -19,7 +20,7 @@ public class Shooter {
 	static boolean moving90 = false;
 	static boolean moving180 = false;
 	static int jumps = 0;
-	static boolean inAuto = false;
+	static boolean crossingBar = false;
 	static long currentTime = 0;
 	static boolean startingCount = false;
 	static boolean goingDown = false;
@@ -91,12 +92,14 @@ public class Shooter {
 	public static long lastChangedCount;
 	public static double prevPot;
 		
-	
 	static Telemetry myTelemetry = Telemetry.getInstance();
 	
 	// Initialization
 
 	public static void init() {
+	
+		Logger.log("Test");
+		
 		pot.enableBrakeMode(true);
 		pot.changeControlMode(CANTalon.TalonControlMode.PercentVbus);
 		shootR.changeControlMode(CANTalon.TalonControlMode.PercentVbus);
@@ -108,9 +111,6 @@ public class Shooter {
 		SmartDashboard.putString("DB/String 4", "" + pot.getAnalogInRaw());	
 		if(Controller.getInstance().getJoy1Button(2)){
 			moveBackward();
-		}
-		else if(Controller.getInstance().getJoy1Button(3)){
-			moveForward();
 		}
 		else{
 			stop();
@@ -172,6 +172,7 @@ public class Shooter {
 	}
 	
 	public static void updateLimits(){
+	
 		if(!pot.isFwdLimitSwitchClosed()){
 			fwdPotMax = pot.getAnalogInRaw();
 		}
@@ -315,6 +316,7 @@ public class Shooter {
     	double roll = (Math.atan2(-fY, fZ)*180.0/Math.PI);
     	double pitch = (Math.atan2(fX, Math.sqrt(fY*fY + fZ*fZ))*180.0/Math.PI);
     	    	
+    	
 //      	SmartDashboard.putString("DB/String 7",	"R:" + roll);
 //    	SmartDashboard.putString("DB/String 8",	"P:" + pitch); 
 
@@ -361,6 +363,8 @@ public class Shooter {
 				}
 			}
 			else if(currentState == State.RAISED){
+				SmartDashboard.putString("DB/String 9",
+						"Raised");
 				//pot.set(0); 
 			}
 			//firing, abort shoot
@@ -424,12 +428,16 @@ public class Shooter {
 //				}
 //			}
 			else if (currentState == State.STARTINGTOCROSSLOWBAR){
+				crossingBar = true;
+		    	Logger.log("Roll(" + roll + ")");
 				SmartDashboard.putString("DB/String 8",
 						"Starting to cross");
 				if (Math.abs(roll) > 10) {
 					if (roll > 0) {
-						if (roll > 15) {
+						if (roll > 10) {
 							goingDown = true;
+							SmartDashboard.putString("DB/String 9",
+									"Dropping Down");
 						}
 					}
 					else {
@@ -439,7 +447,12 @@ public class Shooter {
 				if (goingDown) {
 					setPosition(90);
 					if(isRaised()) {
+						goingDown = false;
+						newPos = 90;
 						currentState = State.RAISED;
+						crossingBar = false;
+						SmartDashboard.putString("DB/String 9",
+								"Going To Raised");
 					}
 				}else {
 					setPosition(newPos);
