@@ -187,7 +187,7 @@ public class Shooter {
 	public static boolean fire(){
 		if(currentState == State.RAISED || currentState == State.RAISING){
 			currentState = State.LOWERING;
-			resetStall();
+//			resetStall();
 		}
 		return true;
 	}
@@ -196,7 +196,7 @@ public class Shooter {
 	public static boolean extend(){
 		if(currentState == State.COLLAPSED || currentState == State.COLLAPSING){
 			currentState = State.EXTENDING;
-			resetStall();
+//			resetStall();
 		}
 		return true;
 	}
@@ -204,7 +204,7 @@ public class Shooter {
 	public static boolean collapse(){
 		if(currentState == State.EXTENDED || currentState == State.EXTENDING){
 			currentState = State.COLLAPSING;
-			resetStall();
+//			resetStall();
 		}
 		return true;
 	}
@@ -279,7 +279,7 @@ public class Shooter {
 		lastChangedCount = currentCount;
 	}
 	
-	private static boolean checkStallCurr(){
+	private static boolean checkStallCurr(){ //USE THIS ONE
 		if(pot.getOutputCurrent() >= 5){
 			return true;
 		}
@@ -288,10 +288,14 @@ public class Shooter {
 	
 	
 	public static void runLoop(){
-//		SmartDashboard.putString("DB/String 9",
-//				"" + myTelemetry.getAvgRight());
+		
+		if(checkStallCurr()){
+			
+		}
+		
+//		SmartDashboard.putString("DB/String 9", "" + myTelemetry.getAvgRight());
 //		currentCount++;
-		updateStalledState();
+//		updateStalledState();
 		
 		SmartDashboard.putString("DB/String 0",	"fwdPotMax " + fwdPotMax);
 		SmartDashboard.putString("DB/String 1",	"currPot " + pot.getAnalogInRaw());
@@ -302,8 +306,7 @@ public class Shooter {
 //		SmartDashboard.putString("DB/String 8", "stalled: " + isStalled());
 //		SmartDashboard.putString("DB/String 9", "currCount: " + currentCount);
 		
-//		SmartDashboard.putString("DB/String 7",
-//				"" + jumps);
+//		SmartDashboard.putString("DB/String 7", "" + jumps);
 //		SmartDashboard.putString("DB/String 7", "Pot: " + pot.getAnalogInRaw());
 		xVal = accel.getX();
     	yVal = accel.getY();
@@ -337,7 +340,7 @@ public class Shooter {
 				}
 			}
 			else if(currentState == State.EXTENDING){
-				if(isExtended() || isStalled()){
+				if(isExtended()){ //took out  || isStalled()
 					currentState = State.EXTENDED;
 				}
 				else{
