@@ -256,7 +256,7 @@ public class TeleOp {
 
 			while (true) {
 				mot.moveWinchMotors(8000);
-				mot.moveGrapplerArmMotor(-260);
+				mot.moveGrapplerArmMotor(-130);
 			}
 		}
 
