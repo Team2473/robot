@@ -63,7 +63,7 @@ public class Vision {
 
 	public void updateDashboard() {
 
-		if (cont.getJoy2Button(3)) {
+		if (cont.getFootPedal()) {
 			reverse = true;
 		} else {
 			reverse = false;

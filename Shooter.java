@@ -72,8 +72,6 @@ public class Shooter {
 	public static int backPotMax = 465; //420;
 	
 	// Joystick Mapping
-	public static int loadButton     = 4;
-	public static int unloadButton   = 5;
 	public static boolean abortShoot = false;
 	public static boolean stalled = false;
 	
@@ -108,7 +106,7 @@ public class Shooter {
 	//Pot reading for positioning
 	public static void testPot(){
 		SmartDashboard.putString("DB/String 4", "" + pot.getAnalogInRaw());	
-		if(Controller.getInstance().getJoy1Button(2)){
+		if(Controller.getInstance().getJoy1Button(7)){
 			moveBackward();
 		}
 		else{
@@ -173,7 +171,7 @@ public class Shooter {
 	public static void updateLimits(){
 	
 		if(!pot.isFwdLimitSwitchClosed()){
-			fwdPotMax = pot.getAnalogInRaw();
+			fwdPotMax = pot.getAnalogInRaw();																		//PRINT THESE
 		}
 		else if(!pot.isRevLimitSwitchClosed()){
 			backPotMax = pot.getAnalogInRaw();
@@ -245,23 +243,23 @@ public class Shooter {
 		}
 		
 		//get status of extend button
-		if(Controller.getInstance().getJoy1Button(5)){
+		if(Controller.getInstance().getJoy1Button(4)){
 			extend();
 		}
 		else{
 			collapse();
 		}
 		//get status of fire button
-		if(Controller.getInstance().getLeftTrigger() == 1){
+		if(Controller.getInstance().getJoy1Button(1)){
 			fire();
 		}
 		
 		//safety abort
-		if(Controller.getInstance().getJoy1Button(2)){
+		if(Controller.getInstance().getJoy1Button(7)){
 			if(currentState == State.LOWERING) abortShoot = true;
 		}
 		
-		if(Controller.getInstance().getJoy1Button(1)) {
+		if(Controller.getInstance().getJoy2Button(2)) {
 			startingToCross();
 		}
 		
@@ -284,7 +282,7 @@ public class Shooter {
 	}
 	
 	private static boolean checkStallCurr(){ //USE THIS ONE
-		if(Controller.getInstance().getJoy1Button(4) || pot.getOutputCurrent() >= 5){
+		if(Controller.getInstance().getJoy2Button(4) || pot.getOutputCurrent() >= 5){
 			return true;
 		}
 		return false;
@@ -294,50 +292,50 @@ public class Shooter {
 	public static void runLoop(){
 		
 		
-		if(!stalled && checkStallCurr()){
-			
-			Logger.getInstance().logInfo("Stalled");
-			stalled = true;
-			if(currentState == State.EXTENDING){
-				currentState = State.COLLAPSING;
-			}
-			else if(currentState == State.LOWERING){
-				currentState = State.RAISING;
-			}
-			else if(currentState == State.COLLAPSING){
-				pot.set(0);
-				Logger.getInstance().logInfo("Stalled: collapsing");
-				if(Controller.getInstance().getJoy1Button(7)){
-					fireBall();
-					currentState = State.COLLAPSING;
-					stalled = false;
-				}
-			}
-			else if(currentState == State.RAISING){
-				pot.set(0);
-				Logger.getInstance().logInfo("Stalled: collapsing");
-				if(Controller.getInstance().getJoy1Button(7)){
-					fireBall();
-					currentState = State.COLLAPSING;
-					stalled = false;
-				}
-			}
-			else if(currentState == State.GOINGOVERFIRSTBUMP || currentState == State.GOINGOVERSECONDBUMP ||
-					currentState == State.STARTINGTOCROSSLOWBAR){
-				pot.set(0);
-				Logger.getInstance().logInfo("Stalled: collapsing");
-				if(Controller.getInstance().getJoy1Button(7)){
-					fireBall();
-					currentState = State.COLLAPSING;
-					stalled = false;
-				}
-			}
-			// 1. kill motor + block usage
-			// 2. flash message on dashboard/log
-			// 3. if driver clears w button, then: spit ball, collapse
+//		if(!stalled && checkStallCurr()){
+//			
+//			Logger.getInstance().logInfo("Stalled");
+//			stalled = true;
+//			if(currentState == State.EXTENDING){
+//				currentState = State.COLLAPSING;
+//			}
+//			else if(currentState == State.LOWERING){
+//				currentState = State.RAISING;
+//			}
+//			else if(currentState == State.COLLAPSING){
+//				pot.set(0);
+//				Logger.getInstance().logInfo("Stalled: collapsing");
+//				if(Controller.getInstance().getJoy1Button(7)){
+//					fireBall();
+//					currentState = State.COLLAPSING;
+//					stalled = false;
+//				}
+//			}
+//			else if(currentState == State.RAISING){
+//				pot.set(0);
+//				Logger.getInstance().logInfo("Stalled: collapsing");
+//				if(Controller.getInstance().getJoy1Button(7)){
+//					fireBall();
+//					currentState = State.COLLAPSING;
+//					stalled = false;
+//				}
+//			}
+//			else if(currentState == State.GOINGOVERFIRSTBUMP || currentState == State.GOINGOVERSECONDBUMP ||
+//					currentState == State.STARTINGTOCROSSLOWBAR){
+//				pot.set(0);
+//				Logger.getInstance().logInfo("Stalled: collapsing");
+//				if(Controller.getInstance().getJoy1Button(7)){
+//					fireBall();
+//					currentState = State.COLLAPSING;
+//					stalled = false;
+//				}
+//			}
+//			// 1. kill motor + block usage
+//			// 2. flash message on dashboard/log
+//			// 3. if driver clears w button, then: spit ball, collapse
 			//reminder to log everything (debug)
 		
-		}
+//		}
 		
 //		SmartDashboard.putString("DB/String 9", "" + myTelemetry.getAvgRight());
 //		currentCount++;
@@ -348,7 +346,7 @@ public class Shooter {
 		SmartDashboard.putString("DB/String 2",	"backPotMax " + backPotMax);
 		SmartDashboard.putString("DB/String 3",	"current: " + pot.getOutputCurrent());
 		SmartDashboard.putString("DB/String 4",	"stallCurrent: " + checkStallCurr());
-//		SmartDashboard.putString("DB/String 7", "State: " + currentState);
+		SmartDashboard.putString("DB/String 7", "State: " + currentState);
 //		SmartDashboard.putString("DB/String 8", "stalled: " + isStalled());
 //		SmartDashboard.putString("DB/String 9", "currCount: " + currentCount);
 		
@@ -576,7 +574,7 @@ public class Shooter {
 		boolean atNinety = false;
 		SmartDashboard.putString("DB/String 4", "breakBeam.get: " + myTelemetry.getBreakBeam());
 		
-		if(Controller.getInstance().getJoy1Button(loadButton)) {
+		if(Controller.getInstance().getJoy2Button(4)) {
 			
 			if(!myTelemetry.getBreakBeam()){
 				// Stop spinning shooters
@@ -605,7 +603,7 @@ public class Shooter {
 				shootL.set(0.2); 
 				
 				// Failsafe: Button released without ball in place
-				if(!Controller.getInstance().getJoy1Button(loadButton) && !atNinety) {
+				if(!Controller.getInstance().getJoy2Button(4) && !atNinety) {
 					shootR.set(0);
 					shootL.set(0);
 					setPosition(0);
@@ -622,7 +620,7 @@ public class Shooter {
 	
 	public static void unload() {
 		
-		if(Controller.getInstance().getJoy1Button(unloadButton)) {
+		if(Controller.getInstance().getJoy1Button(4)) {
 			
 			// Move arm forward
 			setPosition(180);

@@ -48,7 +48,7 @@ public class TeleOp {
 		// SmartDashboard.putString("DB/String 1", "Y " + yVal);
 		// SmartDashboard.putString("DB/String 2", "Z " + zVal);
 
-		if (Controller.getInstance().getJoy1Button(6)) {
+		if (Controller.getInstance().getJoy2Button(1)) {
 			maxSpeed = .5;
 		} else {
 			if(Shooter.crossingBar) {
@@ -105,7 +105,7 @@ public class TeleOp {
 		currentFL = myPanel.getCurrent(2);
 		currentBL = myPanel.getCurrent(3);
 
-		if (Controller.getInstance().getJoy1Button(6)) {
+		if (Controller.getInstance().getJoy2Button(1)) {
 			maxSpeed = .5;
 		} else {
 			if(Shooter.crossingBar) {
@@ -186,83 +186,83 @@ public class TeleOp {
 	private static boolean waiting = false;
 
 	public static void runUtilities() {
-		if (cont.getJoy2Button(1)) {
-			if (currentMode != Motor.MODE_POWER) {
-				currentMode = Motor.MODE_POWER;
-
-				mot.setLeftSideMotorsMode(currentMode);
-				mot.setRightSideMotorsMode(currentMode);
-			}
-			mot.moveLeftSideMotors(.25);
-			mot.moveRightSideMotors(.25);
-
-			try {
-				Thread.sleep(3000);
-			} catch (InterruptedException e) {
-			}
-
-			mot.moveLeftSideMotors(0);
-			mot.moveRightSideMotors(-0.1);
-
-			try {
-				Thread.sleep(1100);
-			} catch (InterruptedException e) {
-			}
-
-			mot.moveLeftSideMotors(0.09);
-			mot.moveRightSideMotors(0.09);
-
-			try {
-				Thread.sleep(400);
-			} catch (InterruptedException e) {
-			}
-
-			for (int i = 0; i < 100; i++) {
-				mot.moveGrapplerArmMotor(260);
-				try {
-					Thread.sleep(25);
-				} catch (InterruptedException e) {
-				}
-			}
-
-			mot.moveLeftSideMotors(.25);
-			mot.moveRightSideMotors(.25);
-
-			try {
-				Thread.sleep(1000);
-			} catch (InterruptedException e) {
-			}
-
-			mot.moveLeftSideMotors(0.09);
-			mot.moveRightSideMotors(0.09);
-
-			waiting = true;
-		}
-
-		if (cont.getJoy2Button(2)) {
-			for (int i = 0; i < 75; i++) {
-				mot.moveGrapplerArmMotor(0);
-				if (i > 20) {
-					mot.moveWinchMotors(8000);
-				}
-				try {
-					Thread.sleep(25);
-				} catch (InterruptedException e) {
-				}
-			}
-
-			mot.moveLeftSideMotors(0);
-			mot.moveRightSideMotors(0);
-
-			while (true) {
-				mot.moveWinchMotors(8000);
-				mot.moveGrapplerArmMotor(-260);
-			}
-		}
-
-		if (cont.getJoy1Button(2)) {
-			waiting = false;
-		}
+//		if (cont.getJoy3Button()) {
+//			if (currentMode != Motor.MODE_POWER) {
+//				currentMode = Motor.MODE_POWER;
+//
+//				mot.setLeftSideMotorsMode(currentMode);
+//				mot.setRightSideMotorsMode(currentMode);
+//			}
+//			mot.moveLeftSideMotors(.25);
+//			mot.moveRightSideMotors(.25);
+//
+//			try {
+//				Thread.sleep(3000);
+//			} catch (InterruptedException e) {
+//			}
+//
+//			mot.moveLeftSideMotors(0);
+//			mot.moveRightSideMotors(-0.1);
+//
+//			try {
+//				Thread.sleep(1100);
+//			} catch (InterruptedException e) {
+//			}
+//
+//			mot.moveLeftSideMotors(0.09);
+//			mot.moveRightSideMotors(0.09);
+//
+//			try {
+//				Thread.sleep(400);
+//			} catch (InterruptedException e) {
+//			}
+//
+//			for (int i = 0; i < 100; i++) {
+//				mot.moveGrapplerArmMotor(260);
+//				try {
+//					Thread.sleep(25);
+//				} catch (InterruptedException e) {
+//				}
+//			}
+//
+//			mot.moveLeftSideMotors(.25);
+//			mot.moveRightSideMotors(.25);
+//
+//			try {
+//				Thread.sleep(1000);
+//			} catch (InterruptedException e) {
+//			}
+//
+//			mot.moveLeftSideMotors(0.09);
+//			mot.moveRightSideMotors(0.09);
+//
+//			waiting = true;
+//		}
+//
+//		if (cont.getJoy3Button()) {
+//			for (int i = 0; i < 75; i++) {
+//				mot.moveGrapplerArmMotor(0);
+//				if (i > 20) {
+//					mot.moveWinchMotors(8000);
+//				}
+//				try {
+//					Thread.sleep(25);
+//				} catch (InterruptedException e) {
+//				}
+//			}
+//
+//			mot.moveLeftSideMotors(0);
+//			mot.moveRightSideMotors(0);
+//
+//			while (true) {
+//				mot.moveWinchMotors(8000);
+//				mot.moveGrapplerArmMotor(-260);
+//			}
+//		}
+//
+//		if (cont.getJoy1Button(7)) {
+//			waiting = false;
+//		}
 
 	}
 
