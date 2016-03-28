@@ -563,7 +563,10 @@ public class Shooter {
 	}
 	
 	public static boolean isRaised(){
-		return getPosition() <= 90; 
+		if (Math.abs(getPosition() - 90) < 10)
+			return true;
+		else
+			return false;
 	}
 	
 		
