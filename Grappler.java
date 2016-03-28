@@ -113,8 +113,8 @@ public class Grappler {
 		}
 
 		if (Controller.getInstance().getJoy2Button(2)) {
-			for (int i = 0; i < 75; i++) {
-				Motor.getInstance().moveGrapplerArmMotor(0);
+			for (int i = 0; i < 100; i++) {
+				Motor.getInstance().moveGrapplerArmMotor(130);
 				if (i > 20) {
 					Motor.getInstance().moveWinchMotors(8000);
 				}
@@ -132,7 +132,7 @@ public class Grappler {
 			while (true) {
 				Motor.getInstance().moveWinchMotors(8000);
 				//(19 March: the grappler arm needs to only come down half / quarter way, instead of running all the way to limit switch)
-				Motor.getInstance().moveGrapplerArmMotor(-260);
+				Motor.getInstance().moveGrapplerArmMotor(130);
 			}
 		}
 	}
