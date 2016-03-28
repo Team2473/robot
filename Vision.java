@@ -21,23 +21,23 @@ import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.SampleRobot;
 import edu.wpi.first.wpilibj.Timer;
 
-//random change
+//random change made
 public class Vision {
 	private static Vision vision = null;
-	
-	static int session1;
-	static int session2;
-	
-	static Image frame1;
-	static Image frame2;
-	
-	static NIVision.Rect rect;
-	
-	static boolean session1NotStarted = true;
-	static boolean session2NotStarted = true;
-	
-	static boolean reverse = false;
-	
+	private Controller cont = Controller.getInstance();
+	int session1;
+	int session2;
+
+	Image frame1;
+	Image frame2;
+
+	NIVision.Rect rect;
+
+	boolean session1NotStarted = true;
+	boolean session2NotStarted = true;
+
+	boolean reverse = false;
+
 	public static Vision getInstance() {
 		if (vision == null) {
 			vision = new Vision();
@@ -62,46 +62,45 @@ public class Vision {
 	}
 
 	public void updateDashboard() {
-		
-		if (Controller.getInstance().getJoy2Button(3)) {
+
+		if (cont.getJoy2Button(3)) {
 			reverse = true;
-		}
-		else {
+		} else {
 			reverse = false;
 		}
-		
-		if(!reverse){
-			SmartDashboard.putString("DB/String 6", "Session 1 running");
+
+		if (!reverse) {
+//			SmartDashboard.putString("DB/String 6", "Session 1 running");
 			// sessions 2 & 3 is no longer started
-						session2NotStarted = true;
+			session2NotStarted = true;
 
-						// configure if session not started
-						if (session1NotStarted) {
-							// End previous sessions
-							NIVision.IMAQdxUnconfigureAcquisition(session2);
-//							NIVision.IMAQdxUnconfigureAcquisition(session3);
+			// configure if session not started
+			if (session1NotStarted) {
+				// End previous sessions
+				NIVision.IMAQdxUnconfigureAcquisition(session2);
+				// NIVision.IMAQdxUnconfigureAcquisition(session3);
 
-							// Configure Grab
-							NIVision.IMAQdxConfigureGrab(session1);
+				// Configure Grab
+				NIVision.IMAQdxConfigureGrab(session1);
 
-							// start acquisition
-							NIVision.IMAQdxStartAcquisition(session1);
+				// start acquisition
+				NIVision.IMAQdxStartAcquisition(session1);
 
-							// session 1 is started
-							session1NotStarted = false;
-						}
-						
-						// grab image
-						NIVision.IMAQdxGrab(session1, frame1, 1);
+				// session 1 is started
+				session1NotStarted = false;
+			}
 
-						// draw on image
-						NIVision.imaqDrawShapeOnImage(frame1, frame1, rect,
-								DrawMode.DRAW_VALUE, ShapeMode.SHAPE_RECT, 25.0f);
+			// grab image
+			NIVision.IMAQdxGrab(session1, frame1, 1);
 
-						// send image to dashboard
-						CameraServer.getInstance().setImage(frame1);
-			
-		}else {
+			// draw on image
+			NIVision.imaqDrawShapeOnImage(frame1, frame1, rect,
+					DrawMode.DRAW_VALUE, ShapeMode.SHAPE_RECT, 25.0f);
+
+			// send image to dashboard
+			CameraServer.getInstance().setImage(frame1);
+
+		} else {
 			SmartDashboard.putString("DB/String 6", "Session 2 running");
 			// sessions 1 & 3 is no longer started
 			session1NotStarted = true;
@@ -110,7 +109,7 @@ public class Vision {
 			if (session2NotStarted) {
 				// End previous sessions
 				NIVision.IMAQdxUnconfigureAcquisition(session1);
-//				NIVision.IMAQdxUnconfigureAcquisition(session3);
+				// NIVision.IMAQdxUnconfigureAcquisition(session3);
 
 				// Configure Grab
 				NIVision.IMAQdxConfigureGrab(session2);
@@ -134,4 +133,3 @@ public class Vision {
 		}
 	}
 }
-

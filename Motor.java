@@ -5,13 +5,13 @@ import edu.wpi.first.wpilibj.CANTalon.FeedbackDevice;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Motor {
-	private CANTalon frontLeft;
-	private CANTalon frontRight;
-	private CANTalon backLeft;
-	private CANTalon backRight;
+	public CANTalon frontLeft;
+	public CANTalon frontRight;
+	public CANTalon backLeft;
+	public CANTalon backRight;
 
 	private CANTalon arm; // the motor to move the arm into position
-	private CANTalon winch1; // the motor to extend the arm
+	private CANTalon winch1; // the motor to extend the arm (ALEX 3/5/2016: both winches pull the robot up lol)
 	private CANTalon winch2; // the motor to pull the robot up
 
 	// add addition cantalons as they are added to robot
@@ -112,8 +112,8 @@ public class Motor {
 
 	public void moveLeftSideMotors(double value) {
 		if (frontLeft.getControlMode() == MODE_POWER) {
-			frontLeft.set(-value*.95);
-			backLeft.set(-value*.95);
+			frontLeft.set(-value);
+			backLeft.set(-value);
 		} else if (frontLeft.getControlMode() == MODE_POSITION) {
 			frontLeft.set(value);
 			backLeft.set(3);// frontLeft integer id
@@ -136,13 +136,13 @@ public class Motor {
 	//260 is pointing up, 0 is pointing level
 	public void moveGrapplerArmMotor(double encValue) {
 		if(-arm.getPosition() - encValue < -20){
-			arm.set(.32);//test constant
+			arm.set(.5);//test constant
 		}else if(-arm.getPosition() - encValue > 20){
-			arm.set(-.12);//test constant
+			arm.set(-.3);//test constant
 		}else{
 			arm.set(0);
 		}
-		SmartDashboard.putString("DB/String 6", "Arm: " + arm.getEncPosition());
+//		SmartDashboard.putString("DB/String 6", "Arm: " + arm.getEncPosition());
 	}
 
 	//140 is one full rotation
@@ -157,9 +157,27 @@ public class Motor {
 		SmartDashboard.putString("DB/String 8", "Winch: " + winch1.getEncPosition());
 	}
 
-	public int getEncoder(CANTalon motor) {
-		return motor.getEncPosition();
+	public double getEncoder(CANTalon motor) {
+		return motor.getPosition();
 	}
+	
+	public double getEncFL(){
+		return getEncoder(frontLeft);
+	}
+	
+	public double getEncFR(){
+		return getEncoder(frontRight);
+	}
+	
+	// 3/5/2016: Alex testing
+	public double getEncWinch(){
+		return getEncoder(winch1);
+	}
+	
+	public double getEncArm(){
+		return getEncoder(arm);
+	}
+	//
 
 	public void resetDriveEncoders() {
 		frontLeft.setPosition(0);
@@ -189,7 +207,7 @@ public class Motor {
 
 		//a is left, b is right
 		while(getEncoder(frontLeft) < encoderValue || getEncoder(frontRight) < encoderValue) {
-			int encoderDiff = getEncoder(frontLeft) - getEncoder(frontRight);
+			double encoderDiff = getEncoder(frontLeft) - getEncoder(frontRight);
 			if (encoderDiff < 0) {
 				//changePower
 				leftPower += (Math.abs(encoderDiff) / k);
@@ -198,7 +216,7 @@ public class Motor {
 				rightPower += (encoderDiff / k);
 			}
 			//update both sides with the new power values
-			moveRightSideMotors(leftPower); //THIS LOOKS WRONG. SHOULDN'T THIS BE LEFT? @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+			moveLeftSideMotors(leftPower); 
 			moveRightSideMotors(rightPower);
 		}
 	}

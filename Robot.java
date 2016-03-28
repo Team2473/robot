@@ -1,9 +1,9 @@
 package org.usfirst.frc.team2473.robot;
 
+import org.usfirst.frc.team2473.robot.Logger.LogLevel;
+
 import edu.wpi.first.wpilibj.*;
-
 import edu.wpi.first.wpilibj.CANTalon.FeedbackDevice;
-
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -15,14 +15,15 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * directory.
  */
 
-public class Robot extends IterativeRobot {
+public class Robot extends IterativeRobot {	
 	/**
      * This function is run when the robot is first started up and should be
      * used for any initialization code.
      */
+	Shooter myShooter = new Shooter();
 	
     public void robotInit() {
-//    	Vision.getInstance().visionInit();
+
     }
     
     /**
@@ -36,16 +37,13 @@ public class Robot extends IterativeRobot {
      * This function is called periodically during autonomous
      */
     public void autonomousPeriodic() {
-//    	SmartDashboard.putString("DB/String 4", "Running AutoAttack");
     	AutoAttack.run();
-//    	Telemetry.getInstance().updateGyroValue();
     }
     
     /**
      * This function is called once each time the robot enters tele-operated mode
      */
     public void teleopInit(){
-//    	Shooter.calibration();
     }
     
     /**
@@ -57,22 +55,6 @@ public class Robot extends IterativeRobot {
      * 
      */
     public void teleopPeriodic() {
-//    	Shooter.testPotentiometer();
-//    	Shooter.checkLS();
-//    	Shooter.joyControlled(); 
-    	
-//    	Shooter.load();
-//    	Shooter.setPosition(0);
-    	
-//    	Shooter.unload();
-//    	Shooter.test();
-//    	if(Vision.reverse){
-//    		TeleOp.runPowerReverse();
-//    	}else{
-//    		TeleOp.runPower();
-//    	}
-//    	Motor.getInstance().moveForwardPowerPrintEncoders(.3);
-    	
     }
     
     /**

@@ -39,6 +39,7 @@ public class AutoAttack {
 	 */
 	public static void run() {
 //		//Starting on Left Side of Field
+		//making left turn into defense
 		if(mySwitches.getTripleSwitch() == 1) {
 			SmartDashboard.putString("DB/String 5", "Starting Side: LEFT");
 			
@@ -93,6 +94,8 @@ public class AutoAttack {
 //			//Move Past Defense
 //			movePastDefense()
 		}
+		//starting on right side of field
+		//make right turn into defense
 		else if (mySwitches.getTripleSwitch() == 2) {
 			SmartDashboard.putString("DB/String 5", "Starting Side: RIGHT");
 			
@@ -142,7 +145,7 @@ public class AutoAttack {
 			}
 //			
 //			//Turn Left
-//			ninetyTurnWithGyro(LEFT);
+//			ninetyTurnWithGyro(RIGHT);
 //			
 //			//Move Past Defense
 //			movePastDefense()
@@ -182,8 +185,12 @@ public class AutoAttack {
 		}
 	}
 	
+	//currently this is working only for the low bar
 	private static void movePastDefense() {
+		//set shooter state to STARTINGTOCROSSLOWBAR
 		
+//		Shooter.currentState = Shooter.State.STARTINGTOCROSSLOWBAR;
+//		myMotor.moveForwardEncoders();
 	}
 }
 
