@@ -243,7 +243,7 @@ public class TeleOp {
 			for (int i = 0; i < 75; i++) {
 				mot.moveGrapplerArmMotor(0);
 				if (i > 20) {
-					mot.moveWinchMotors(8000);
+					mot.moveWinchMotors(16000);
 				}
 				try {
 					Thread.sleep(25);
@@ -255,7 +255,7 @@ public class TeleOp {
 			mot.moveRightSideMotors(0);
 
 			while (true) {
-				mot.moveWinchMotors(8000);
+				mot.moveWinchMotors(16000);
 				mot.moveGrapplerArmMotor(-130);
 			}
 		}
