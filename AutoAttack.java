@@ -21,9 +21,9 @@ public class AutoAttack {
 	/**
 	 * Switch Position Definitions
 	 * 3-Position RectangularSwitch:
-	 * --Side of Field--
+	 * --Initial Starting Position--
 	 * 1: Left Side of Field (relative to looking at field from driver's position)
-	 * 2: Right Side of Field (relative to looking at field from driver's position)
+	 * 2: Right in front of Defense
 	 * 
 	 * 4-Position Dial
 	 * --Time Delay--, Allows us to let other teammates pass us safely and then we proceed with our autonomous attack
@@ -94,61 +94,13 @@ public class AutoAttack {
 //			//Move Past Defense
 //			movePastDefense()
 		}
-		//starting on right side of field
-		//make right turn into defense
+		//starting in front of defense
+		//just drive straight
 		else if (mySwitches.getTripleSwitch() == 2) {
-			SmartDashboard.putString("DB/String 5", "Starting Side: RIGHT");
+			SmartDashboard.putString("DB/String 5", "Starting in Front");
 			
-			//Delay Time
-			try {
-				if(mySwitches.getFourDial() == 0) {
-					SmartDashboard.putString("DB/String 6", "5 Second Delay");
-//					Thread.sleep(5000);
-				}
-				else if (mySwitches.getFourDial() == 1) {
-					SmartDashboard.putString("DB/String 6", "10 Second Delay");
-//					Thread.sleep(10000);
-				}
-				else if (mySwitches.getFourDial() == 2) {
-					SmartDashboard.putString("DB/String 6", "15 Second Delay");
-//					Thread.sleep(15000);
-				}
-				else if (mySwitches.getFourDial() == 3) {
-					SmartDashboard.putString("DB/String 6", "20 Second Delay");
-//					Thread.sleep(20000);
-				}
-			}
-			catch (Exception e) {
-				//Do Nothing(for Thread.sleep())
-			}
-			
-			//Distance To travel dependent on defense position
-			if(mySwitches.getEightDial() == 0) {
-				SmartDashboard.putString("DB/String 7", "Defense 0");
-//				myMotor.moveForwardEncoders();
-			}
-			else if (mySwitches.getEightDial() == 1) {
-				SmartDashboard.putString("DB/String 7", "Defense 1");
-//				myMotor.moveForwardEncoders();
-			}
-			else if (mySwitches.getEightDial() == 2) {
-				SmartDashboard.putString("DB/String 7", "Defense 2");
-//				myMotor.moveForwardEncoders();
-			}
-			else if (mySwitches.getEightDial() == 3) {
-				SmartDashboard.putString("DB/String 7", "Defense 3");
-//				myMotor.moveForwardEncoders();
-			}
-			else if (mySwitches.getEightDial() == 4) {
-				SmartDashboard.putString("DB/String 7", "Defense 4");
-//				myMotor.moveForwardEncoders();
-			}
-//			
-//			//Turn Left
-//			ninetyTurnWithGyro(RIGHT);
-//			
-//			//Move Past Defense
-//			movePastDefense()
+			//just drive straight
+			movePastDefense();
 		}
 		
 	}
