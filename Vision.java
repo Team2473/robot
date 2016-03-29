@@ -54,8 +54,11 @@ public class Vision {
 	}
 
 	public void updateDashboard() {
-		if(Controller.getInstance().getJoy2Button(4)) {
+		if(Controller.getInstance().getJoy2Button(4) && !climbing) {
 			climbing = true;
+		}
+		else if (Controller.getInstance().getJoy2Button(4) && climbing){
+			climbing = false;
 		}
 
 		if (climbing) {
