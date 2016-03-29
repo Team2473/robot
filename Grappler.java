@@ -22,7 +22,7 @@ public class Grappler {
 	public void runScaleTower() {
         //Pressing button 1
 		
-		if (Controller.getInstance().getJoy2Button(1)) {
+		if (Controller.getInstance().getJoy1Button(10)) {
             
 			Motor.getInstance().setLeftSideMotorsMode(Motor.MODE_POWER);
 			Motor.getInstance().setRightSideMotorsMode(Motor.MODE_POWER);
@@ -41,11 +41,11 @@ public class Grappler {
 			Motor.getInstance().moveRightSideMotors(-.1);
 			
 			//(18 Mar 2016: increased encoder value from 1000
-			while(Motor.getInstance().getEncFL() > -1500 && Motor.getInstance().getEncFR() < 1500){
-				if(Motor.getInstance().getEncFL() < -1500){
+			while(Motor.getInstance().getEncFL() > -1700 && Motor.getInstance().getEncFR() < 1700){
+				if(Motor.getInstance().getEncFL() < -1700){
 					Motor.getInstance().moveLeftSideMotors(.09);
 				}
-				if(Motor.getInstance().getEncFR() > 1500){
+				if(Motor.getInstance().getEncFR() > 1700){
 					Motor.getInstance().moveLeftSideMotors(.09);
 				}
 				SmartDashboard.putString("DB/String 0", "FL: " + Motor.getInstance().getEncFL());
@@ -112,11 +112,11 @@ public class Grappler {
 			TeleOp.waiting = true;
 		}
 
-		if (Controller.getInstance().getJoy2Button(2)) {
+		if (Controller.getInstance().getJoy1Button(11)) {
 			for (int i = 0; i < 100; i++) {
-				Motor.getInstance().moveGrapplerArmMotor(130);
+				Motor.getInstance().moveGrapplerArmMotor(100);
 				if (i > 20) {
-					Motor.getInstance().moveWinchMotors(8000);
+					Motor.getInstance().moveWinchMotors(25000);
 				}
 				try {
 					//Pause for 25 ms
@@ -130,9 +130,9 @@ public class Grappler {
 			//failsafe to ensure other methods do not run, as this is the last action in the game
 
 			while (true) {
-				Motor.getInstance().moveWinchMotors(8000);
+				Motor.getInstance().moveWinchMotors(25000);
 				//(19 March: the grappler arm needs to only come down half / quarter way, instead of running all the way to limit switch)
-				Motor.getInstance().moveGrapplerArmMotor(130);
+				Motor.getInstance().moveGrapplerArmMotor(100);
 			}
 		}
 	}
