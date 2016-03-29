@@ -74,7 +74,7 @@ public class Robot extends IterativeRobot {
     	
     	Vision.getInstance().updateDashboard();
 //    	if (!Shooter.inAuto){
-    	if(Vision.getInstance().reverse) {
+    	if(TeleOp.reverse) {
     		TeleOp.runPowerReverse();
     	}
     	else {

@@ -184,6 +184,7 @@ public class TeleOp {
 	}
 
 	private static boolean waiting = false;
+	public static boolean reverse = false;
 
 	public static void runUtilities() {
 		if (cont.getJoy1Button(10)) {
@@ -262,6 +263,12 @@ public class TeleOp {
 
 		if (cont.getJoy1Button(7)) {
 			waiting = false;
+		}
+		
+		if (Controller.getInstance().getFootPedal()) {
+			reverse = true;
+		} else {
+			reverse = false;
 		}
 
 	}
