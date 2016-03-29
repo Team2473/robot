@@ -25,7 +25,6 @@ public class Robot extends IterativeRobot {
     public void robotInit() {
     	//Setting log level to debug
     	Logger.getInstance().logLevel = LogLevel.Debug;
-    	Vision.getInstance().visionInit();
 
     }
     
