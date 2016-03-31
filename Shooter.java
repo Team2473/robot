@@ -90,6 +90,10 @@ public class Shooter {
 	public static long currentCount = 0;
 	public static long lastChangedCount;
 	public static double prevPot;
+	
+	public static boolean fwdPressed = false;
+	public static boolean revPressed = false;
+	
 		
 	static Telemetry myTelemetry = Telemetry.getInstance();
 	
@@ -170,11 +174,15 @@ public class Shooter {
 	
 	public static void updateLimits(){
 	
-		if(!pot.isFwdLimitSwitchClosed()){
-			fwdPotMax = pot.getAnalogInRaw();																		//PRINT THESE
+		if(!fwdPressed && !pot.isFwdLimitSwitchClosed()){
+			fwdPotMax = pot.getAnalogInRaw();
+			fwdPressed = true; 
+			revPressed = false;
 		}
-		else if(!pot.isRevLimitSwitchClosed()){
+		else if(!revPressed && !pot.isRevLimitSwitchClosed()){
 			backPotMax = pot.getAnalogInRaw();
+			revPressed = true;
+			fwdPressed = false;
 		}
 	}
 
@@ -289,6 +297,19 @@ public class Shooter {
 	}
 	
 	
+	public static void testShooter(){
+		if(Controller.getInstance().getJoy1Button(3)){ //extend
+			pot.set(0.25);
+		}
+		else if(Controller.getInstance().getJoy1Button(2)){ //collapse
+			pot.set(-0.25);
+		}
+		else{
+			pot.set(0);
+		}
+	}
+	
+	
 	public static void runLoop(){
 		
 		
@@ -347,6 +368,9 @@ public class Shooter {
 		SmartDashboard.putString("DB/String 3",	"current: " + pot.getOutputCurrent());
 		SmartDashboard.putString("DB/String 4",	"stallCurrent: " + checkStallCurr());
 		SmartDashboard.putString("DB/String 7", "State: " + currentState);
+		SmartDashboard.putString("DB/String 5", "fwdLim: " + !pot.isFwdLimitSwitchClosed()); //true --> resets max
+		SmartDashboard.putString("DB/String 6", "backLim: " + !pot.isRevLimitSwitchClosed());
+		SmartDashboard.putString("DB/String 8", "d: " + getPosition());
 //		SmartDashboard.putString("DB/String 8", "stalled: " + isStalled());
 //		SmartDashboard.putString("DB/String 9", "currCount: " + currentCount);
 		
@@ -418,7 +442,7 @@ public class Shooter {
 			else if(currentState == State.RAISED){
 				SmartDashboard.putString("DB/String 9",
 						"Raised");
-				//pot.set(0); 
+				pot.set(0); 
 			}
 			//firing, abort shoot
 			else if(currentState == State.LOWERING){
@@ -642,8 +666,9 @@ public class Shooter {
 	// Motor Control 
 	// TODO: This should be using the motor class
 
-	//public static double[] lookupTable = {0.34, 0.32, 0.32, 0.30, 0.28, 0.26, 0.26, 0.26, 0.24, 0.24, 0.22, 0.22, 0.20, 0.19, 0.16, 0.14, 0.14, 0.12, 0.10, 0.02};  //old one
-	public static double[] lookupTable = {0.34, 0.32, 0.32, 0.30, 0.28, 0.26, 0.26, 0.26, 0.24, 0.24, 0.22, 0.22, 0.20, 0.19, 0.16, 0.14, 0.14, 0.12, 0.10, 0.07};    //replace with above
+	//public static double[] lookupTable = {0.34, 0.32, 0.32, 0.30, 0.28, 0.26, 0.26, 0.26, 0.24, 0.24, 0.22, 0.22, 0.20, 0.19, 0.16, 0.14, 0.14, 0.12, 0.10, 0.02};  //robot in bag
+	//public static double[] lookupTable = {0.34, 0.32, 0.32, 0.30, 0.28, 0.26, 0.26, 0.26, 0.24, 0.24, 0.22, 0.22, 0.20, 0.19, 0.16, 0.14, 0.14, 0.12, 0.10, 0.07};    //replace with above, slower version
+	public static double[] lookupTable = {0.54, 0.52, 0.52, 0.50, 0.48, 0.36, 0.30, 0.26, 0.24, 0.24, 0.22, 0.22, 0.20, 0.19, 0.16, 0.14, 0.14, 0.12, 0.10, 0.07};    //replace with above
 
 	public static double getPosition(){
 		double diff = fwdPotMax - backPotMax;
