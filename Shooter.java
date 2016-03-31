@@ -74,6 +74,7 @@ public class Shooter {
 	// Joystick Mapping
 	public static boolean abortShoot = false;
 	public static boolean stalled = false;
+	public static boolean suspended = false;
 	
 	// Accelerometer
 	static double alpha = 0.5;
@@ -313,69 +314,68 @@ public class Shooter {
 	public static void runLoop(){
 		
 		
-//		if(!stalled && checkStallCurr()){
-//			
-//			Logger.getInstance().logInfo("Stalled");
-//			stalled = true;
-//			if(currentState == State.EXTENDING){
-//				currentState = State.COLLAPSING;
-//			}
-//			else if(currentState == State.LOWERING){
-//				currentState = State.RAISING;
-//			}
-//			else if(currentState == State.COLLAPSING){
-//				pot.set(0);
-//				Logger.getInstance().logInfo("Stalled: collapsing");
+		//boolean suspended that = true when human input is required
+		
+		if(!stalled && checkStallCurr()){
+			
+			Logger.getInstance().logInfo("Stalled");
+			stalled = true;
+			if(currentState == State.EXTENDING){
+				currentState = State.COLLAPSING;
+				stalled = false;
+			}
+			else if(currentState == State.LOWERING){
+				currentState = State.RAISING;
+				stalled = false;
+			}
+			else if(currentState == State.COLLAPSING){
+				pot.set(0);
+				Logger.getInstance().logInfo("Stalled: collapsing");
+				suspended = true;
+//				if(Controller.getInstance().getJoy1Button(7)){
+//					fireBall(); //dont need
+//					currentState = State.COLLAPSING;
+//					stalled = false;
+//				}
+			}
+			else if(currentState == State.RAISING){
+				pot.set(0);
+				Logger.getInstance().logInfo("Stalled: collapsing");
+				suspended = true;
 //				if(Controller.getInstance().getJoy1Button(7)){
 //					fireBall();
 //					currentState = State.COLLAPSING;
 //					stalled = false;
 //				}
-//			}
-//			else if(currentState == State.RAISING){
-//				pot.set(0);
-//				Logger.getInstance().logInfo("Stalled: collapsing");
+			}
+			else if(currentState == State.GOINGOVERFIRSTBUMP || currentState == State.GOINGOVERSECONDBUMP ||
+					currentState == State.STARTINGTOCROSSLOWBAR){
+				pot.set(0);
+				Logger.getInstance().logInfo("Stalled: collapsing");
+				suspended = true;
 //				if(Controller.getInstance().getJoy1Button(7)){
 //					fireBall();
 //					currentState = State.COLLAPSING;
 //					stalled = false;
 //				}
-//			}
-//			else if(currentState == State.GOINGOVERFIRSTBUMP || currentState == State.GOINGOVERSECONDBUMP ||
-//					currentState == State.STARTINGTOCROSSLOWBAR){
-//				pot.set(0);
-//				Logger.getInstance().logInfo("Stalled: collapsing");
-//				if(Controller.getInstance().getJoy1Button(7)){
-//					fireBall();
-//					currentState = State.COLLAPSING;
-//					stalled = false;
-//				}
-//			}
-//			// 1. kill motor + block usage
-//			// 2. flash message on dashboard/log
-//			// 3. if driver clears w button, then: spit ball, collapse
-			//reminder to log everything (debug)
+			}
+		}
 		
-//		}
-		
-//		SmartDashboard.putString("DB/String 9", "" + myTelemetry.getAvgRight());
-//		currentCount++;
-//		updateStalledState();
-		
-		SmartDashboard.putString("DB/String 0",	"fwdPotMax " + fwdPotMax);
-		SmartDashboard.putString("DB/String 1",	"currPot " + pot.getAnalogInRaw());
-		SmartDashboard.putString("DB/String 2",	"backPotMax " + backPotMax);
-		SmartDashboard.putString("DB/String 3",	"current: " + pot.getOutputCurrent());
-		SmartDashboard.putString("DB/String 4",	"stallCurrent: " + checkStallCurr());
-		SmartDashboard.putString("DB/String 7", "State: " + currentState);
-		SmartDashboard.putString("DB/String 5", "fwdLim: " + !pot.isFwdLimitSwitchClosed()); //true --> resets max
-		SmartDashboard.putString("DB/String 6", "backLim: " + !pot.isRevLimitSwitchClosed());
-		SmartDashboard.putString("DB/String 8", "d: " + getPosition());
-//		SmartDashboard.putString("DB/String 8", "stalled: " + isStalled());
-//		SmartDashboard.putString("DB/String 9", "currCount: " + currentCount);
-		
-//		SmartDashboard.putString("DB/String 7", "" + jumps);
-//		SmartDashboard.putString("DB/String 7", "Pot: " + pot.getAnalogInRaw());
+		//add what to do when the suspended boolean == true
+		if(stalled && suspended){
+			if(currentState == State.COLLAPSING || currentState == State.RAISING || currentState == State.GOINGOVERFIRSTBUMP || currentState == State.GOINGOVERSECONDBUMP ||
+					currentState == State.STARTINGTOCROSSLOWBAR){
+				if(Controller.getInstance().getJoy1Button(7)){
+					fireBall();
+					currentState = State.COLLAPSING;
+					stalled = false;
+					suspended = false;
+				}
+			}
+
+		}
+
+
 		xVal = accel.getX();
     	yVal = accel.getY();
     	zVal = accel.getZ();
@@ -387,16 +387,13 @@ public class Shooter {
     	double roll = (Math.atan2(-fY, fZ)*180.0/Math.PI);
     	double pitch = (Math.atan2(fX, Math.sqrt(fY*fY + fZ*fZ))*180.0/Math.PI);
     	    	
-    	
-//      	SmartDashboard.putString("DB/String 7",	"R:" + roll);
-//    	SmartDashboard.putString("DB/String 8",	"P:" + pitch); 
 
-//    	SmartDashboard.putString("DB/String 0",	"" + stateString(currentState));
-//    	SmartDashboard.putString("DB/String 2",	"Y " + yVal);
-//    	SmartDashboard.putString("DB/String 2",	"Z " + zVal); 
-			updateControlState();
-			updateLimits();
-			
+		updateControlState();
+		updateLimits();
+		
+		//surround all the "all normal" state machine stuff with a conditional that checks and makes sure that suspended == false
+		
+		if(!suspended){
 			// Calculate outputs
 			if(currentState == State.COLLAPSING){
 				holdBall();
@@ -463,48 +460,6 @@ public class Shooter {
 					abortShoot = false;
 				}
 			}
-//			else if(currentState == State.CROSSINGLOWBAR) {
-//				//Tell Drive Code to stop
-//				inAuto = true;
-//				
-//				//Set Drive motors to move forward
-//				Motor.getInstance().moveLeftSideMotors(-0.2);
-//				Motor.getInstance().moveRightSideMotors(-0.2);
-//
-//				SmartDashboard.putString("DB/String 8",
-//						"CrossingBarAgain");
-//				
-//				//If the accel val is > threshold and the robot has not tipped yet
-//				if (Math.abs(yVal) > .05 && !tipped) {
-//					if ((yVal > 0))
-//						newPos += (int)(70 * (yVal * yVal));
-//						setPosition(newPos);
-//				}
-//				if (Math.abs(yVal) > .5) {
-//					jumps++;
-//				}
-//				
-//				//if you have tipped twice, you are coming down
-//				if (jumps == 2) {
-//					tipped = true;
-//				}
-//				
-//				//if you have tipped the second time, switch back to teleop and set arm to 90
-//				if (tipped) {
-//					setPosition(90);
-//					if (isRaised()) {
-//						Motor.getInstance().moveLeftSideMotors(0);
-//						Motor.getInstance().moveRightSideMotors(0);
-//						inAuto = false;
-//						currentState = State.RAISED;
-//					}
-//					SmartDashboard.putString("DB/String 9",
-//							"Setting Back to 90");
-//				} else {
-//				SmartDashboard.putString("DB/String 9",
-//						"NewPos" + newPos);
-//				}
-//			}
 			else if (currentState == State.STARTINGTOCROSSLOWBAR){
 				crossingBar = true;
 		    	Logger.getInstance().logDebug("Roll(" + roll + ")");
@@ -532,49 +487,12 @@ public class Shooter {
 						SmartDashboard.putString("DB/String 9",
 								"Going To Raised");
 					}
-				}else {
+				}
+				else {
 					setPosition(newPos);
 				}
-				
-//				//Tell Drive Code to stop
-//				inAuto = true;
-////				
-////				//Set Drive motors to move forward
-//				Motor.getInstance().moveLeftSideMotors(-0.2);
-//				Motor.getInstance().moveRightSideMotors(-0.2);
-//				
-//				//Move to next state
-//				currentState = State.GOINGOVERFIRSTBUMP;
 			}
-//			else if (currentState == State.GOINGOVERFIRSTBUMP){
-//				SmartDashboard.putString("DB/String 8",
-//						"Going over first bump");
-//				//Move the arm down as you go up the ramp
-//				if (Math.abs(yVal) > .05) {
-//					if ((yVal > 0))
-//						newPos += (int)(70 * (yVal * yVal));
-//						setPosition(newPos);
-//				}
-//				
-//				//check to see if you have crossed the bump
-//				if(yVal < .1 && !startingCount && myTelemetry.getAvgRight() < 27) {
-//					startingCount = true;
-//					currentTime = System.currentTimeMillis();
-//				}
-//				
-//				if ((yVal < .1)) {
-//					if ((System.currentTimeMillis() - currentTime) > 250){
-//						currentState = State.GOINGOVERSECONDBUMP;
-//					}
-//				}
-//				else {
-//					startingCount = false;
-//				}
-//			}
-//			else if (currentState == State.GOINGOVERSECONDBUMP) {
-//				SmartDashboard.putString("DB/String 8",
-//						"Going over second bump");
-//			}
+		}
 	}
 	
 	public static boolean isCollapsed(){
@@ -709,11 +627,15 @@ public class Shooter {
 	}
 	
 	public static void printValues(){
-		SmartDashboard.putString("DB/String 0", "fwd: " + pot.isFwdLimitSwitchClosed());
-		SmartDashboard.putString("DB/String 1", "back: " + pot.isRevLimitSwitchClosed());
-		SmartDashboard.putString("DB/String 2", "pot: " + pot.getAnalogInRaw());
-		SmartDashboard.putString("DB/String 9", "State: " + currentState);
-		SmartDashboard.putString("DB/String 8", "isExtended: " + isExtended());
+		SmartDashboard.putString("DB/String 0",	"fwdPotMax " + fwdPotMax);
+		SmartDashboard.putString("DB/String 1",	"currPot " + pot.getAnalogInRaw());
+		SmartDashboard.putString("DB/String 2",	"backPotMax " + backPotMax);
+		SmartDashboard.putString("DB/String 3",	"current: " + pot.getOutputCurrent());
+		SmartDashboard.putString("DB/String 4",	"stallCurrent: " + checkStallCurr());
+		SmartDashboard.putString("DB/String 5", "fwdLim: " + !pot.isFwdLimitSwitchClosed()); //true --> resets max
+		SmartDashboard.putString("DB/String 6", "backLim: " + !pot.isRevLimitSwitchClosed());
+		SmartDashboard.putString("DB/String 7", "State: " + currentState);
+		SmartDashboard.putString("DB/String 8", "d: " + getPosition());
 	}
 }
 
