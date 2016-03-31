@@ -291,7 +291,7 @@ public class Shooter {
 	}
 	
 	private static boolean checkStallCurr(){ //USE THIS ONE
-		if(Controller.getInstance().getJoy2Button(4) || pot.getOutputCurrent() >= 5){
+		if(Controller.getInstance().getJoy1Button(6) || pot.getOutputCurrent() >= 5){
 			return true;
 		}
 		return false;
@@ -313,67 +313,69 @@ public class Shooter {
 	
 	public static void runLoop(){
 		
+		SmartDashboard.putString("DB/String 0",	"stalled: " + stalled);
+		SmartDashboard.putString("DB/String 1", "State: " + currentState);
 		
 		//boolean suspended that = true when human input is required
 		
-		if(!stalled && checkStallCurr()){
-			
-			Logger.getInstance().logInfo("Stalled");
-			stalled = true;
-			if(currentState == State.EXTENDING){
-				currentState = State.COLLAPSING;
-				stalled = false;
-			}
-			else if(currentState == State.LOWERING){
-				currentState = State.RAISING;
-				stalled = false;
-			}
-			else if(currentState == State.COLLAPSING){
-				pot.set(0);
-				Logger.getInstance().logInfo("Stalled: collapsing");
-				suspended = true;
-//				if(Controller.getInstance().getJoy1Button(7)){
-//					fireBall(); //dont need
-//					currentState = State.COLLAPSING;
-//					stalled = false;
-//				}
-			}
-			else if(currentState == State.RAISING){
-				pot.set(0);
-				Logger.getInstance().logInfo("Stalled: collapsing");
-				suspended = true;
-//				if(Controller.getInstance().getJoy1Button(7)){
-//					fireBall();
-//					currentState = State.COLLAPSING;
-//					stalled = false;
-//				}
-			}
-			else if(currentState == State.GOINGOVERFIRSTBUMP || currentState == State.GOINGOVERSECONDBUMP ||
-					currentState == State.STARTINGTOCROSSLOWBAR){
-				pot.set(0);
-				Logger.getInstance().logInfo("Stalled: collapsing");
-				suspended = true;
-//				if(Controller.getInstance().getJoy1Button(7)){
-//					fireBall();
-//					currentState = State.COLLAPSING;
-//					stalled = false;
-//				}
-			}
-		}
+//		if(!stalled && checkStallCurr()){
+//			
+//			Logger.getInstance().logInfo("Stalled");
+//			stalled = true;
+//			if(currentState == State.EXTENDING){
+//				currentState = State.COLLAPSING;
+//				stalled = false;
+//			}
+//			else if(currentState == State.LOWERING){
+//				currentState = State.RAISING;
+//				stalled = false;
+//			}
+//			else if(currentState == State.COLLAPSING){
+//				pot.set(0);
+//				Logger.getInstance().logInfo("Stalled: collapsing");
+//				suspended = true;
+////				if(Controller.getInstance().getJoy1Button(7)){
+////					fireBall(); //dont need
+////					currentState = State.COLLAPSING;
+////					stalled = false;
+////				}
+//			}
+//			else if(currentState == State.RAISING){
+//				pot.set(0);
+//				Logger.getInstance().logInfo("Stalled: collapsing");
+//				suspended = true;
+////				if(Controller.getInstance().getJoy1Button(7)){
+////					fireBall();
+////					currentState = State.COLLAPSING;
+////					stalled = false;
+////				}
+//			}
+//			else if(currentState == State.GOINGOVERFIRSTBUMP || currentState == State.GOINGOVERSECONDBUMP ||
+//					currentState == State.STARTINGTOCROSSLOWBAR){
+//				pot.set(0);
+//				Logger.getInstance().logInfo("Stalled: collapsing");
+//				suspended = true;
+////				if(Controller.getInstance().getJoy1Button(7)){
+////					fireBall();
+////					currentState = State.COLLAPSING;
+////					stalled = false;
+////				}
+//			}
+//		}
 		
 		//add what to do when the suspended boolean == true
-		if(stalled && suspended){
-			if(currentState == State.COLLAPSING || currentState == State.RAISING || currentState == State.GOINGOVERFIRSTBUMP || currentState == State.GOINGOVERSECONDBUMP ||
-					currentState == State.STARTINGTOCROSSLOWBAR){
-				if(Controller.getInstance().getJoy1Button(7)){
-					fireBall();
-					currentState = State.COLLAPSING;
-					stalled = false;
-					suspended = false;
-				}
-			}
-
-		}
+//		if(stalled && suspended){
+//			if(currentState == State.COLLAPSING || currentState == State.RAISING || currentState == State.GOINGOVERFIRSTBUMP || currentState == State.GOINGOVERSECONDBUMP ||
+//					currentState == State.STARTINGTOCROSSLOWBAR){
+//				if(Controller.getInstance().getJoy1Button(7)){
+//					fireBall();
+//					currentState = State.COLLAPSING;
+//					stalled = false;
+//					suspended = false;
+//				}
+//			}
+//
+//		}
 
 
 		xVal = accel.getX();
@@ -393,7 +395,7 @@ public class Shooter {
 		
 		//surround all the "all normal" state machine stuff with a conditional that checks and makes sure that suspended == false
 		
-		if(!suspended){
+//		if(!suspended){
 			// Calculate outputs
 			if(currentState == State.COLLAPSING){
 				holdBall();
@@ -492,7 +494,7 @@ public class Shooter {
 					setPosition(newPos);
 				}
 			}
-		}
+//		}
 	}
 	
 	public static boolean isCollapsed(){
