@@ -23,28 +23,28 @@ public class Diagnostic {
 
 	// testing the controller
 	public boolean controllerTest() {
-		SmartDashboard.putString("DB/String 1", "Press green button");
-		while (!Controller.getInstance().getJoy1Button(1)) {
-		}
-
-		SmartDashboard.putString("DB/String 1", "Press red button");
-		while (!Controller.getInstance().getJoy1Button(2)) {
-		}
-
-		SmartDashboard.putString("DB/String 1", "Press blue button");
-		while (!Controller.getInstance().getJoy1Button(3)) {
-		}
-
-		SmartDashboard.putString("DB/String 1", "Press yellow button");
-		while (!Controller.getInstance().getJoy1Button(4)) {
-		}
-
-		SmartDashboard.putString("DB/String 1", "Press left bumper");
-		while (!Controller.getInstance().getJoy1Button(5)) {
-		}
-		SmartDashboard.putString("DB/String 1", "Press right bumper");
-		while (!Controller.getInstance().getJoy1Button(6)) {
-		}
+//		SmartDashboard.putString("DB/String 1", "Press green button");
+//		while (!Controller.getInstance().getJoy1Button(1)) {
+//		}
+//
+//		SmartDashboard.putString("DB/String 1", "Press red button");
+//		while (!Controller.getInstance().getJoy1Button(2)) {
+//		}
+//
+//		SmartDashboard.putString("DB/String 1", "Press blue button");
+//		while (!Controller.getInstance().getJoy1Button(3)) {
+//		}
+//
+//		SmartDashboard.putString("DB/String 1", "Press yellow button");
+//		while (!Controller.getInstance().getJoy1Button(4)) {
+//		}
+//
+//		SmartDashboard.putString("DB/String 1", "Press left bumper");
+//		while (!Controller.getInstance().getJoy1Button(5)) {
+//		}
+//		SmartDashboard.putString("DB/String 1", "Press right bumper");
+//		while (!Controller.getInstance().getJoy1Button(6)) {
+//		}
 
 		SmartDashboard.putString("DB/String 1", "Move left joystick up");
 
@@ -57,20 +57,20 @@ public class Diagnostic {
 		}
 
 		SmartDashboard.putString("DB/String 1", "Press left trigger");
-		while (Controller.getInstance().getLeftTrigger() < 0.9) {
-		}
-
-		SmartDashboard.putString("DB/String 1", "Press arm button");
-		while (!Controller.getInstance().getJoy2Button(1)) {
-		}
-
-		SmartDashboard.putString("DB/String 1", "Press winch button");
-		while (!Controller.getInstance().getJoy2Button(2)) {
-		}
-
-		SmartDashboard.putString("DB/String 1", "Press foot pedal");
-		while (!Controller.getInstance().getJoy2Button(3)) {
-		}
+//		while (Controller.getInstance().getLeftTrigger() < 0.9) {
+//		}
+//
+//		SmartDashboard.putString("DB/String 1", "Press arm button");
+//		while (!Controller.getInstance().getJoy2Button(1)) {
+//		}
+//
+//		SmartDashboard.putString("DB/String 1", "Press winch button");
+//		while (!Controller.getInstance().getJoy2Button(2)) {
+//		}
+//
+//		SmartDashboard.putString("DB/String 1", "Press foot pedal");
+//		while (!Controller.getInstance().getJoy2Button(3)) {
+//		}
 
 		SmartDashboard.putString("DB/String 1", "All controllers working");
 		try {
