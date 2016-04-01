@@ -380,16 +380,16 @@ public class Shooter {
 //		}
 
 
-		xVal = accel.getX();
-    	yVal = accel.getY();
-    	zVal = accel.getZ();
-    	
-    	fX = xVal * alpha + (fX * (1-alpha)); 
-    	fY = yVal * alpha + (fY * (1-alpha)); 
-    	fZ = zVal * alpha + (fZ * (1-alpha)); 
-
-    	double roll = (Math.atan2(-fY, fZ)*180.0/Math.PI);
-    	double pitch = (Math.atan2(fX, Math.sqrt(fY*fY + fZ*fZ))*180.0/Math.PI);
+//		xVal = accel.getX();
+//    	yVal = accel.getY();
+//    	zVal = accel.getZ();
+//    	
+//    	fX = xVal * alpha + (fX * (1-alpha)); 
+//    	fY = yVal * alpha + (fY * (1-alpha)); 
+//    	fZ = zVal * alpha + (fZ * (1-alpha)); 
+//
+//    	double roll = (Math.atan2(-fY, fZ)*180.0/Math.PI);
+//    	double pitch = (Math.atan2(fX, Math.sqrt(fY*fY + fZ*fZ))*180.0/Math.PI);
     	    	
 
 		updateControlState();
@@ -465,37 +465,37 @@ public class Shooter {
 				}
 			}
 			else if (currentState == State.STARTINGTOCROSSLOWBAR){
-				crossingBar = true;
-		    	Logger.getInstance().logDebug("Roll(" + roll + ")");
-				SmartDashboard.putString("DB/String 8",
-						"Starting to cross");
-				if (Math.abs(roll) > 10) {
-					if (roll > 0) {
-						if (roll > 10) {
-							goingDown = true;
-							SmartDashboard.putString("DB/String 9",
-									"Dropping Down");
-						}
-					}
-					else {
-//						newPos -= (roll / 2); //(31 Mar: previous value)
-						newPos -= (roll / 2.4); //(31 Mar: increased the magnitude of denominator so that arm comes down slower; crashing rn)
-					}
-				}
-				if (goingDown) {
-					setPosition(90);
-					if(isRaised()) {
-						goingDown = false;
-						newPos = 90;
-						currentState = State.RAISED;
-						crossingBar = false;
-						SmartDashboard.putString("DB/String 9",
-								"Going To Raised");
-					}
-				}
-				else {
-					setPosition(newPos);
-				}
+//				crossingBar = true;
+//		    	Logger.getInstance().logDebug("Roll(" + roll + ")");
+//				SmartDashboard.putString("DB/String 8",
+//						"Starting to cross");
+//				if (Math.abs(roll) > 10) {
+//					if (roll > 0) {
+//						if (roll > 10) {
+//							goingDown = true;
+//							SmartDashboard.putString("DB/String 9",
+//									"Dropping Down");
+//						}
+//					}
+//					else {
+////						newPos -= (roll / 2); //(31 Mar: previous value)
+//						newPos -= (roll / 2.4); //(31 Mar: increased the magnitude of denominator so that arm comes down slower; crashing rn)
+//					}
+//				}
+//				if (goingDown) {
+//					setPosition(90);
+//					if(isRaised()) {
+//						goingDown = false;
+//						newPos = 90;
+//						currentState = State.RAISED;
+//						crossingBar = false;
+//						SmartDashboard.putString("DB/String 9",
+//								"Going To Raised");
+//					}
+//				}
+//				else {
+//					setPosition(newPos);
+//				}
 			}
 //		}
 	}

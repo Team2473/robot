@@ -18,11 +18,16 @@ public class TeleOp {
 
 	private static Controller cont = Controller.getInstance();
 	private static Motor mot = Motor.getInstance();
+	
+	private static int i = 0;
+	
+	private static boolean runDrive = true;
 
 	// static Accelerometer accel = new
 	// BuiltInAccelerometer(Accelerometer.Range.k4G);
 
 	public static void runPower() {
+		i++;
 		// double totalCurrent = 0;
 		// for (int i = 0; i < 15; i++){
 		// totalCurrent += myPanel.getCurrent(i);
@@ -57,11 +62,10 @@ public class TeleOp {
 				maxSpeed = .23;
 			}
 		}
-		if (currentFR < (2 * currentBR) && currentFL < (2 * currentBL) && currentBR < (2 * currentFR)
-				&& currentBL < (2 * currentFL)) {
-			if (waiting) {
-				return;
-			}
+		if (runDrive) {
+//			if (waiting) {
+//				return;
+//			}
 
 			if (currentMode != Motor.MODE_POWER) {
 				currentMode = Motor.MODE_POWER;
@@ -85,8 +89,16 @@ public class TeleOp {
 				mot.moveRightSideMotors(0);
 			}
 
-			// SmartDashboard.putString("DB/String 6", "LY: " + leftY);
+			 SmartDashboard.putString("DB/String 2", "I: " + i);
 			// SmartDashboard.putString("DB/String 7", "RY: " + rightY);
+			
+//			if ( (i % 10000 == 0) && !(currentFR < (2 * currentBR) && currentFL < (2 * currentBL) && currentBR < (2 * currentFR)
+//					&& currentBL < (2 * currentFL))) {
+//				runDrive = false;
+//				i = 0;
+//			}else {
+//				runDrive = true;
+//			} 
 		} else {
 			SmartDashboard.putString("DB/String 0", "DRIVE MOTOR FAILURE");
 			Motor.getInstance().moveLeftSideMotors(0);
@@ -95,6 +107,7 @@ public class TeleOp {
 	}
 
 	public static void runPowerReverse() {
+		i++;
 		SmartDashboard.putString("DB/String 3", "FR Volt: " + currentFR);
 		SmartDashboard.putString("DB/String 4", "BR Volt: " + currentBR);
 		SmartDashboard.putString("DB/String 5", "FL Volt: " + currentFL);
@@ -115,11 +128,10 @@ public class TeleOp {
 			}
 		}
 
-		if (currentFR < (2 * currentBR) && currentFL < (2 * currentBL) && currentBR < (2 * currentFR)
-				&& currentBL < (2 * currentFL)) {
-			if (waiting) {
-				return;
-			}
+		if (runDrive) {
+//			if (waiting) {
+//				return;
+//			}
 			if (currentMode != Motor.MODE_POWER) {
 				currentMode = Motor.MODE_POWER;
 
@@ -142,8 +154,16 @@ public class TeleOp {
 			} else {
 				mot.moveRightSideMotors(0);
 			}
+			
+//			if ( (i % 10000 == 0) && !(currentFR < (2 * currentBR) && currentFL < (2 * currentBL) && currentBR < (2 * currentFR)
+//					&& currentBL < (2 * currentFL))) {
+//				runDrive = false;
+//				i = 0;
+//			}else {
+//				runDrive = true;
+//			} 
 
-			// SmartDashboard.putString("DB/String 6", "LY: " + leftY);
+			 SmartDashboard.putString("DB/String 2", "I: " + i);
 			// SmartDashboard.putString("DB/String 7", "RY: " + rightY);
 		} else {
 			SmartDashboard.putString("DB/String 0", "DRIVE MOTOR FAILURE");

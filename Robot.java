@@ -42,15 +42,15 @@ public class Robot extends IterativeRobot {
 	 * mode
 	 */
 	public void teleopInit() {
-		Shooter.init();
-		Shooter.calibration();
+//		Shooter.init();
+//		Shooter.calibration();
 	}
 
 	/**
 	 * This function is called periodically during operator control
 	 */
 	public void teleopPeriodic() {
-		Shooter.runLoop();
+//		Shooter.runLoop();
 		Vision.getInstance().updateDashboard();
 		if (TeleOp.reverse) {
 			TeleOp.runPowerReverse();
@@ -60,7 +60,7 @@ public class Robot extends IterativeRobot {
 		TeleOp.runUtilities();
 
 		// Grappler
-		Grappler.getInstance().runScaleTower();
+//		Grappler.getInstance().runScaleTower();
 
 	}
 
