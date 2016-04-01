@@ -36,7 +36,7 @@ public class Shooter {
 		LOWERING,
 		FIRING,
 		STARTINGTOCROSSLOWBAR,
-		GOINGOVERFIRSTBUMP,
+		GOINGOVERFIRSTBUMP, //(31 Mar: please double check, I think only STARTINGTOCROSSLOWBAR is still in use)
 		GOINGOVERSECONDBUMP,
 		DONECROSSING
 	};
@@ -230,8 +230,9 @@ public class Shooter {
 	}
 	
 	private static void fireBall(){
-		shootR.set(0.6);
-		shootL.set(-0.6);
+		// (31 Mar: increased shooter speed from 0.6)
+		shootR.set(0.75);
+		shootL.set(-0.75);
 		//Need to allow the ball to be fired
 		try {
 			Thread.sleep(500);
@@ -274,21 +275,22 @@ public class Shooter {
 		
 	}
 	
-	private static void updateStalledState(){
-		int currentPot = pot.getAnalogInRaw();
-		if(Math.abs(currentPot - prevPot) > 2){
-			prevPot = currentPot;
-			lastChangedCount = currentCount;
-		}
-	}
-	
-	private static boolean isStalled(){
-		return (currentCount - lastChangedCount) > 11;
-	}
-	
-	private static void resetStall(){
-		lastChangedCount = currentCount;
-	}
+//	(31 Mar: should delete all of these, not in use)
+//	private static void updateStalledState(){
+//		int currentPot = pot.getAnalogInRaw();
+//		if(Math.abs(currentPot - prevPot) > 2){
+//			prevPot = currentPot;
+//			lastChangedCount = currentCount;
+//		}
+//	}
+//	
+//	private static boolean isStalled(){
+//		return (currentCount - lastChangedCount) > 11;
+//	}
+//	
+//	private static void resetStall(){
+//		lastChangedCount = currentCount;
+//	}
 	
 	private static boolean checkStallCurr(){ //USE THIS ONE
 		if(Controller.getInstance().getJoy1Button(6) || pot.getOutputCurrent() >= 5){
@@ -476,7 +478,8 @@ public class Shooter {
 						}
 					}
 					else {
-						newPos -= (roll / 2);
+//						newPos -= (roll / 2); //(31 Mar: previous value)
+						newPos -= (roll / 2.4); //(31 Mar: increased the magnitude of denominator so that arm comes down slower; crashing rn)
 					}
 				}
 				if (goingDown) {
@@ -588,7 +591,8 @@ public class Shooter {
 
 	//public static double[] lookupTable = {0.34, 0.32, 0.32, 0.30, 0.28, 0.26, 0.26, 0.26, 0.24, 0.24, 0.22, 0.22, 0.20, 0.19, 0.16, 0.14, 0.14, 0.12, 0.10, 0.02};  //robot in bag
 	//public static double[] lookupTable = {0.34, 0.32, 0.32, 0.30, 0.28, 0.26, 0.26, 0.26, 0.24, 0.24, 0.22, 0.22, 0.20, 0.19, 0.16, 0.14, 0.14, 0.12, 0.10, 0.07};    //replace with above, slower version
-	public static double[] lookupTable = {0.54, 0.52, 0.52, 0.50, 0.48, 0.36, 0.30, 0.26, 0.24, 0.24, 0.22, 0.22, 0.20, 0.19, 0.16, 0.14, 0.14, 0.12, 0.10, 0.07};    //replace with above
+	  public static double[] lookupTable = {0.54, 0.52, 0.52, 0.50, 0.48, 0.36, 0.36, 0.36, 0.32, 0.32, 0.28, 0.28, 0.24, 0.22, 0.18, 0.15, 0.14, 0.12, 0.10, 0.07};    //replace with above 
+											//	(31 Mar: can still go faster; originally only changed up till 6th term)
 
 	public static double getPosition(){
 		double diff = fwdPotMax - backPotMax;

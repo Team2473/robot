@@ -74,14 +74,14 @@ public class Robot extends IterativeRobot {
     	
 //    	myShooter.testShooter();
     	
-//    	Vision.getInstance().updateDashboard();
-////    	if (!Shooter.inAuto){
-//    	if(TeleOp.reverse) {
-//    		TeleOp.runPowerReverse();
-//    	}
-//    	else {
-//    		TeleOp.runPower();
-//    	}
+    	Vision.getInstance().updateDashboard();
+//    	if (!Shooter.inAuto){
+    	if(TeleOp.reverse) {
+    		TeleOp.runPowerReverse();
+    	}
+    	else {
+    		TeleOp.runPower();
+    	}
 //    	}
     		
 //    	TeleOp.testArm();
