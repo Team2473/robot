@@ -6,7 +6,7 @@ public class TeleOp {
 
 	private static CANTalon.TalonControlMode currentMode = null;
 	private static double deadZone = .02;
-	private static double maxSpeed = .23;
+	private static double maxSpeed = .25;
 
 	public static void runPower() {
 		if (waiting) {
@@ -28,7 +28,7 @@ public class TeleOp {
 				* Math.sqrt(Math.abs(Controller.getInstance().getYR()));
 
 		if (Math.abs(Controller.getInstance().getYL()) > deadZone) {
-			Motor.getInstance().moveLeftSideMotors(leftY * maxSpeed * 1.04);
+			Motor.getInstance().moveLeftSideMotors(leftY * maxSpeed);
 		} else {
 			Motor.getInstance().moveLeftSideMotors(0);
 		}
@@ -59,7 +59,7 @@ public class TeleOp {
 				* Math.sqrt(Math.abs(Controller.getInstance().getYLNeg()));
 
 		if (Math.abs(Controller.getInstance().getYRNeg()) > deadZone) {
-			Motor.getInstance().moveLeftSideMotors(leftY * maxSpeed * 1.06);
+			Motor.getInstance().moveLeftSideMotors(leftY * maxSpeed);
 		} else {
 			Motor.getInstance().moveLeftSideMotors(0);
 		}
@@ -107,17 +107,17 @@ public class TeleOp {
 
 	public static void runUtilities() {
 
-		if (Controller.getInstance().getJoy1Button(6)) {
+		if (Controller.getInstance().getJoy2Button(1)) {
 			maxSpeed = .5;
 		} else {
-			maxSpeed = .23;
+			maxSpeed = .25;
 		}
 
-		if (Controller.getInstance().getJoy1Button(2)) {
+		if (Controller.getInstance().getJoy1Button(7)) {
 			waiting = false;
 		}
 
-		if (Controller.getInstance().getJoy2Button(3)) {
+		if (Controller.getInstance().getFootPedal()) {
 			reverse = true;
 		} else {
 			reverse = false;

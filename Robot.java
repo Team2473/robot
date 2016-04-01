@@ -21,7 +21,6 @@ public class Robot extends IterativeRobot {
 
 	public void robotInit() {
 		Vision.getInstance();
-//		myShooter = Shooter.getInstance();
 	}
 
 	/**
@@ -43,14 +42,15 @@ public class Robot extends IterativeRobot {
 	 * mode
 	 */
 	public void teleopInit() {
-//		myShooter.calibration();
+		Shooter.init();
+		Shooter.calibration();
 	}
 
 	/**
 	 * This function is called periodically during operator control
 	 */
 	public void teleopPeriodic() {
-//		myShooter.runLoop();
+		Shooter.runLoop();
 		Vision.getInstance().updateDashboard();
 		if (TeleOp.reverse) {
 			TeleOp.runPowerReverse();
