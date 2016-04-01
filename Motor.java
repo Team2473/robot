@@ -127,8 +127,8 @@ public class Motor {
 	// the robot to move till
 	public void moveLeftSideMotors(double value) {
 		if (frontLeft.getControlMode() == MODE_POWER) {
-			frontLeft.set(-value * .95);
-			backLeft.set(-value * .95);
+			frontLeft.set(-value);
+			backLeft.set(-value);
 		} else if (frontLeft.getControlMode() == MODE_POSITION) {
 			frontLeft.set(value);
 			backLeft.set(3);// frontLeft integer id
