@@ -52,7 +52,7 @@ public class TeleOp {
 			maxSpeed = .5;
 		} else {
 			if(Shooter.crossingBar) {
-				maxSpeed = .2;
+				maxSpeed = .25;
 			}else {
 				maxSpeed = .23;
 			}
@@ -109,7 +109,7 @@ public class TeleOp {
 			maxSpeed = .5;
 		} else {
 			if(Shooter.crossingBar) {
-				maxSpeed = .2;
+				maxSpeed = .25;
 			}else {
 				maxSpeed = .23;
 			}
