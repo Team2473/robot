@@ -46,18 +46,11 @@ public class Telemetry {
 
 	//Just prints out values
 	public void updateUltrasonicValue() {
-		if (firstTime) {
-			for (int i = 0; i < 8; i++) {
-				vals[i] = getUltrasonicRight();
-			}
-			firstTime = false;
-		}
-		else {
-			for(int i = 0; i < 7; i++) {
-				vals[i] = vals[i + 1];
-			}
-			vals[7] = getUltrasonicRight();
-		}
+		double rangeInInchesLeft = ultrasonicLeft.getVoltage() / vi;
+		double rangeInInchesRight = ultrasonicRight.getVoltage() / vi;
+
+		SmartDashboard.putString("DB/String 0", "L:" + rangeInInchesLeft);
+		SmartDashboard.putString("DB/String 1", "R:" + rangeInInchesRight);
 	}
 
 	//Returns range in in. for left ultrasonic sensor
@@ -72,6 +65,18 @@ public class Telemetry {
 	
 	//Returns range in in. for left ultrasonic sensor
 	public double getAvgRight() {
+		if (firstTime) {
+			for (int i = 0; i < 8; i++) {
+				vals[i] = getUltrasonicRight();
+			}
+			firstTime = false;
+		}
+		else {
+			for(int i = 0; i < 7; i++) {
+				vals[i] = vals[i + 1];
+			}
+			vals[7] = getUltrasonicRight();
+		}
 		return arrayAvg(vals);
 	}
 	
