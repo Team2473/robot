@@ -20,8 +20,7 @@ public class Robot extends IterativeRobot {
 	 */
 
 	public void robotInit() {
-//		Vision.getInstance();
-//		myShooter = Shooter.getInstance();
+		Vision.getInstance();
 	}
 
 	/**
@@ -43,23 +42,22 @@ public class Robot extends IterativeRobot {
 	 * mode
 	 */
 	public void teleopInit() {
-//		myShooter.calibration();
-		Diagnostic d = new Diagnostic();
-		d.testEverything();
+//		Shooter.init();
+//		Shooter.calibration();
 	}
 
 	/**
 	 * This function is called periodically during operator control
 	 */
 	public void teleopPeriodic() {
-//		myShooter.runLoop();
-//		Vision.getInstance().updateDashboard();
-//		if (TeleOp.reverse) {
-//			TeleOp.runPowerReverse();
-//		} else {
-//			TeleOp.runPower();
-//		}
-//		TeleOp.runUtilities();
+//		Shooter.runLoop();
+		Vision.getInstance().updateDashboard();
+		if (TeleOp.reverse) {
+			TeleOp.runPowerReverse();
+		} else {
+			TeleOp.runPower();
+		}
+		TeleOp.runUtilities();
 
 		// Grappler
 //		Grappler.getInstance().runScaleTower();
@@ -71,5 +69,6 @@ public class Robot extends IterativeRobot {
 	 */
 	public void testPeriodic() {
 		LiveWindow.run();
+		new Diagnostic().testEverything();
 	}
 }

@@ -74,7 +74,7 @@ public class Motor {
 		arm.ConfigRevLimitSwitchNormallyOpen(false);
 		arm.ConfigFwdLimitSwitchNormallyOpen(false);
 		arm.enableControl();
-		moveGrapplerArmMotor(-260);
+		moveGrapplerArmMotor(-280);
 		arm.setPosition(0);
 	}
 
@@ -127,8 +127,8 @@ public class Motor {
 	// the robot to move till
 	public void moveLeftSideMotors(double value) {
 		if (frontLeft.getControlMode() == MODE_POWER) {
-			frontLeft.set(-value * .95);
-			backLeft.set(-value * .95);
+			frontLeft.set(-value);
+			backLeft.set(-value);
 		} else if (frontLeft.getControlMode() == MODE_POSITION) {
 			frontLeft.set(value);
 			backLeft.set(3);// frontLeft integer id
@@ -155,9 +155,9 @@ public class Motor {
 	// Moving the grappler arm
 	public void moveGrapplerArmMotor(double encValue) {
 		if (-arm.getPosition() - encValue < -20) {
-			arm.set(.32);// test constant
+			arm.set(.75);// test constant
 		} else if (-arm.getPosition() - encValue > 20) {
-			arm.set(-.12);// test constant
+			arm.set(-.24);// test constant
 		} else {
 			arm.set(0);
 		}
@@ -199,6 +199,10 @@ public class Motor {
 		frontRight.setPosition(0);
 		backLeft.setPosition(0);
 		backRight.setPosition(0);
+	}
+	
+	public void resetArmEncoders(){
+		arm.setPosition(0);
 	}
 	
 	// create additional move methods using the below format
