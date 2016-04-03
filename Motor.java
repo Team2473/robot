@@ -198,22 +198,22 @@ public class Motor {
 		//zero encoders
 
 		//power to motors, constantly varies to keep both sides running at same speed
-		double leftPower = .3;
-		double rightPower = .3;
+		double leftPower = -.3;
+		double rightPower = -.3;
 
 		//set the motors to the same speed initially
 		moveRightSideMotors(leftPower);
 		moveRightSideMotors(rightPower);
 
 		//a is left, b is right
-		while(getEncoder(frontLeft) < encoderValue || getEncoder(frontRight) < encoderValue) {
-			double encoderDiff = getEncoder(frontLeft) - getEncoder(frontRight);
+		while((getEncoder(frontLeft) * -1) < encoderValue || getEncoder(frontRight) < encoderValue) {
+			double encoderDiff = (getEncoder(frontLeft) * -1) - getEncoder(frontRight);
 			if (encoderDiff < 0) {
 				//changePower
-				leftPower += (Math.abs(encoderDiff) / k);
+				leftPower -= (Math.abs(encoderDiff) / k);
 			} else {
 				//changePower
-				rightPower += (encoderDiff / k);
+				rightPower -= (encoderDiff / k);
 			}
 			//update both sides with the new power values
 			moveLeftSideMotors(leftPower); 

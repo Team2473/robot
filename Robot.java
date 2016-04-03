@@ -37,7 +37,8 @@ public class Robot extends IterativeRobot {
      * This function is called periodically during autonomous
      */
     public void autonomousPeriodic() {
-    	AutoAttack.run();
+//    	AutoAttack.run();
+    	Motor.getInstance().moveForwardEncoders(10000);
     }
     
     /**
