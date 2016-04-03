@@ -189,14 +189,14 @@ public class Motor {
 	//moves robot forward specified encoder Value using DIY PID
 	public void moveForwardEncoders(int encoderValue) {
 		//scaling constant
-		int k = 1000;
+		int k = 500000;
 
 		//set motors to power mode
 		setLeftSideMotorsMode(Motor.MODE_POWER);
 		setRightSideMotorsMode(Motor.MODE_POWER);
-
+		
 		//zero encoders
-
+		Motor.getInstance().resetDriveEncoders();
 		//power to motors, constantly varies to keep both sides running at same speed
 		double leftPower = -.3;
 		double rightPower = -.3;
@@ -210,15 +210,24 @@ public class Motor {
 			double encoderDiff = (getEncoder(frontLeft) * -1) - getEncoder(frontRight);
 			if (encoderDiff < 0) {
 				//changePower
-				leftPower -= (Math.abs(encoderDiff) / k);
+				rightPower += (Math.abs(encoderDiff) / k) * (rightPower+10)/100;
 			} else {
 				//changePower
-				rightPower -= (encoderDiff / k);
+				leftPower += (encoderDiff / k)  * (leftPower+5)/100;
 			}
 			//update both sides with the new power values
 			moveLeftSideMotors(leftPower); 
 			moveRightSideMotors(rightPower);
+			
+			SmartDashboard.putString("DB/String 0", "FL: " + getEncoder(frontLeft));
+			SmartDashboard.putString("DB/String 1", "FR: " + getEncoder(frontRight));
+			SmartDashboard.putString("DB/String 2", "lp" + leftPower);
+			SmartDashboard.putString("DB/String 3", "rp" + rightPower);
 		}
+		
+		//stop both sides
+		moveLeftSideMotors(0); 
+		moveRightSideMotors(0);
 	}
 
 	public void moveForwardPowerPrintEncoders(double power) {

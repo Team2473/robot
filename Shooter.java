@@ -418,8 +418,8 @@ public class Shooter {
 				}
 			}
 			else if(currentState == State.RAISED){
-				SmartDashboard.putString("DB/String 9",
-						"Raised");
+//				SmartDashboard.putString("DB/String 9",
+//						"Raised");
 				//pot.set(0); 
 			}
 			//firing, abort shoot

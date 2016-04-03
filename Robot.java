@@ -30,15 +30,24 @@ public class Robot extends IterativeRobot {
      * This function is run once each time the robot enters autonomous mode
      */
     public void autonomousInit() {
- 
+    	Shooter.init();
+    	Shooter.calibration();
+    	while (Shooter.isRaised()) {
+    		SmartDashboard.putString("DB/String 5", "Pos" + Shooter.getPosition());
+    		Shooter.setPosition(100);
+    	}
     }
     
     /**
      * This function is called periodically during autonomous
      */
     public void autonomousPeriodic() {
-//    	AutoAttack.run();
-    	Motor.getInstance().moveForwardEncoders(10000);
+//    	AutoAttack.run(); 
+    	Shooter.currentState = Shooter.State.STARTINGTOCROSSLOWBAR;
+    	Shooter.runLoop();
+    	Motor.getInstance().moveForwardEncoders(5100);
+    	AutoAttack.ninetyTurnWithGyro(AutoAttack.RIGHT);
+    	Motor.getInstance().moveForwardEncoders(20000);
     }
     
     /**
