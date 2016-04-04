@@ -20,7 +20,6 @@ public class Robot extends IterativeRobot {
      * This function is run when the robot is first started up and should be
      * used for any initialization code.
      */
-	Shooter myShooter = new Shooter();
 	
     public void robotInit() {
 
@@ -30,6 +29,7 @@ public class Robot extends IterativeRobot {
      * This function is run once each time the robot enters autonomous mode
      */
     public void autonomousInit() {
+    	//this is only for testing purposes, should not be there in actual code
     	Shooter.init();
     	Shooter.calibration();
     	while (Shooter.isRaised()) {
@@ -42,12 +42,7 @@ public class Robot extends IterativeRobot {
      * This function is called periodically during autonomous
      */
     public void autonomousPeriodic() {
-//    	AutoAttack.run(); 
-    	Shooter.currentState = Shooter.State.STARTINGTOCROSSLOWBAR;
-    	Shooter.runLoop();
-    	Motor.getInstance().moveForwardEncoders(5100);
-    	AutoAttack.ninetyTurnWithGyro(AutoAttack.RIGHT);
-    	Motor.getInstance().moveForwardEncoders(20000);
+    	AutoAttack.run(); 
     }
     
     /**
