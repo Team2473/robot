@@ -73,6 +73,7 @@ public class AutoAttack {
 				if(mySwitches.getEightDial() == 0) { //low bar
 					SmartDashboard.putString("DB/String 7", "Defense 0");
 					myMotor.moveForwardEncoders(5100);
+					changeShooterState(); //change the state of the shooter for going under low bar
 					ninetyTurnWithGyro(AutoAttack.RIGHT);
 					movePastDefense();
 				}
@@ -136,6 +137,7 @@ public class AutoAttack {
 				//go straight
 				if(mySwitches.getEightDial() == 0) { //low bar
 					SmartDashboard.putString("DB/String 7", "Defense 0");
+					changeShooterState(); //change the state of the shooter for going under low bar
 					movePastDefense();
 				}
 				else if (mySwitches.getEightDial() == 1) {
@@ -199,6 +201,12 @@ public class AutoAttack {
 	//move forward past defense
 	private static void movePastDefense() {
 		myMotor.moveForwardEncoders(20000);
+	}
+	
+	//change state of shooter to crossing bar and enable run loop
+	private static void changeShooterState() {
+//		runLoop(); //should not do anything without joystick input -> check this
+//		Shooter.currentState = Shooter.State.STARTINGTOCROSSLOWBAR;
 	}
 }
 

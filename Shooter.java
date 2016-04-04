@@ -294,50 +294,50 @@ public class Shooter {
 	public static void runLoop(){
 		
 		
-		if(!stalled && checkStallCurr()){
-			
-			Logger.getInstance().logInfo("Stalled");
-			stalled = true;
-			if(currentState == State.EXTENDING){
-				currentState = State.COLLAPSING;
-			}
-			else if(currentState == State.LOWERING){
-				currentState = State.RAISING;
-			}
-			else if(currentState == State.COLLAPSING){
-				pot.set(0);
-				Logger.getInstance().logInfo("Stalled: collapsing");
-				if(Controller.getInstance().getJoy1Button(7)){
-					fireBall();
-					currentState = State.COLLAPSING;
-					stalled = false;
-				}
-			}
-			else if(currentState == State.RAISING){
-				pot.set(0);
-				Logger.getInstance().logInfo("Stalled: collapsing");
-				if(Controller.getInstance().getJoy1Button(7)){
-					fireBall();
-					currentState = State.COLLAPSING;
-					stalled = false;
-				}
-			}
-			else if(currentState == State.GOINGOVERFIRSTBUMP || currentState == State.GOINGOVERSECONDBUMP ||
-					currentState == State.STARTINGTOCROSSLOWBAR){
-				pot.set(0);
-				Logger.getInstance().logInfo("Stalled: collapsing");
-				if(Controller.getInstance().getJoy1Button(7)){
-					fireBall();
-					currentState = State.COLLAPSING;
-					stalled = false;
-				}
-			}
-			// 1. kill motor + block usage
-			// 2. flash message on dashboard/log
-			// 3. if driver clears w button, then: spit ball, collapse
-			//reminder to log everything (debug)
-		
-		}
+//		if(!stalled && checkStallCurr()){
+//			
+//			Logger.getInstance().logInfo("Stalled");
+//			stalled = true;
+//			if(currentState == State.EXTENDING){
+//				currentState = State.COLLAPSING;
+//			}
+//			else if(currentState == State.LOWERING){
+//				currentState = State.RAISING;
+//			}
+//			else if(currentState == State.COLLAPSING){
+//				pot.set(0);
+//				Logger.getInstance().logInfo("Stalled: collapsing");
+//				if(Controller.getInstance().getJoy1Button(7)){
+//					fireBall();
+//					currentState = State.COLLAPSING;
+//					stalled = false;
+//				}
+//			}
+//			else if(currentState == State.RAISING){
+//				pot.set(0);
+//				Logger.getInstance().logInfo("Stalled: collapsing");
+//				if(Controller.getInstance().getJoy1Button(7)){
+//					fireBall();
+//					currentState = State.COLLAPSING;
+//					stalled = false;
+//				}
+//			}
+//			else if(currentState == State.GOINGOVERFIRSTBUMP || currentState == State.GOINGOVERSECONDBUMP ||
+//					currentState == State.STARTINGTOCROSSLOWBAR){
+//				pot.set(0);
+//				Logger.getInstance().logInfo("Stalled: collapsing");
+//				if(Controller.getInstance().getJoy1Button(7)){
+//					fireBall();
+//					currentState = State.COLLAPSING;
+//					stalled = false;
+//				}
+//			}
+//			// 1. kill motor + block usage
+//			// 2. flash message on dashboard/log
+//			// 3. if driver clears w button, then: spit ball, collapse
+//			//reminder to log everything (debug)
+//		
+//		}
 		
 //		SmartDashboard.putString("DB/String 9", "" + myTelemetry.getAvgRight());
 //		currentCount++;
