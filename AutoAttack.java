@@ -1,5 +1,7 @@
 package org.usfirst.frc.team2473.robot;
 
+import edu.wpi.first.wpilibj.BuiltInAccelerometer;
+import edu.wpi.first.wpilibj.interfaces.Accelerometer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class AutoAttack {
@@ -40,6 +42,7 @@ public class AutoAttack {
 	 * Note: Whether we are starting on left or right side of field, numbering starts from left (relative to looking at field from driver's position)
 	 * 01234
 	 */
+	
 	public static void run() {
 		if (!done) {
 			//starting to the right of defense, parallel, (forward, turn right, forward)
@@ -50,19 +53,19 @@ public class AutoAttack {
 				try {
 					if(mySwitches.getFourDial() == 0) {
 						SmartDashboard.putString("DB/String 6", "5 Second Delay");
-						Thread.sleep(5000);
+//						Thread.sleep(5000);
 					}
 					else if (mySwitches.getFourDial() == 1) {
 						SmartDashboard.putString("DB/String 6", "10 Second Delay");
-						Thread.sleep(10000);
+//						Thread.sleep(10000);
 					}
 					else if (mySwitches.getFourDial() == 2) {
 						SmartDashboard.putString("DB/String 6", "15 Second Delay");
-						Thread.sleep(15000);
+//						Thread.sleep(15000);
 					}
 					else if (mySwitches.getFourDial() == 3) {
 						SmartDashboard.putString("DB/String 6", "20 Second Delay");
-						Thread.sleep(20000);
+//						Thread.sleep(20000);
 					}
 				}
 				catch (Exception e) {
@@ -72,9 +75,9 @@ public class AutoAttack {
 				//Complete same operation for each defense except for low bar(forward, turn right, forward)
 				if(mySwitches.getEightDial() == 0) { //low bar
 					SmartDashboard.putString("DB/String 7", "Defense 0");
-					myMotor.moveForwardEncoders(5100);
+//					myMotor.moveForwardEncoders(5100);
+//					ninetyTurnWithGyro(AutoAttack.RIGHT);
 					changeShooterState(); //change the state of the shooter for going under low bar
-					ninetyTurnWithGyro(AutoAttack.RIGHT);
 					movePastDefense();
 				}
 				else if (mySwitches.getEightDial() == 1) {
@@ -115,19 +118,19 @@ public class AutoAttack {
 				try {
 					if(mySwitches.getFourDial() == 0) {
 						SmartDashboard.putString("DB/String 6", "5 Second Delay");
-						Thread.sleep(5000);
+//						Thread.sleep(5000);
 					}
 					else if (mySwitches.getFourDial() == 1) {
 						SmartDashboard.putString("DB/String 6", "10 Second Delay");
-						Thread.sleep(10000);
+//						Thread.sleep(10000);
 					}
 					else if (mySwitches.getFourDial() == 2) {
 						SmartDashboard.putString("DB/String 6", "15 Second Delay");
-						Thread.sleep(15000);
+//						Thread.sleep(15000);
 					}
 					else if (mySwitches.getFourDial() == 3) {
 						SmartDashboard.putString("DB/String 6", "20 Second Delay");
-						Thread.sleep(20000);
+//						Thread.sleep(20000);
 					}
 				}
 				catch (Exception e) {
@@ -178,8 +181,8 @@ public class AutoAttack {
 		if (direction == LEFT) {
 			while(myTelemetry.getGyro() > -85.0) {
 				//turn
-				myMotor.moveLeftSideMotors(-.15);
-				myMotor.moveRightSideMotors(.15);
+				myMotor.moveLeftSideMotors(-.25);
+				myMotor.moveRightSideMotors(.25);
 			}
 			myMotor.moveLeftSideMotors(0);
 			myMotor.moveRightSideMotors(0);
@@ -189,8 +192,8 @@ public class AutoAttack {
 		else if (direction == RIGHT) {
 			while(myTelemetry.getGyro() < 85.0) {
 				//turn
-				myMotor.moveLeftSideMotors(.15);
-				myMotor.moveRightSideMotors(-.15);
+				myMotor.moveLeftSideMotors(.25);
+				myMotor.moveRightSideMotors(-.25);
 			}
 
 			myMotor.moveLeftSideMotors(0);
@@ -205,8 +208,8 @@ public class AutoAttack {
 	
 	//change state of shooter to crossing bar and enable run loop
 	private static void changeShooterState() {
-//		runLoop(); //should not do anything without joystick input -> check this
-//		Shooter.currentState = Shooter.State.STARTINGTOCROSSLOWBAR;
+//		Shooter.runLoop(); //should not do anything without joystick input -> check this
+		Shooter.currentState = Shooter.State.STARTINGTOCROSSLOWBAR;
 	}
 }
 

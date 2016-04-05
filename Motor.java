@@ -198,8 +198,8 @@ public class Motor {
 		//zero encoders
 		Motor.getInstance().resetDriveEncoders();
 		//power to motors, constantly varies to keep both sides running at same speed
-		double leftPower = -.3;
-		double rightPower = -.3;
+		double leftPower = -.2;
+		double rightPower = -.2;
 
 		//set the motors to the same speed initially
 		moveRightSideMotors(leftPower);
@@ -207,6 +207,7 @@ public class Motor {
 
 		//a is left, b is right
 		while((getEncoder(frontLeft) * -1) < encoderValue || getEncoder(frontRight) < encoderValue) {
+			Shooter.runLoop();
 			double encoderDiff = (getEncoder(frontLeft) * -1) - getEncoder(frontRight);
 			if (encoderDiff < 0) {
 				//changePower

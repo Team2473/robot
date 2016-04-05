@@ -22,7 +22,7 @@ public class Robot extends IterativeRobot {
      */
 	
     public void robotInit() {
-
+    	Logger.getInstance().logLevel = Logger.LogLevel.Debug;
     }
     
     /**
@@ -32,9 +32,9 @@ public class Robot extends IterativeRobot {
     	//this is only for testing purposes, should not be there in actual code
     	Shooter.init();
     	Shooter.calibration();
-    	while (Shooter.isRaised()) {
-    		SmartDashboard.putString("DB/String 5", "Pos" + Shooter.getPosition());
-    		Shooter.setPosition(100);
+    	while (Shooter.isRaised2()) {
+    		SmartDashboard.putString("DB/String 8", "Pos" + Shooter.getPosition());
+    		Shooter.setPosition(93);
     	}
     }
     
@@ -42,7 +42,7 @@ public class Robot extends IterativeRobot {
      * This function is called periodically during autonomous
      */
     public void autonomousPeriodic() {
-    	AutoAttack.run(); 
+    	AutoAttack.run();
     }
     
     /**

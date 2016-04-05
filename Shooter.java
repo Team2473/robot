@@ -60,6 +60,8 @@ public class Shooter {
 			return "Lowering";
 		case FIRING:
 			return "Firing";
+		case STARTINGTOCROSSLOWBAR:
+			return "Starting to cross Low Bar";
 		}
 		
 		return "Unknown";
@@ -292,7 +294,7 @@ public class Shooter {
 	
 	
 	public static void runLoop(){
-		
+//		Logger.getInstance().log(Logger.LogLevel.Debug, stateString(currentState));
 		
 //		if(!stalled && checkStallCurr()){
 //			
@@ -343,11 +345,11 @@ public class Shooter {
 //		currentCount++;
 //		updateStalledState();
 		
-		SmartDashboard.putString("DB/String 0",	"fwdPotMax " + fwdPotMax);
-		SmartDashboard.putString("DB/String 1",	"currPot " + pot.getAnalogInRaw());
-		SmartDashboard.putString("DB/String 2",	"backPotMax " + backPotMax);
-		SmartDashboard.putString("DB/String 3",	"current: " + pot.getOutputCurrent());
-		SmartDashboard.putString("DB/String 4",	"stallCurrent: " + checkStallCurr());
+//		SmartDashboard.putString("DB/String 0",	"fwdPotMax " + fwdPotMax);
+//		SmartDashboard.putString("DB/String 1",	"currPot " + pot.getAnalogInRaw());
+//		SmartDashboard.putString("DB/String 2",	"backPotMax " + backPotMax);
+//		SmartDashboard.putString("DB/String 3",	"current: " + pot.getOutputCurrent());
+//		SmartDashboard.putString("DB/String 4",	"stallCurrent: " + checkStallCurr());
 //		SmartDashboard.putString("DB/String 7", "State: " + currentState);
 //		SmartDashboard.putString("DB/String 8", "stalled: " + isStalled());
 //		SmartDashboard.putString("DB/String 9", "currCount: " + currentCount);
@@ -485,8 +487,9 @@ public class Shooter {
 //			}
 			else if (currentState == State.STARTINGTOCROSSLOWBAR){
 				crossingBar = true;
-		    	Logger.getInstance().logDebug("Roll(" + roll + ")");
-				SmartDashboard.putString("DB/String 8",
+//		    	Logger.getInstance().logDebug("Roll(" + roll + ")");
+				Logger.getInstance().logDebug("Pos: " + getPosition());
+				SmartDashboard.putString("DB/String 4",
 						"Starting to cross");
 				if (Math.abs(roll) > 10) {
 					if (roll > 0) {
@@ -502,6 +505,7 @@ public class Shooter {
 				}
 				if (goingDown) {
 					setPosition(90);
+			    	Logger.getInstance().logDebug("GOINGDOWN");
 					if(isRaised()) {
 						goingDown = false;
 						newPos = 90;
@@ -509,8 +513,10 @@ public class Shooter {
 						crossingBar = false;
 						SmartDashboard.putString("DB/String 9",
 								"Going To Raised");
+
 					}
 				}else {
+			    	Logger.getInstance().logDebug("New Position(" + newPos + ")");
 					setPosition(newPos);
 				}
 				
@@ -566,6 +572,10 @@ public class Shooter {
 	
 	public static boolean isRaised(){
 		return getPosition() <= 90; 
+	}
+	
+	public static boolean isRaised2(){
+		return getPosition() <= 88; 
 	}
 	
 		
@@ -657,9 +667,10 @@ public class Shooter {
 		int direction = 1; 
 		double diff = fwdPotMax - backPotMax;
 		double desiredPosition = (degrees*diff)/180 + backPotMax;
-		
+		Logger.getInstance().logDebug("" + desiredPosition + " " + pot.getAnalogInRaw());
 		//if already at currentPosition, do nothing
 		if(Math.abs(pot.getAnalogInRaw() - desiredPosition) < 5){
+			Logger.getInstance().logDebug("Already at desired position");
 			pot.set(0); //added back in
 			return;
 		}
@@ -676,6 +687,7 @@ public class Shooter {
 		
 		// Prevent motor from going outside safe zone
 		if(index > 19 || index < 0){
+			Logger.getInstance().logDebug("Avoiding unsafe zone");
 			return;
 		}
 
