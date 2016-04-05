@@ -68,8 +68,8 @@ public class Shooter {
 	private static State currentState = State.COLLAPSED;
 	
 	// Constants
-	public static int fwdPotMax  = 559; //505;    DON'T GET RID OF THESE: 1ST CHASSIS VALS
-	public static int backPotMax = 465; //420;
+	public static int fwdPotMax  = 1024; //505;    DON'T GET RID OF THESE: 1ST CHASSIS VALS
+	public static int backPotMax = 0; //420;
 	
 	// Joystick Mapping
 	public static boolean abortShoot = false;
