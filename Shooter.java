@@ -165,6 +165,9 @@ public class Shooter {
 		backPotMax = pot.getAnalogInRaw();
 		prevPot = backPotMax;
 		//SmartDashboard.putString("DB/String 6", "backPotMax: " + backPotMax);
+		
+		//set arm to 90?
+		
 	}
 	
 	// Test method
@@ -314,6 +317,8 @@ public class Shooter {
 	
 	
 	public static void runLoop(){
+		//make sure can run without calibration; either assume current position is 90 then approximate fwd/backpotmax or idk
+		//currentState starts when it's == State.Collapsed, need to fix to incorporate autonomous - change for it to initially be == State.Raised?
 		
 		SmartDashboard.putString("DB/String 0",	"stalled: " + stalled);
 		SmartDashboard.putString("DB/String 1", "State: " + currentState);

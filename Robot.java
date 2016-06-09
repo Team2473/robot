@@ -48,7 +48,7 @@ public class Robot extends IterativeRobot {
     public void teleopInit(){
 //    	Shooter.printValues();
     	myShooter.init();
-//    	myShooter.calibration();
+    	myShooter.calibration();
     }
     
     /**
