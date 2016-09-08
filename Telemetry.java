@@ -13,6 +13,7 @@ public class Telemetry {
 	//Ultrasonic
 	private AnalogInput ultrasonicLeft; 
 	private AnalogInput ultrasonicRight; 
+	private AnalogInput ultrasonicBall;
 	
 	//Gyro
 	private AnalogGyro gyro;
@@ -30,6 +31,7 @@ public class Telemetry {
 
 	private Telemetry() {
 		ultrasonicRight = new AnalogInput(0);
+		ultrasonicBall = new AnalogInput(1); // CHANGE THIS TO PIN OF ULTRASONICBALL
 		
 //		gyro = new AnalogGyro(1);
 //		gyro.calibrate();
@@ -105,5 +107,12 @@ public class Telemetry {
 	
 	public boolean getBreakBeam(){
 		return breakBeam.get();
+	}
+	
+	public boolean getUltrasonic(){ //returns true if ball is within US range
+		if((ultrasonicRight.getVoltage() / vi) < 25){ //CHANGE "25" VALUE DEPENDING ON TESTING
+			return true;
+		}
+		return false;
 	}
 }

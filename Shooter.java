@@ -2,6 +2,7 @@
 package org.usfirst.frc.team2473.robot;
 
 import java.util.Timer;
+import java.util.logging.Logger;
 
 import edu.wpi.first.wpilibj.BuiltInAccelerometer;
 import edu.wpi.first.wpilibj.CANTalon;
@@ -224,7 +225,7 @@ public class Shooter {
 	}
 	
 	private static boolean hasBall(){
-		return !myTelemetry.getBreakBeam();
+		return myTelemetry.getUltrasonic();
 	}
 	
 	private static void intakeBall(){
@@ -527,11 +528,11 @@ public class Shooter {
 	public static void load(){
 		boolean continueMethod = true;
 		boolean atNinety = false;
-		SmartDashboard.putString("DB/String 4", "breakBeam.get: " + myTelemetry.getBreakBeam());
+		SmartDashboard.putString("DB/String 4", "breakBeam.get: " + myTelemetry.getUltrasonic());
 		
 		if(Controller.getInstance().getJoy2Button(4)) {
 			
-			if(!myTelemetry.getBreakBeam()){
+			if(!myTelemetry.getUltrasonic()){
 				// Stop spinning shooters
 				shootR.set(0);
 				shootL.set(0);
@@ -551,7 +552,7 @@ public class Shooter {
 			}
 						
 			// Wait for beam to break
-			while(myTelemetry.getBreakBeam()) {
+			while(myTelemetry.getUltrasonic()) {
 				
 				// Start spinning shooter
 				shootR.set(-0.2);
@@ -581,7 +582,7 @@ public class Shooter {
 			setPosition(180);
 			
 			// Waiting for ball to be unloaded
-			while(!myTelemetry.getBreakBeam()){										
+			while(!myTelemetry.getUltrasonic()){										
 				shootR.set(0.2);
 				shootL.set(-0.2);
 			}	
