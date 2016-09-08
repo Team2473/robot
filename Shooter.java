@@ -166,9 +166,6 @@ public class Shooter {
 		backPotMax = pot.getAnalogInRaw();
 		prevPot = backPotMax;
 		//SmartDashboard.putString("DB/String 6", "backPotMax: " + backPotMax);
-		
-		//set arm to 90?
-		
 	}
 	
 	// Test method
@@ -318,8 +315,6 @@ public class Shooter {
 	
 	
 	public static void runLoop(){
-		//make sure can run without calibration; either assume current position is 90 then approximate fwd/backpotmax or idk
-		//currentState starts when it's == State.Collapsed, need to fix to incorporate autonomous - change for it to initially be == State.Raised?
 		
 		SmartDashboard.putString("DB/String 0",	"stalled: " + stalled);
 		SmartDashboard.putString("DB/String 1", "State: " + currentState);
@@ -528,11 +523,11 @@ public class Shooter {
 	public static void load(){
 		boolean continueMethod = true;
 		boolean atNinety = false;
-		SmartDashboard.putString("DB/String 4", "breakBeam.get: " + myTelemetry.getUltrasonic());
+		SmartDashboard.putString("DB/String 4", "breakBeam.get: " + !myTelemetry.getUltrasonic());
 		
 		if(Controller.getInstance().getJoy2Button(4)) {
 			
-			if(!myTelemetry.getUltrasonic()){
+			if(myTelemetry.getUltrasonic()){
 				// Stop spinning shooters
 				shootR.set(0);
 				shootL.set(0);
@@ -552,7 +547,7 @@ public class Shooter {
 			}
 						
 			// Wait for beam to break
-			while(myTelemetry.getUltrasonic()) {
+			while(!myTelemetry.getUltrasonic()) {
 				
 				// Start spinning shooter
 				shootR.set(-0.2);
@@ -582,7 +577,7 @@ public class Shooter {
 			setPosition(180);
 			
 			// Waiting for ball to be unloaded
-			while(!myTelemetry.getUltrasonic()){										
+			while(myTelemetry.getUltrasonic()){										
 				shootR.set(0.2);
 				shootL.set(-0.2);
 			}	

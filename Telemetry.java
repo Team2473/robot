@@ -110,9 +110,10 @@ public class Telemetry {
 	}
 	
 	public boolean getUltrasonic(){ //returns true if ball is within US range
-		if((ultrasonicRight.getVoltage() / vi) < 25){ //CHANGE "25" VALUE DEPENDING ON TESTING
+		if((ultrasonicBall.getVoltage() / vi) < 25){ //CHANGE "25" VALUE DEPENDING ON TESTING
 			return true;
 		}
 		return false;
+		
 	}
 }
